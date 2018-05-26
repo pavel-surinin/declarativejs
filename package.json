@@ -1,6 +1,6 @@
 {
   "name": "declarative-js",
-  "version": "3.0.1-0",
+  "version": "3.0.0",
   "main": "index.js",
   "types": "target/dist/definitions/index.d.ts",
   "author": "Pavel Surinin <pavel.surinin@gmail.com>",
@@ -21,6 +21,7 @@
     "lint": "npx tslint -c tslint.json -p tsconfig.json -t stylish",
     "test": "npx jest -c jest.config.js",
     "build": "npm run lint && npm run compile && npm test -- --coverage",
-    "pre-publish": "npm run build && cp package.json target/dist/js/src/package.json"
+    "pre-publish": "npm run build && cp package.json target/dist/js/src/package.json",
+    "publish:patch": "npm version patch && npm run pre-publish && npm publish"
   }
 }
