@@ -1,11 +1,14 @@
 {
-  "name": "verbose-js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./target/dist/js/index.ts",
-  "types": "./target/dist/definitions/index.d.ts",
-  "author": "psurinin",
-  "license": "ISC",
+  "name": "declarative-js",
+  "version": "3.0.0",
+  "main": "index.js",
+  "types": "target/dist/definitions/index.d.ts",
+  "author": "Pavel Surinin <pavel.surinin@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pavel-surinin/declarative-js.git"
+  },
   "devDependencies": {
     "@types/jest": "22.2.3",
     "jest": "22.4.3",
@@ -16,6 +19,8 @@
   "scripts": {
     "compile": "npx tsc -d",
     "lint": "npx tslint -c tslint.json -p tsconfig.json -t stylish",
-    "test": "npx jest -c jest.config.js"
+    "test": "npx jest -c jest.config.js",
+    "build": "npm run lint && npm run compile && npm test -- --coverage",
+    "pre-publish": "npm run build && cp package.json target/dist/js/src/package.json"
   }
 }
