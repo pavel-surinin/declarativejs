@@ -2,32 +2,9 @@
 Open source javascript library for declarative coding
 
 # Table of Contents
-1. [is](#is)
-2. [inCase](#inCase)
-
-    2.1 [Asseritng](##Asseritng) 
-
-    2.2 [Action](##Action) 
-
-    - [do](###incase(value).\<predicate>.do) 
-
-    - [throw](###incase(value).\<predicate>.throw) 
-
-    - [map](###incase(value).\<predicate>.map) 
-
-3. [optional](#optional)
-
-    3.1 [ifPresent](##optional(value).ifPresent) 
-
-    3.2 [isPresent](##optional(value).isPresent) 
-    
-    3.3 [map](##optional(value).map) 
-
-    3.3 [filter](##optional(value).map(...).filter) 
-
-    3.3 [or](##optional(value).map(...).or) 
-    
-
+1. [is](#IS)
+2. [inCase](#INCASE)
+3. [optional](#OPTIONAL)
 
 ## IS
 
@@ -200,7 +177,7 @@ Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/d
 ### optional(value).ifPresent
 
 ```javascript
-    optional(myVar).ifPresent(() => console.warn('I am here')) //true or false
+    optional(myVar).ifPresent(() => console.warn('I am here'))
 ```
 
 ### optional(value).map
