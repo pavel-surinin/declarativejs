@@ -5,15 +5,15 @@ Open source javascript library for declarative coding
 1. [is](#is)
 2. [inCase](#inCase)
 
-    2.1 [Asseritng](#Asseritng) 
+    2.1 [Asseritng](##Asseritng) 
 
-    2.2 [Action](#Action) 
-    
-    2.2.1 [do](#do) 
-    
-    2.2.2 [throw](#throw) 
-    
-    2.2.3 [map](#map) 
+    2.2 [Action](##Action) 
+
+    - [do](###do) 
+
+    - [throw](###throw) 
+
+    - [map](###map) 
 
 ## is
 
