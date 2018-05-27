@@ -2,9 +2,9 @@
 Open source javascript library for declarative coding
 
 # Table of Contents
-1. [is](#IS)
-2. [inCase](#INCASE)
-3. [optional](#OPTIONAL)
+1. [is](##IS)
+2. [inCase](##INCASE)
+3. [optional](##OPTIONAL)
 
 ## IS
 
