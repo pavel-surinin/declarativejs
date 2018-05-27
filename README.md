@@ -9,13 +9,27 @@ Open source javascript library for declarative coding
 
     2.2 [Action](##Action) 
 
-    - [do](###do) 
+    - [do](###incase(value).\<predicate>.do) 
 
-    - [throw](###throw) 
+    - [throw](###incase(value).\<predicate>.throw) 
 
-    - [map](###map) 
+    - [map](###incase(value).\<predicate>.map) 
 
-## is
+3. [optional](#optional)
+
+    3.1 [ifPresent](##optional(value).ifPresent) 
+
+    3.2 [isPresent](##optional(value).isPresent) 
+    
+    3.3 [map](##optional(value).map) 
+
+    3.3 [filter](##optional(value).map(...).filter) 
+
+    3.3 [or](##optional(value).map(...).or) 
+    
+
+
+## IS
 
 `null` assertion
 ```javascript
@@ -70,7 +84,7 @@ Open source javascript library for declarative coding
     is('c').meets.only(isC)         //true
 ```
 
-## inCase
+## INCASE
 
 Function `inCase` can be splitted in two parts: 
 
@@ -132,13 +146,13 @@ Examples of asserting part:
 ### Action
 Examples what will be if asserting returns true
 
-#### do
+#### incase(value).\<predicate>.do
 `do` that takes callback function `() => void` as a parameter.
 ```javascript
     inCase(myVar).empty
         .do(() => console.warn('warn'))
 ```
-#### throw
+#### incase(value).\<predicate>.throw
 `throw` that will throw `Error`, takes `string` as a paramter, that will be an error message
 ```javascript
     inCase(myVar).empty
@@ -149,7 +163,7 @@ or with no message
     inCase(myVar).empty.throw()
 ```
 
-#### map
+#### incase(value).\<predicate>.map
 `map` that will map value, takes function `(value: T) => R` as a parameter
 
 ```javascript
@@ -169,6 +183,75 @@ or with no message
 
 `map` after mapping has these methods
 - get `map(toSomething).get()` that will return mapped value in case condition is `true` or throw an error id condition is `false`
+- or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
+- or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
+- or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
+
+## OPTIONAL
+
+Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
+
+### optional(value).isPresent
+
+```javascript
+    optional(myVar).isPresent() //true or false
+```
+
+### optional(value).ifPresent
+
+```javascript
+    optional(myVar).ifPresent(() => console.warn('I am here')) //true or false
+```
+
+### optional(value).map
+
+Every map call is checking is mapped value defined.
+If mapped value is undefined, other `map` calls will not be executed.  
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    const toGreeting = name => `Hi, ${name}!`
+    optional(myVar)
+        .map(x => x.event)
+        .map(event => event.name)
+        .map(toGreeting)
+        .get() // if some map evaluated to undefined an error will be thrown
+```
+
+### optional(value).map(...).filter
+
+After `map` call `.filter()` method is available, that accepts predicate `(value: T) => boolean`. If filters predicate returns `false`, other piped `filter` or `map` calls will no be executed. 
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    const toGreeting = name => `Hi, ${name}!`
+    optional(myVar)
+        .map(x => x.event)
+        .map(event => event.name)
+        .filter(name => name === 'John')
+        .map(toGreeting)
+        .get() // if filter returned false an error will be thrown
+```
+
+### optional(value).map(...).or
+
+After mapping if some value was `undefined` or `filter` in pipe returned `fasle`, `or` functions will be called. These functions are the same as `or` in `inCase` function.
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    const toGreeting = name => `Hi, ${name}!`
+    optional(myVar)
+        .map(x => x.event)
+        .map(event => event.name)
+        .filter(name => name === 'John')
+        .map(toGreeting)
+        .or.else('Hi stranger')
+        // or.elseGet(() => 'Hi stranger')
+        // or.throw('Ups, somethng went worng')
+```
 - or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
 - or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
 - or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
