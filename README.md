@@ -6,10 +6,10 @@ Open source javascript library for declarative coding
 1. [is](#is)
 2. [inCase](#incase)
 3. [optional](#optional)
-4. [Array Functions](#ArrayFunctions)
-    - [Filters](#Filters)
-    - [Collectors](#Collectors)
-5. [JMap](#JMap)
+4. [Array Functions](#arrayfunctions)
+    - [Filters](#filters)
+    - [Collectors](#collectors)
+5. [JMap](#jmap)
 ## IS
 
 `null` assertion
