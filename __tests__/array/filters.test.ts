@@ -1,6 +1,4 @@
-import { Filters } from '../../src/array/filters'
-
-import toBe = Filters.toBe
+import { toBe } from '../../src/array/filters'
 
 interface User {
     name?: string

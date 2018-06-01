@@ -1,3 +1,4 @@
+
 # declarative-js
 Open source javascript library for declarative coding
 
@@ -5,7 +6,10 @@ Open source javascript library for declarative coding
 1. [is](#is)
 2. [inCase](#incase)
 3. [optional](#optional)
-
+4. [Array Functions](#ArrayFunctions)
+    - [Filters](#Filters)
+    - [Collectors](#Collectors)
+5. [JMap](#JMap)
 ## IS
 
 `null` assertion
@@ -232,3 +236,123 @@ After mapping if some value was `undefined` or `filter` in pipe returned `fasle`
 - or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
 - or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
 - or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
+
+## ArrayFunctions
+
+### Filters
+
+#### filter out undefined
+```javascript
+import { toBe } from 'declarative-js'
+
+[undefined, 'a', 'b'].filter(toBe.present) // ['a', 'b']
+```
+
+#### filter out empty
+```javascript
+import { toBe } from 'declarative-js'
+
+['', 'a', 'b'].filter(toBe.notEmpty) // ['a', 'b']
+```
+
+#### filter to be equal to ...
+```javascript
+import { toBe } from 'declarative-js'
+
+['', 'a', 'b', 'a', 'c'].filter(toBe.equal('a')) // ['a', 'a']
+```
+
+#### filter to be not equal to ...
+```javascript
+import { toBe } from 'declarative-js'
+
+['a', 'b', 'a', 'c'].filter(toBe.notEqual('a')) // ['b', 'c']
+```
+
+#### filter to be unique
+it works on primitives and objects as well. This function comparing references and content.
+
+```javascript
+import { toBe } from 'declarative-js'
+
+['a', 'b', 'a', 'a', 'c'].filter(toBe.unique) // ['a', 'b', 'c']
+```
+
+```javascript
+import { toBe } from 'declarative-js'
+
+[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
+```
+
+### Collectors
+
+#### grpupBy
+
+Groups by key resoved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items
+        
+```javascript
+import { Collectors } from 'declarative-js'
+import groupBy = Collectors.groupBy
+
+['a', 'a', 'b'].reduce(groupBy(v => v), new JMap()) // {a: ['a', 'a'], b: ['b'] }
+reduced.keys() //   ['a', 'b']
+reduced.values() // [['a', 'a'], ['b']]
+
+``` 
+
+#### flat
+Flats 2d `array` to `array` 
+        
+```javascript
+import { Collectors } from 'declarative-js'
+import flat = Collectors.flat
+
+[[1, 2], [2, 3], [3, 4]].reduce(flat) // [1, 2, 3, 4, 5, 6]
+```        
+
+#### toMap
+
+Collects items by key, from callback to [JMap](#Jmap). If function resolves key, that already exists it will throwan `Error`
+  
+```javascript
+import { Collectors } from 'declarative-js'
+import toMap = Collectors.toMap
+
+const reduced = [{name: 'john'}, {name: 'mike'}].reduce(toMap(va => va.name), new JMap())
+reduced.keys() // ['john', 'mike']
+reduced.values() // [{name: 'john'}, {name: 'mike'}]
+```   
+
+#### toObject
+Collects items to object by key from callback
+
+```javascript
+import { Collectors } from 'declarative-js'
+import toObject = Collectors.toObject
+
+[{name: 'john'}, {name: 'mike'}].reduce(toObject(va => va.name), {})
+// {
+//    john: {name: 'john'},
+//    mike: {name: 'mike'}
+// }
+```
+
+## JMap
+
+Map that has all required functions to comfortably work with it 
+```javascript
+const jmap = new JMap()
+jmap.put('mike', 1)
+jmap.put('john', 2)
+
+sample.keys() // ['mike', 'john']
+sample.values() // [1, 2]
+sample.get('mike') // 1
+sample.containsValue(1) // true
+sample.containsKey('mike') //false
+```
+This map can be created from `object` as well.
+```javascript
+const map = new JMap({a: 1, b: 2})
+
+```

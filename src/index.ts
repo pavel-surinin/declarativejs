@@ -1,3 +1,7 @@
 export * from './assert/Assert'
 export * from './if/InCase'
 export * from './optional/Optional'
+export * from './array/filters'
+export * from './array/reduce'
+export * from './map/map'
+export * from './map/map'
