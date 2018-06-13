@@ -1,4 +1,4 @@
-import { inCase } from '../../src/if/InCase'
+import { inCase } from '../if/InCase'
 import { JMap } from '../map/map';
 
 export namespace Collectors {
