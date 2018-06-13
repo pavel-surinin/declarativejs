@@ -36,7 +36,7 @@ const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
         isEmpty || !is(mapper(value)).present
     ),
     filter: (predicate: (prValue: R) => boolean): ToMap<T, R> => toMap(
-        mapper(value),
+        isEmpty ? {} as R : mapper(value),
         passThrough,
         isEmpty  || !predicate(mapper(value)
     )),
