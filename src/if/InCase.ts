@@ -3,11 +3,21 @@ import { or } from './Or'
 
 export type Predicate<T> = (val: T) => boolean
 
+export interface InCaseToMap<R> {
+    map: <E>(chainMapper: (value: R) => E) => InCaseToMap<E>;
+    get: () => R;
+    or: {
+        throw: (errMessage?: string | undefined) => R;
+        else: (elseValue: R) => R;
+        elseGet: (elseProducer: () => R) => R;
+    };
+};
+
 const tomap = <T, R>(
     {mapper, value, predicate}
     : {mapper: (value: T) => R, value: T, predicate: Predicate<T>}
 ) => ({
-    map: <E>(chainMapper: (value: R) => E) => tomap({
+    map: <E>(chainMapper: (value: R) => E): InCaseToMap<E> => tomap({
         mapper: chainMapper,
         value: mapper(value),
         predicate: predicate(value) ? () => true : () => false

@@ -7,17 +7,35 @@ import is = Assert.is
 
 const passThrough = <T>(v: T) => v
 
+// export interface ToMap<T, R> {
+//     get: () => R
+//     map: <E>(chMapper: (chValue: R) => E ) => ToMap<R, E>
+//     filter: (predicate: (prValue: R) => boolean) => ToMap<T, R>
+//     or: string
+// }
+
+export interface ToMap<T, R> {
+    get: () => R;
+    map: <E>(chMapper: (chValue: R) => E) => ToMap<R, E>;
+    filter: (predicate: (prValue: R) => boolean) => ToMap<T, R>;
+    or: {
+        throw: (errMessage?: string | undefined) => R;
+        else: (elseValue: R) => R;
+        elseGet: (elseProducer: () => R) => R;
+    };
+};
+
 const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
     get: () => inCase(isEmpty)
         .equals(false)
         .map(() => mapper(value))
         .or.throw('Value is not defined'),
-    map: <E>(chMapper: (chValue: R) => E ) => toMap(
+    map: <E>(chMapper: (chValue: R) => E ): ToMap<R, E> => toMap(
         isEmpty ? {} as R : mapper(value)as R, 
         chMapper, 
         isEmpty || !is(mapper(value)).present
     ),
-    filter: (predicate: (prValue: R) => boolean) => toMap(
+    filter: (predicate: (prValue: R) => boolean): ToMap<T, R> => toMap(
         mapper(value),
         passThrough,
         isEmpty  || !predicate(mapper(value)
