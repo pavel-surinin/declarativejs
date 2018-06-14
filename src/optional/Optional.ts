@@ -1,18 +1,11 @@
 import { Assert } from '../assert/Assert'
 import { inCase } from '../if/InCase'
-import { or } from '../if/or'
+import { or } from '../if/Or'
 import isNull = Assert.isNull
 import isUndefined = Assert.isUndefined
 import is = Assert.is
 
 const passThrough = <T>(v: T) => v
-
-// export interface ToMap<T, R> {
-//     get: () => R
-//     map: <E>(chMapper: (chValue: R) => E ) => ToMap<R, E>
-//     filter: (predicate: (prValue: R) => boolean) => ToMap<T, R>
-//     or: string
-// }
 
 export interface ToMap<T, R> {
     get: () => R;
