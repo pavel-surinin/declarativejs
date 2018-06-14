@@ -9,6 +9,38 @@ beforeEach(() => {
 })
 
 describe('InCase', () => {
+    describe('true', () => {
+        it('should call on true', () => {
+            inCase(true).true.do(eventTracker.do)
+            expect(spy.do).toBeCalled()            
+        })
+        it('should call on true', () => {
+            const fruit = inCase(true).true
+                .map(() => 'banana')
+                .or.else('apple')
+            expect(fruit).toBe('banana')            
+        })
+        it('should not call on false', () => {
+            inCase(false).true.do(eventTracker.do)
+            expect(spy.do).not.toBeCalled()            
+        })
+    })
+    describe('false', () => {
+        it('should call on true', () => {
+            inCase(true).false.do(eventTracker.do)
+            expect(spy.do).not.toBeCalled()            
+        })
+        it('should call on true', () => {
+            const fruit = inCase(true).false
+                .map(() => 'banana')
+                .or.else('apple')
+            expect(fruit).toBe('apple')            
+        })
+        it('should not call on false', () => {
+            inCase(false).false.do(eventTracker.do)
+            expect(spy.do).toBeCalled()            
+        })
+    })
     describe('empty', () => {
         it('should throw on success condition', () => {
             expect(() => inCase('').empty.throw()).toThrow()

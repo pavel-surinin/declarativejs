@@ -49,6 +49,21 @@ describe('Optional', () => {
             });
         })
         describe('or', () => {
+            it('should get "or" after optional()', () => {
+                const result = optional(undefinedObject as string | undefined)
+                    .or.else('a')
+                expect(result).toBe('a');
+            })
+            it('should get "or" after optional() (elseGet)', () => {
+                const result = optional(undefinedObject as string | undefined)
+                    .or.elseGet(() => 'a')
+                expect(result).toBe('a');
+            })
+            it('should get "or" after optional() not follow or', () => {
+                const result = optional(definedObject)
+                    .or.elseGet(() => ({p: 111}))
+                expect(result).toMatchObject(definedObject);
+            })
             it('should follow on undefined or.else', () => {
                 const result = optional(definedObject)
                     .map(v => v.und)
@@ -86,6 +101,12 @@ describe('Optional', () => {
                     .filter(p => p !== null)
                     .get()
                 expect(a).toBe(1)
+            })
+            it('should filter after optional', () => {
+                const a = optional(definedObject)
+                    .filter(p => p !== null)
+                    .get()
+                expect(a.p).toBe(1)
             })
             it('should filter twice to pass', () => {
                 const a = optional(definedObject)

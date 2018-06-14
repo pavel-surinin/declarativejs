@@ -48,7 +48,17 @@ const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
 })
 
 export const optional = <T> (value?: T) => ({
+    filter: (predicate: (v: T) => boolean) => toMap(
+        value as T, 
+        () => value as T, 
+        !is(value).present || !predicate(value as T)
+    ),
     isPresent: () => isNull(value) && isUndefined(value),
     map: <R>(mapper: (val: T) => R) => toMap(value as T, mapper, !is(value).present),
-    ifPresent: (consumer: () => void) => inCase(value).present.do(consumer)
+    ifPresent: (consumer: () => void) => inCase(value).present.do(consumer),
+    or: or({
+        mapper: () => value as T,
+        predicate: () => is(value).present,
+        value
+    })
 })

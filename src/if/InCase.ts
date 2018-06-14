@@ -94,6 +94,10 @@ export const inCase = <T>(value: T) => ({
         equals: (valueToComapre: any) => then(() => !Assert.isEqual(value)(valueToComapre), value),
         present: then(v => Assert.isNull(v) || Assert.isUndefined(v), value)
     },
+    // tslint:disable-next-line:no-any
+    true: then(v => v as any === true, value),
+    // tslint:disable-next-line:no-any
+    false: then(v => v as any === false, value),
     present: then(v => !Assert.isNull(v) && !Assert.isUndefined(v), value),
     empty: then(Assert.isEmpty, value),
     undefined: then(Assert.isUndefined, value), 

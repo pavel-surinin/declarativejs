@@ -103,6 +103,8 @@ Examples of asserting part:
 ```javascript
     import { inCase } from 'declarative-js'
 
+    inCase(myVar).true.do(() => console.warn('warn'))
+    inCase(myVar).false.do(() => console.warn('warn'))
     inCase(myVar).empty.do(() => console.warn('warn'))
     inCase(myVar).not.empty.do(() => console.warn('warn'))
     inCase(myVar).null.do(() => console.warn('warn'))
@@ -182,6 +184,19 @@ Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/d
 
 ```javascript
     optional(myVar).ifPresent(() => console.warn('I am here'))
+```
+
+### optional(value).or
+
+```javascript
+    import { optional } from 'declarative-js'
+
+// instant
+    optional(myVar).or.else('Alternative')
+    // lazy
+    optional(myVar).or.elseGet(() => 'Alternative')
+    // error
+    optional(myVar).or.throw('This is bad')
 ```
 
 ### optional(value).map
@@ -350,6 +365,7 @@ sample.values() // [1, 2]
 sample.get('mike') // 1
 sample.containsValue(1) // true
 sample.containsKey('mike') //false
+sample.entries() //[ ['mike', 1], ['john', 2] ]
 ```
 This map can be created from `object` as well.
 ```javascript

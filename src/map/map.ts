@@ -1,13 +1,12 @@
-import { inCase } from '..'
-
 export class JMap<T> {
     
     private storage: {[keyof: string]: T} = {}
 
     constructor(obj?: {[keyof: string]: T}) {
-        inCase(obj)
-            .present
-            .do(() => Object.keys(obj!).forEach(key => this.storage[key] = obj![key])) 
+        if (obj) {
+            Object.keys(obj)
+                .forEach(key => this.storage[key] = obj![key])
+        }
     }
 
     put = (key: string, value: T) => this.storage[key] = value
@@ -21,4 +20,6 @@ export class JMap<T> {
     containsKey = (key: string) => Object.keys(this.storage).some(k => k === key)
 
     containsValue = (value: T) => this.values().some(v => v === value)
+
+    entries = (): [string, T][] => this.keys().map(k => [k, this.storage[k]] as [string, T])
 }
