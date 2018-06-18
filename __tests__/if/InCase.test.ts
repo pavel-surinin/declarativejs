@@ -25,6 +25,26 @@ describe('InCase', () => {
             expect(spy.do).not.toBeCalled()            
         })
     })
+    describe('toArray', () => {
+        it('should return an array of multile elements', () => {
+            const arr = inCase('hi').not.empty
+                .map(s => s.split(''))
+                .toArray()
+            expect(arr).toHaveLength(2)            
+        })
+        it('should return an array of one element', () => {
+            const arr = inCase('hi').not.empty
+                .map(s => s)
+                .toArray()
+            expect(arr).toHaveLength(1)       
+        })
+        it('should return empty array', () => {
+            const arr = inCase('').not.empty
+                .map(s => s)
+                .toArray()
+            expect(arr).toHaveLength(0)             
+        })
+    })
     describe('false', () => {
         it('should call on true', () => {
             inCase(true).false.do(eventTracker.do)

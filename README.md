@@ -2,6 +2,10 @@
 # declarative-js
 Open source javascript library for declarative coding
 
+```bash
+npm install declarative-js
+```
+
 # Table of Contents
 1. [is](#is)
 2. [inCase](#incase)
@@ -145,6 +149,22 @@ or with no message
 ```javascript
     inCase(myVar).empty.throw()
 ```
+#### incase(value).\<predicate>.toArray
+
+```javascript
+    inCase('hi').not.empty
+        .map(s => s.split(''))
+        .toArray()  // ['h','i']
+
+    inCase({g: 'hi'}).not.empty
+        .map(o => o.g)
+        .toArray()  // ['hi']
+
+    inCase(undefined).not.empty
+        .map(s => s.split(''))
+        .toArray()  // []
+```
+
 
 #### incase(value).\<predicate>.map
 `map` that will map value, takes function `(value: T) => R` as a parameter
@@ -173,6 +193,30 @@ or with no message
 ## OPTIONAL
 
 Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
+
+### optional(value).toArray
+
+Converts value to array. If value is not present returns empty array. If value is single object returns `array` of one object . If value is `array` returns `array`.
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    optional('hi').toArray() // ['hi']
+    optional(['hi', 'Mr.']).toArray() // ['hi', 'Mr.']
+    optional(undefined).toArray() // []
+```
+
+### optional(value).isAbsent
+
+```javascript
+    optional(myVar).isAbsent() //true or false
+```
+
+### optional(value).ifAbsent
+
+```javascript
+    optional(myVar).ifAbsent(() => console.warn('I am not here'))
+```
 
 ### optional(value).isPresent
 
@@ -229,6 +273,23 @@ After `map` call `.filter()` method is available, that accepts predicate `(value
         .filter(name => name === 'John')
         .map(toGreeting)
         .get() // if filter returned false an error will be thrown
+```
+
+
+### optional(value).map(...).toArray
+
+After `map` call `.toArray()` method is available that does the same as `optional(value).toArray()`. 
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    optional('hi')
+        .map(x => x.split(''))
+        .toArray() // ['h', 'i']
+    
+    optional(undefined)
+        .map(x => x.split(''))
+        .toArray() // []    
 ```
 
 ### optional(value).map(...).or

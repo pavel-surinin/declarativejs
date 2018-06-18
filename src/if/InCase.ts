@@ -1,5 +1,6 @@
 import { Assert } from '../assert/Assert'
 import { or } from './Or'
+import { toArray } from '../ToArray';
 
 export type Predicate<T> = (val: T) => boolean
 
@@ -11,6 +12,7 @@ export interface InCaseToMap<R> {
         else: (elseValue: R) => R;
         elseGet: (elseProducer: () => R) => R;
     };
+    toArray: () => R[]
 };
 
 const tomap = <T, R>(
@@ -20,7 +22,7 @@ const tomap = <T, R>(
     map: <E>(chainMapper: (value: R) => E): InCaseToMap<E> => tomap({
         mapper: chainMapper,
         value: mapper(value),
-        predicate: predicate(value) ? () => true : () => false
+        predicate: predicate(value) ? () => true : () => false,
     }),
     get: () => {
         if (predicate(value)) {
@@ -28,7 +30,8 @@ const tomap = <T, R>(
         }
         throw new Error('Value does not meet the condition')
     },
-    or: or({mapper, value, predicate})
+    or: or({mapper, value, predicate}),
+    toArray: () => predicate(value) ? toArray(mapper(value)) : []
 })
 
 const then = <T>( assert: Predicate<T>, v: T) => {

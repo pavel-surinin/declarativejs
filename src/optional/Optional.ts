@@ -4,6 +4,7 @@ import { or } from '../if/Or'
 import isNull = Assert.isNull
 import isUndefined = Assert.isUndefined
 import is = Assert.is
+import { toArray } from '../ToArray'
 
 const passThrough = <T>(v: T) => v
 
@@ -16,6 +17,7 @@ export interface ToMap<T, R> {
         else: (elseValue: R) => R;
         elseGet: (elseProducer: () => R) => R;
     };
+    toArray: () => R[]
 };
 
 const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
@@ -37,7 +39,14 @@ const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
         mapper: mapper,
         predicate: () => !isEmpty,
         value
-    })
+    }),
+    toArray: () => {
+        if (isEmpty) {
+            return []                        
+        } else {
+            return toArray(mapper(value))
+        }
+    }
 })
 
 export const optional = <T> (value?: T) => ({
@@ -46,12 +55,15 @@ export const optional = <T> (value?: T) => ({
         () => value as T, 
         !is(value).present || !predicate(value as T)
     ),
-    isPresent: () => isNull(value) && isUndefined(value),
-    map: <R>(mapper: (val: T) => R) => toMap(value as T, mapper, !is(value).present),
+    isPresent: () => !isNull(value) && !isUndefined(value),
+    isAbsent: () => isNull(value) || isUndefined(value),
     ifPresent: (consumer: () => void) => inCase(value).present.do(consumer),
+    ifAbsent: (consumer: () => void) => inCase(value).not.present.do(consumer),
+    map: <R>(mapper: (val: T) => R) => toMap(value as T, mapper, !is(value).present),
     or: or({
         mapper: () => value as T,
         predicate: () => is(value).present,
         value
-    })
+    }),
+    toArray: () => toArray(value)
 })

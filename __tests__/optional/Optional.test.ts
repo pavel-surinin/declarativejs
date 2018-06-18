@@ -15,12 +15,10 @@ beforeEach(() => {
 describe('Optional', () => {
     describe('isPresent', () => {
         it('should get that value is not present', () => {
-            const isPresent = optional(undefinedObject).isPresent()
-            expect(isPresent).toBeFalsy()
+            expect(optional(undefinedObject).isPresent()).toBeFalsy()
         })
         it('should get that value is present', () => {
-            const isPresent = optional(definedObject).isPresent()
-            expect(isPresent).toBeFalsy()
+            expect(optional(definedObject).isPresent()).toBeTruthy()
         })
     })
     describe('map', () => {
@@ -133,6 +131,21 @@ describe('Optional', () => {
                 expect(result).toBe(2)    
             })
         })
+        describe('toArray', () => {
+            it('should return empty array on absent value', () => {
+                const arr = optional(undefined).map(x => x).toArray()
+                expect(arr).toHaveLength(0)
+            })
+            it('should return an array of one element on defined value', () => {
+                const arr = optional(definedObject).map(x => x).toArray()                
+                expect(arr).toHaveLength(1)
+            })
+            it('should return an array of elements on defined value', () => {
+                const arr = optional('hi').map(s => s.split('')).toArray()
+                expect(arr).toHaveLength(2)
+                expect(arr).toMatchObject(['h', 'i'])
+            })
+        })
     })
     describe('ifPresent', () => {
         it('should not call if value is undefined ', () => {
@@ -146,6 +159,36 @@ describe('Optional', () => {
         it('should call if value is present', () => {
             optional(definedObject).ifPresent(eventTracker.do)
             expect(spy.do).toHaveBeenCalled()
+        })
+    })
+    describe('isAbsent', () => {
+        it('should return absent or not', () => {
+            expect(optional(undefined).isAbsent()).toBeTruthy();
+            expect(optional(null).isAbsent()).toBeTruthy();
+            expect(optional(definedObject).isAbsent()).toBeFalsy();
+        })
+    })
+    describe('toArray', () => {
+        it('should return empty array on absent value', () => {
+            expect(optional(undefined).toArray()).toHaveLength(0)
+        })
+        it('should return an array of one element on defined value', () => {
+            expect(optional(definedObject).toArray()).toHaveLength(1)
+        })
+        it('should return an array of elements on defined value', () => {
+            const arr = optional([1, 2]).toArray()
+            expect(arr).toHaveLength(2)
+        })
+    })
+    describe('ifAbsent', () => {
+        it('should call function if absent', () => {
+            optional(undefined).ifAbsent(eventTracker.do)
+            expect(spy.do).toHaveBeenCalled()
+        })
+        
+        it('should not call function if defined', () => {
+            optional(definedObject).ifAbsent(eventTracker.do)
+            expect(spy.do).not.toHaveBeenCalled()
         })
     })
 })
