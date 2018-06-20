@@ -12,7 +12,7 @@ npm install declarative-js
 3. [optional](#optional)
 4. [Array Functions](#arrayfunctions)
     - [Filters](#filters)
-    - [Collectors](#collectors)
+    - [Reducers](#reducers)
 5. [JMap](#jmap)
 ## IS
 
@@ -360,15 +360,15 @@ import { toBe } from 'declarative-js'
 [{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
 ```
 
-### Collectors
+### Reducers
 
 #### grpupBy
 
 Groups by key resoved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items
         
 ```javascript
-import { Collectors } from 'declarative-js'
-import groupBy = Collectors.groupBy
+import { Reducers } from 'declarative-js'
+import groupBy = Reducers.groupBy
 
 ['a', 'a', 'b'].reduce(groupBy(v => v), new JMap()) // {a: ['a', 'a'], b: ['b'] }
 reduced.keys() //   ['a', 'b']
@@ -376,12 +376,26 @@ reduced.values() // [['a', 'a'], ['b']]
 
 ``` 
 
+#### groupByValueOfKey
+
+Groups objects by value extracted from object by key provided in parameters to [JMap](#Jmap) where key is `string` and value is an `array` of items
+        
+```javascript
+import { Reducers } from 'declarative-js'
+import groupByValueOfKey = Reducers.groupByValueOfKey
+
+const arr = [{name: 'Mike'}, {name: 'John'}, {name: 'John'}]
+arr.reduce(groupByValueOfKey('name'), new JMap())
+reduced.keys() //['Mike', 'John'] 
+reduced.values() //[[{name: 'Mike'}], [{name: 'John'}, {name: 'John'}]]
+``` 
+
 #### flat
 Flats 2d `array` to `array` 
         
 ```javascript
-import { Collectors } from 'declarative-js'
-import flat = Collectors.flat
+import { Reducers } from 'declarative-js'
+import flat = Reducers.flat
 
 [[1, 2], [2, 3], [3, 4]].reduce(flat) // [1, 2, 3, 4, 5, 6]
 ```        
@@ -391,8 +405,8 @@ import flat = Collectors.flat
 Collects items by key, from callback to [JMap](#Jmap). If function resolves key, that already exists it will throwan `Error`
   
 ```javascript
-import { Collectors } from 'declarative-js'
-import toMap = Collectors.toMap
+import { Reducers } from 'declarative-js'
+import toMap = Reducers.toMap
 
 const reduced = [{name: 'john'}, {name: 'mike'}].reduce(toMap(va => va.name), new JMap())
 reduced.keys() // ['john', 'mike']
@@ -403,8 +417,8 @@ reduced.values() // [{name: 'john'}, {name: 'mike'}]
 Collects items to object by key from callback
 
 ```javascript
-import { Collectors } from 'declarative-js'
-import toObject = Collectors.toObject
+import { Reducers } from 'declarative-js'
+import toObject = Reducers.toObject
 
 [{name: 'john'}, {name: 'mike'}].reduce(toObject(va => va.name), {})
 // {
@@ -426,7 +440,7 @@ sample.values() // [1, 2]
 sample.get('mike') // 1
 sample.containsValue(1) // true
 sample.containsKey('mike') //false
-sample.entries() //[ ['mike', 1], ['john', 2] ]
+sample.entries() // [ {key: 'mike', value: 1}, {key: 'john', value: 2} ]
 ```
 This map can be created from `object` as well.
 ```javascript

@@ -1,3 +1,8 @@
+export interface Entry<T> {
+    key: string,
+    value: T
+}
+
 export class JMap<T> {
     
     private storage: {[keyof: string]: T} = {}
@@ -21,5 +26,7 @@ export class JMap<T> {
 
     containsValue = (value: T) => this.values().some(v => v === value)
 
-    entries = (): [string, T][] => this.keys().map(k => [k, this.storage[k]] as [string, T])
+    entries = (): Entry<T>[] => this.keys().map(k => ({
+        key: k, value: this.storage[k]
+    }))
 }

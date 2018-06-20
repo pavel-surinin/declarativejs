@@ -1,15 +1,26 @@
-import { Collectors } from '../../src/array/reduce'
+import { Reducer } from '../../src/array/reduce'
 import { JMap } from '../../src/map/map'
-import groupBy = Collectors.groupBy
-import flat = Collectors.flat
-import toMap = Collectors.toMap
-import toObject = Collectors.toObject
+import groupBy = Reducer.groupBy
+import flat = Reducer.flat
+import toMap = Reducer.toMap
+import toObject = Reducer.toObject
+import groupByValueOfKey = Reducer.groupByValueOfKey
 
 describe('Collectors', () => {
     it('should grpupBy to JMap', () => {
         const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v), new JMap())
         expect(reduced.keys()).toMatchObject(['a', 'b'])
         expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
+    })
+    it('should groupByValueOfKey to JMap', () => {
+        const reduced = [{name: 'Mike'}, {name: 'John'}, {name: 'John'}].reduce(groupByValueOfKey('name'), new JMap())
+        expect(reduced.keys()).toMatchObject(['Mike', 'John'])
+        expect(reduced.values()).toMatchObject([[{name: 'Mike'}], [{name: 'John'}, {name: 'John'}]])
+    })
+    it('should throwh when groupByValueOfKey value is not string to JMap', () => {
+        expect(
+            () => [{a: {}}, {a: 3}, {a: 1}].reduce(groupByValueOfKey('a'), new JMap())
+        ).toThrow('Value of "a" in groupByValueOfKey(key)  must be string, instead get: object')
     })
     it('should flat from 2d array to simple array', () => {
         const reduced = [[1, 2], [2, 3], [3, 4]]

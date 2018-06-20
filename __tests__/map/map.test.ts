@@ -40,8 +40,8 @@ describe('JMap', () => {
     })
     it('should return tuples of entries', () => {
         expect(sample.entries()).toMatchObject([
-            ['mike', 1],
-            ['john', 2]
+            {key: 'mike', value: 1},
+            {key: 'john', value: 2}
         ])
     })
 })

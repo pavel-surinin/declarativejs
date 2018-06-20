@@ -1,7 +1,7 @@
 import { inCase } from '../if/InCase'
 import { JMap } from '../map/map';
 
-export namespace Collectors {
+export namespace Reducer {
 
     export interface MMap<T> {
         [keyof: string]: T
@@ -18,6 +18,30 @@ export namespace Collectors {
                 .do(() => agr.put(key, [value]))
             return agr
         }
+
+    /**
+     * Reducer to use in {@link Array#reduce} function 
+     * Groups objects by value extracted from object by key provided in parameters
+     * <pre>
+     *   const arr = [{name: 'Mike'}, {name: 'John'}, {name: 'John'}]
+     *   reduced.keys() //['Mike', 'John'] 
+     *   reduced.values() //[[{name: 'Mike'}], [{name: 'John'}, {name: 'John'}]]
+     * </pre>  
+     */    
+    export const groupByValueOfKey = 
+        <T, K extends keyof T>(key: K) => (agr: JMap<T[]>, value: T): JMap<T[]> => {
+            const derivedKey = value[key]
+            if (typeof derivedKey === 'string') {
+                if (agr.get(derivedKey)) {
+                    agr.get(derivedKey)!.push(value)
+                } else {
+                    agr.put(derivedKey, [value])
+                }
+                return agr
+            } 
+            throw new Error('Value of "' + key + '" in groupByValueOfKey(key) ' +
+             ' must be string, instead get: ' + typeof value[key])
+        }    
 
     export const flat = <T>(agr: T[], value: T[]) => { 
         value.forEach(v => agr.push(v))
