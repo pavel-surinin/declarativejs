@@ -2,9 +2,7 @@
 # declarative-js
 Open source javascript library for declarative coding
 
-```bash
-npm install declarative-js
-```
+[![npm version](https://badge.fury.io/js/declarative-js.svg)](https://badge.fury.io/js/declarative-js)
 
 # Table of Contents
 1. [is](#is)
