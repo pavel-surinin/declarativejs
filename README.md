@@ -3,6 +3,7 @@
 Open source javascript library for declarative coding
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
+[![Build Status](https://travis-ci.org/pavel-surinin/declarative-js.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
 
 # Table of Contents
 1. [is](#is)

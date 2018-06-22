@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@types/jest": "22.2.3",
+    "coveralls": "^3.0.1",
     "jest": "22.4.3",
     "ts-jest": "22.4.5",
     "tslint": "5.10.0",
@@ -19,7 +20,7 @@
   "scripts": {
     "compile": "npx tsc -d",
     "lint": "npx tslint -c tslint.json -p tsconfig.json -t stylish",
-    "test": "npx jest -c jest.config.js",
+    "test": "npx jest -c jest.config.js --coverage",
     "build": "npm run lint && npm run compile && npm test -- --coverage",
     "pre-publish": "npm run build && cp package.json target/out/package.json && cp README.md target/out/README.md",
     "publish:patch": "npm version patch && npm run pre-publish && npm publish target/out"
