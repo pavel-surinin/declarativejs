@@ -20,8 +20,8 @@
   "scripts": {
     "compile": "npx tsc -d",
     "lint": "npx tslint -c tslint.json -p tsconfig.json -t stylish",
-    "test": "npx jest -c jest.config.js --coverage",
-    "build": "npm run lint && npm run compile && npm test -- --coverage",
+    "test": "npx jest -c jest.config.js --coverage > coveralls",
+    "build": "npm run lint && npm run compile && npm test",
     "pre-publish": "npm run build && cp package.json target/out/package.json && cp README.md target/out/README.md",
     "publish:patch": "npm version patch && npm run pre-publish && npm publish target/out"
   }
