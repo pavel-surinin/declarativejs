@@ -29,4 +29,6 @@ export class JMap<T> {
     entries = (): Entry<T>[] => this.keys().map(k => ({
         key: k, value: this.storage[k]
     }))
+
+    size = () => this.keys().length
 }

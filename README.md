@@ -466,6 +466,7 @@ jmap.put('john', 2)
 
 sample.keys() // ['mike', 'john']
 sample.values() // [1, 2]
+sample.size() // 2
 sample.get('mike') // 1
 sample.containsValue(1) // true
 sample.containsKey('mike') //false

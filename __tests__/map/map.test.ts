@@ -38,6 +38,9 @@ describe('JMap', () => {
         expect(sample.containsKey('mike')).toBeTruthy()
         expect(sample.containsKey('qqqq')).toBeFalsy()
     })
+    it('should check size of map', () => {
+        expect(sample.size()).toBe(2)
+    })
     it('should return tuples of entries', () => {
         expect(sample.entries()).toMatchObject([
             {key: 'mike', value: 1},
