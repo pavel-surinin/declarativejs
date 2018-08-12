@@ -5,6 +5,9 @@ import flat = Reducer.flat
 import toMap = Reducer.toMap
 import toObject = Reducer.toObject
 import groupByValueOfKey = Reducer.groupByValueOfKey
+import min = Reducer.min
+import max = Reducer.max
+import sum = Reducer.sum
 
 describe('Collectors', () => {
     it('should grpupBy to JMap', () => {
@@ -52,5 +55,14 @@ describe('Collectors', () => {
     it('should throw if key already exists collecting to object', () => {
         const arr: {name: string}[] = [{name: 'john'}, {name: 'john'}]
         expect(() => arr.reduce(toObject(va => va.name), {})).toThrow('Key: "john" has duplicates')
+    })
+    it('should reduce min value', () => {
+        expect([1, 2, 3].reduce(min)).toBe(1)
+    })
+    it('should reduce max value', () => {
+        expect([1, 2, 3].reduce(max)).toBe(3)
+    })
+    it('should reduce min value', () => {
+        expect([1, 2, 3].reduce(sum)).toBe(6)
     })
 })

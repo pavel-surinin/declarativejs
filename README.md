@@ -426,6 +426,36 @@ import toObject = Reducers.toObject
 // }
 ```
 
+#### min
+Finds min value of an array of numbers
+
+```javascript
+import { Reducers } from 'declarative-js'
+import min = Reducers.min
+
+[1, 2, 3].reduce(min)) // 1
+```
+
+#### max
+Finds min value of an array of numbers
+
+```javascript
+import { Reducers } from 'declarative-js'
+import max = Reducers.max
+
+[1, 2, 3].reduce(max)) // 3
+```
+
+#### sum
+Calculates sum of numbers in array
+
+```javascript
+import { Reducers } from 'declarative-js'
+import sum = Reducers.sum
+
+[1, 2, 3].reduce(sum)) // 6
+```
+
 ## JMap
 
 Map that has all required functions to comfortably work with it 
