@@ -14,21 +14,37 @@ export class JMap<T> {
         }
     }
 
-    put = (key: string, value: T) => this.storage[key] = value
+    put(key: string, value: T) {
+        this.storage[key] = value
+    } 
 
-    get = (key: string): T | undefined => this.storage[key]
+    get(key: string): T | undefined {
+        return this.storage[key]
+    }
 
-    keys = () => Object.keys(this.storage)
+    keys(): string[] {
+        return Object.keys(this.storage)
+    } 
 
-    values = () => Object.keys(this.storage).map(key => this.storage[key])
+    values(): T[] {
+        return Object.keys(this.storage).map(key => this.storage[key])
+    }
 
-    containsKey = (key: string) => Object.keys(this.storage).some(k => k === key)
+    containsKey(key: string): boolean {
+        return Object.keys(this.storage).some(k => k === key)
+    } 
 
-    containsValue = (value: T) => this.values().some(v => v === value)
+    containsValue(value: T): boolean {
+        return this.values().some(v => v === value)
+    } 
 
-    entries = (): Entry<T>[] => this.keys().map(k => ({
-        key: k, value: this.storage[k]
-    }))
+    entries(): Entry<T>[] {
+        return this.keys().map(k => ({
+           key: k, value: this.storage[k]
+       }))
+    }
 
-    size = () => this.keys().length
+    size(): number {
+        return this.keys().length
+    } 
 }

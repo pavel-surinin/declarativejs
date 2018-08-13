@@ -11,6 +11,7 @@ Open source javascript library for declarative coding
 3. [optional](#optional)
 4. [Array Functions](#arrayfunctions)
     - [Filters](#filters)
+    - [Mappers](#mappers)
     - [Reducers](#reducers)
 5. [JMap](#jmap)
 ## IS
@@ -358,6 +359,19 @@ import { toBe } from 'declarative-js'
 
 [{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
 ```
+
+### Mappers
+
+#### toObjValues
+
+As javascript `Object` class has static method `keys`, there is similar method to get object values
+
+```javascript
+import { Mapper } from 'declarative-js'
+import toObjValues = Reducers.toObjValues
+
+[{a: 1, b: 2}, {a: 3, b: 4}].map(toObjValues) // [[1, 2], [3, 4]]
+``` 
 
 ### Reducers
 
