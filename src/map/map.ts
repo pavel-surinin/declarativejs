@@ -47,4 +47,8 @@ export class JMap<T> {
     size(): number {
         return this.keys().length
     } 
+    
+    toObject(): {[keyof: string]: T} {
+        return {...this.storage}
+    } 
 }

@@ -47,4 +47,8 @@ describe('JMap', () => {
             {key: 'john', value: 2}
         ])
     })
+    it('should return object with other reference', () => {
+        expect(sample.toObject()).toMatchObject({'mike': 1, 'john': 2})
+        expect(new JMap(sample.toObject())).not.toBe(sample.toObject())
+    })
 })
