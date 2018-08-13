@@ -32,7 +32,7 @@ export namespace Assert {
     export const isEqual = <T>(value1: T) => (value2: any) => value1 === value2
     
     /**
-     * Checks value to be not present and not undefined
+     * Checks value to be not null and not undefined
      * @param value 
      */
     export const isPresent = <T>(value: T) => !isUndefined(value) && !isNull(value)

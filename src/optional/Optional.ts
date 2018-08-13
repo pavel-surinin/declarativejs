@@ -4,7 +4,7 @@ import { or } from '../if/Or'
 import isNull = Assert.isNull
 import isUndefined = Assert.isUndefined
 import is = Assert.is
-import { toArray } from '../ToArray'
+import { toArray, AlwaysArray } from '../ToArray'
 
 const passThrough = <T>(v: T) => v
 
@@ -17,7 +17,7 @@ export interface ToMap<T, R> {
         else: (elseValue: R) => R;
         elseGet: (elseProducer: () => R) => R;
     };
-    toArray: () => R[]
+    toArray: () => AlwaysArray<R>
 };
 
 const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
@@ -42,7 +42,8 @@ const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
     }),
     toArray: () => {
         if (isEmpty) {
-            return []                        
+            // tslint:disable-next-line
+            return [] as any as AlwaysArray<R>              
         } else {
             return toArray(mapper(value))
         }
