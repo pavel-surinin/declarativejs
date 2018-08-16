@@ -99,12 +99,22 @@ export namespace Reducer {
         return agr
     }
     
+    export const toMapAndValue = <T, R>(
+        getKey: (cbv: T) => string, 
+        getValue: (cbv: T) => R
+    ) => (agr: JMap<R>, value: T) => {
+        const key = getKey(value)
+        inCase(agr.get(key)).present.throw(`Key: "${key}" has duplicates`)
+        agr.put(key, getValue(value))
+        return agr
+    }
+
     /**
      * Function to use in array reduce function as callback to make a object
      * <pre>
      *     <code>
      *         [{id: 1, name: "John"}, {id: 2, name: "Albert"}]
-     *              .reduce(toMap(val => val.id), {})
+     *              .reduce(toObject(val => val.id), {})
      *     </code>
      * </pre>
      * As seond parameter in reduce function need to pass <code>{}</code>

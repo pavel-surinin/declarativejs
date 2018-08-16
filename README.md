@@ -426,6 +426,20 @@ reduced.keys() // ['john', 'mike']
 reduced.values() // [{name: 'john'}, {name: 'mike'}]
 ```   
 
+#### toMapAndValue
+
+Collects items by key, from callback to [JMap](#Jmap). If function resolves key, that already exists it will throwan `Error`
+Second callback is value mapper.
+
+```javascript
+import { Reducers } from 'declarative-js'
+import toMapAndValue = Reducers.toMapAndValue
+
+const reduced = [{name: 'john', age: 11}, {name: 'mike', age: 12}].reduce(toMapAndValue(va => va.name, va => va.age), new JMap())
+reduced.keys() // ['john', 'mike']
+reduced.values() // [11, 12]
+```   
+
 #### toObject
 Collects items to object by key from callback
 
