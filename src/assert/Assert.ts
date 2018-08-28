@@ -15,8 +15,8 @@ export namespace Assert {
         if (typeof value === 'string') {
             return '' === value;
         }
-        if (typeof value === 'object') {
-            return JSON.stringify({}) === JSON.stringify(value) && Object.keys(value).length === 0;
+        if (typeof value === 'object' && value !== null && value !== undefined) {
+            return Object.keys(value).length === 0;
         }
         return false;
     }
