@@ -16,7 +16,7 @@ export namespace Assert {
             return '' === value;
         }
         if (typeof value === 'object' && value !== null && value !== undefined) {
-            return Object.keys(value).length === 0;
+            return !(value instanceof Date) && Object.keys(value).length === 0;
         }
         return false;
     }

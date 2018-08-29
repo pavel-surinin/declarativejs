@@ -25,6 +25,7 @@ describe('Assert', () => {
         expect(is('a').empty).toBeFalsy()
         expect(is({a: 'a'}).empty).toBeFalsy()
         expect(is(['a']).empty).toBeFalsy()
+        expect(is([new Date()]).empty).toBeFalsy()
     })
     it('should check to be typeof string', () => {
         expect(is('a').typeof('string')).toBeTruthy()
