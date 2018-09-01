@@ -14,6 +14,7 @@ Open source javascript library for declarative coding
     - [Mappers](#mappers)
     - [Reducers](#reducers)
 5. [JMap](#jmap)
+5. [MethodMap](#methodmap)
 ## IS
 
 `null` assertion
@@ -377,13 +378,16 @@ import toObjValues = Reducers.toObjValues
 
 #### grpupBy
 
-Groups by key resoved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items
+Groups by key resoved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items.
+Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
+ 
         
 ```javascript
 import { Reducers } from 'declarative-js'
 import groupBy = Reducers.groupBy
+import Map = Reducers.Map
 
-['a', 'a', 'b'].reduce(groupBy(v => v), new JMap()) // {a: ['a', 'a'], b: ['b'] }
+['a', 'a', 'b'].reduce(groupBy(v => v), Map()) // {a: ['a', 'a'], b: ['b'] }
 reduced.keys() //   ['a', 'b']
 reduced.values() // [['a', 'a'], ['b']]
 
@@ -391,14 +395,17 @@ reduced.values() // [['a', 'a'], ['b']]
 
 #### groupByValueOfKey
 
-Groups objects by value extracted from object by key provided in parameters to [JMap](#Jmap) where key is `string` and value is an `array` of items
+Groups objects by value extracted from object by key provided in parameters to [JMap](#Jmap) where key is `string` and value is an `array` of items. 
+Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
+ 
         
 ```javascript
 import { Reducers } from 'declarative-js'
 import groupByValueOfKey = Reducers.groupByValueOfKey
+import Map = Reducers.Map
 
 const arr = [{name: 'Mike'}, {name: 'John'}, {name: 'John'}]
-arr.reduce(groupByValueOfKey('name'), new JMap())
+arr.reduce(groupByValueOfKey('name'), Map())
 reduced.keys() //['Mike', 'John'] 
 reduced.values() //[[{name: 'Mike'}], [{name: 'John'}, {name: 'John'}]]
 ``` 
@@ -415,33 +422,39 @@ import flat = Reducers.flat
 
 #### toMap
 
-Collects items by key, from callback to [JMap](#Jmap). If function resolves key, that already exists it will throwan `Error`
+Collects items by key, from callback to [JMap](#Jmap). 
+Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
+If function resolves key, that already exists it will throw an `Error`
   
 ```javascript
 import { Reducers } from 'declarative-js'
 import toMap = Reducers.toMap
+import Map = Reducers.Map
 
-const reduced = [{name: 'john'}, {name: 'mike'}].reduce(toMap(va => va.name), new JMap())
+const reduced = [{name: 'john'}, {name: 'mike'}].reduce(toMap(va => va.name), Map())
 reduced.keys() // ['john', 'mike']
 reduced.values() // [{name: 'john'}, {name: 'mike'}]
 ```   
 
 #### toMapAndValue
 
-Collects items by key, from callback to [JMap](#Jmap). If function resolves key, that already exists it will throwan `Error`
+Collects items by key, from callback to [JMap](#Jmap). 
+Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
+If function resolves key, that already exists it will throw an `Error`
 Second callback is value mapper.
 
 ```javascript
 import { Reducers } from 'declarative-js'
 import toMapAndValue = Reducers.toMapAndValue
+import Map = Reducers.Map
 
-const reduced = [{name: 'john', age: 11}, {name: 'mike', age: 12}].reduce(toMapAndValue(va => va.name, va => va.age), new JMap())
+const reduced = [{name: 'john', age: 11}, {name: 'mike', age: 12}].reduce(toMapAndValue(va => va.name, va => va.age), Map())
 reduced.keys() // ['john', 'mike']
 reduced.values() // [11, 12]
 ```   
 
 #### toObject
-Collects items to object by key from callback
+Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
 
 ```javascript
 import { Reducers } from 'declarative-js'
@@ -451,6 +464,21 @@ import toObject = Reducers.toObject
 // {
 //    john: {name: 'john'},
 //    mike: {name: 'mike'}
+// }
+```
+
+#### toObjectAndValue
+Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
+Second callback is value mapper.
+
+```javascript
+import { Reducers } from 'declarative-js'
+import toObjectAndValue = Reducers.toObjectAndValue
+
+[{name: 'john', age: 1}, {name: 'mike', age: 2}].reduce(toObjectAndValue(va => va.name, va => va.age), {})
+// {
+//    john: 1,
+//    mike: 2
 // }
 ```
 
@@ -484,9 +512,26 @@ import sum = Reducers.sum
 [1, 2, 3].reduce(sum)) // 6
 ```
 
+## MethodMap
+
+Interface for DTO to that is used in [reducers](#reducers).
+```typescript
+interface MethodMap<T> {
+    put(key: string, value: T): T | undefined
+    get(key: string): T | undefined
+    keys(): string[]
+    values(): T[]
+    containsKey(key: string): boolean
+    containsValue(value: T): boolean
+    entries(): Entry<T>[]
+    size(): number
+    toObject(): {[keyof: string]: T}
+}
+```
+
 ## JMap
 
-Map that has all required functions to comfortably work with it 
+Map that has all required functions to comfortably work with it. Implements typescript `interface` [MethodMap](#methodmap) 
 ```javascript
 const jmap = new JMap()
 jmap.put('mike', 1)

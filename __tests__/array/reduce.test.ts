@@ -66,7 +66,13 @@ describe('Collectors', () => {
         expect([1, 2, 3].reduce(sum)).toBe(6)
     })
     it('should reduce to map with other value', () => {
-        expect([{a: 'a', b: 1}, {a: 'b', b: 2}]
-        .reduce(Reducer.toMapAndValue(x => x.a, x => x.b), new JMap()).toObject()).toMatchObject({a: 1, b: 2})
+        const res = [{a: 'a', b: 1}, {a: 'b', b: 2}]
+            .reduce(Reducer.toMapAndValue(x => x.a, x => x.b), Reducer.Map())
+            .toObject()
+        expect(res).toMatchObject({a: 1, b: 2})
+    })
+    it('should reduce to object and second callback to map value', () => {
+        const res = [{a: 'a', b: 1}, {a: 'b', b: 2}].reduce(Reducer.toObjectAndValue(x => x.a, x => x.b), {})
+        expect(res).toMatchObject({a: 1, b: 2})
     })
 })

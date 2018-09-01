@@ -1,5 +1,5 @@
 import { inCase } from '../if/InCase'
-import { JMap } from '../map/map';
+import { JMap, MethodMap } from '../map/map';
 
 // tslint:disable-next-line:no-any
 function use(...args: any[]) {
@@ -12,33 +12,40 @@ export namespace Reducer {
         [keyof: string]: T
     }
 
+    export type Getter<C, R> = (cbv: C) => R
+
+    export type KeyGetter<C> = Getter<C, string>
+
+    export const Map = <T>(obj?: MMap<T>) => new JMap<T>(obj)
+
     /**
      * Function to use in array reduce function as callback to group by provided key.
      * <pre>
      *     <code>
-     *         [1,2,3].reduce(groupBy(number => number % 2 === 0 ? even : odd), new JMap())
+     *         [1,2,3].reduce(groupBy(number => number % 2 === 0 ? even : odd), Reducer.Map())
      *     </code>
      * </pre>
      * As seond parameter in reduce function need to pass <code>new JMap()</code>
-     * @param {JMap<T[]>} obj           to collect in
+     * @param {MethodMap<T[]>} obj           to collect in
      * @param {T} val                   value to put in object
      * @param {string} key              key to group by
-     * @returns {JMap<T[]>}             updated object
+     * @returns {MethodMap<T[]>}             updated object
      */
     export const groupBy =
-        <T>(getKey: (v: T) => string) => (agr: JMap<T[]>, value: T): JMap<T[]> => {
+        <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T[]>, value: T): MethodMap<T[]> => {
             const key = getKey(value)
-            inCase(agr.get(key))
+            const extractedValue = agr.get(key);
+            inCase(extractedValue)
                 .present
-                .do(() => agr.get(key)!.push(value))
-            inCase(agr.get(key))
+                .do(() => extractedValue!.push(value))
+            inCase(extractedValue)
                 .not.present
                 .do(() => agr.put(key, [value]))
             return agr
         }
 
     /**
-     * Reducer to use in {@link Array#reduce} function 
+     * Reducer to use in {@link Array.reduce} function 
      * Groups objects by value extracted from object by key provided in parameters
      * <pre>
      *   const arr = [{name: 'Mike'}, {name: 'John'}, {name: 'John'}]
@@ -47,7 +54,7 @@ export namespace Reducer {
      * </pre>  
      */
     export const groupByValueOfKey =
-        <T, K extends keyof T>(key: K) => (agr: JMap<T[]>, value: T): JMap<T[]> => {
+        <T, K extends keyof T>(key: K) => (agr: MethodMap<T[]>, value: T): MethodMap<T[]> => {
             const derivedKey = value[key]
             if (typeof derivedKey === 'string') {
                 if (agr.get(derivedKey)) {
@@ -79,38 +86,72 @@ export namespace Reducer {
     }
 
     /**
-     * Function to use in array reduce function as callback to make a Map
+     * Function to use in array reduce function as callback to make a Map.
+     * Collects items by key, from callback to {@link MethodMap<T>}. 
+     * If function resolves key, that already exists it will throw an Error
+     * 
+     * Example:
      * <pre>
      *     <code>
      *         [{id: 1, name: "John"}, {id: 2, name: "Mickey"}]
-     *              .reduce(toMap(val => val.id), new JMap())
+     *              .reduce(toMap(val => val.id), Reducer.Map())
      *     </code>
      * </pre>
-     * As seond parameter in reduce function need to pass <code>new JMap()</code>
-     * @param {JMap<T>} obj         to collect in
-     * @param {T} val               value to store in map
-     * @param {string} key          key to store value by
-     * @returns {JMap<T>}           updated object
+     * As seond parameter in reduce function need to pass {@link MethodMap<T>}. 
+     * It can be imported from same namespace {@link Reducer}
+     * @type {T}                            value type
+     * @type {R}                            value type in map
+     * @param {KeyGetter<T>} getKey         callback to get key from value
+     * @param {MethodMap<T>} agr            object to collect in
+     * @param {T} value                     value that that is passed in function for each iteration
+     * @throws Error                        if map has duplicate keys will thrown error
      */
-    export const toMap = <T>(getKey: (cbv: T) => string) => (agr: JMap<T>, value: T) => {
+    export const toMap = <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T>, value: T) => {
         const key = getKey(value)
-        inCase(agr.get(key)).present.throw(`Key: "${key}" has duplicates`);
-        agr.put(key, value)
-        return agr
-    }
-    
-    export const toMapAndValue = <T, R>(
-        getKey: (cbv: T) => string, 
-        getValue: (cbv: T) => R
-    ) => (agr: JMap<R>, value: T) => {
-        const key = getKey(value)
-        inCase(agr.get(key)).present.throw(`Key: "${key}" has duplicates`)
-        agr.put(key, getValue(value))
+        inCase(agr.put(key, value))
+            .present
+            .throw(`Key: "${key}" has duplicates`);
         return agr
     }
 
     /**
-     * Function to use in array reduce function as callback to make a object
+     * Function to use in array reduce function as callback to make a Map.     * 
+     * Collects items to {@link MethodMap<T>} by key from callback. If function resolves key,
+     * that already exists it will throw an Error. Second callback is value mapper.
+     * 
+     * Example:
+     * <pre>
+     *     <code>
+     *         [{id: 1, name: "John"}, {id: 2, name: "Albert"}]
+     *              .reduce(toObjectAndValue(val => val.id, val => val.name), Reducer.Map())
+     *     </code>
+     * </pre>
+     * As seond parameter in reduce function need to pass {@link MethodMap<T>}. 
+     * It can be imported from same namespace {@link Reducer}
+     * @type {T}                            value type
+     * @type {R}                            value type in map
+     * @param {KeyGetter<T>} getKey         callback to get key from value
+     * @param {Getter<T, R>} getValue       callback to get value to put in object
+     * @param {[keyof: string]: T>} agr     object to collect in
+     * @param {T} value                     value that that is passed in function for each iteration
+     * @throws Error                        if map has duplicate keys will thrown error 
+     */
+    export const toMapAndValue = <T, R>(
+        getKey: KeyGetter<T>,
+        getValue: Getter<T, R>
+    ) => (agr: MethodMap<R>, value: T) => {
+        const key = getKey(value)
+        inCase(agr.put(key, getValue(value)))
+            .present
+            .throw(`Key: "${key}" has duplicates`)
+        return agr
+    }
+
+    /**
+     * Collects items to object by key from callback. If function resolves 
+     * key, that already exists it will throw an Error
+     * 
+     * Example:
      * <pre>
      *     <code>
      *         [{id: 1, name: "John"}, {id: 2, name: "Albert"}]
@@ -118,16 +159,48 @@ export namespace Reducer {
      *     </code>
      * </pre>
      * As seond parameter in reduce function need to pass <code>{}</code>
-     * @param {[keyof: string]: T>}     obj     to collect in
-     * @param {T} val                   value   to store in map
-     * @param {string} key              key     to store value by
-     * @returns {[keyof: string]: T>}}          updated object
+     * @type {T}                            value type
+     * @type {R}                            value type in map
+     * @param {KeyGetter<T>} getKey         callback to get key from value
+     * @param {[keyof: string]: T>} agr     object to collect in
+     * @param {T} value                     value that that is passed in function for each iteration
+     * @throws Error                        if map has duplicate keys will thrown error     * 
      */
-    export const toObject = <T>(getKey: (cbv: T) => string) => (agr: MMap<T[]>, value: T) => {
+    export const toObject = <T>(getKey: KeyGetter<T>) => (agr: MMap<T>, value: T) => {
         const key = getKey(value)
         inCase(agr[key]).present.throw(`Key: "${key}" has duplicates`);
         // tslint:disable-next-line:no-any
         (agr[key] as any) = value
+        return agr
+    }
+
+    /**
+     * Collects items to object by key from callback. If function resolves key,
+     * that already exists it will throw an Error. Second callback is value mapper.
+     * 
+     * Example:
+     * <pre>
+     *     <code>
+     *         [{id: 1, name: "John"}, {id: 2, name: "Albert"}]
+     *              .reduce(toObjectAndValue(val => val.id, val => val.name), {})
+     *     </code>
+     * </pre>
+     * As seond parameter in reduce function need to pass <code>{}</code>
+     * @type {T}                            value type
+     * @type {R}                            value type in map
+     * @param {KeyGetter<T>} getKey         callback to get key from value
+     * @param {Getter<T, R>} getValue       callback to get value to put in object
+     * @param {[keyof: string]: T>} agr     object to collect in
+     * @param {T} value                     value that that is passed in function for each iteration
+     * @throws Error                        if map has duplicate keys will thrown error 
+     */
+    export const toObjectAndValue = <T, R>(
+        getKey: KeyGetter<T>, getValue: Getter<T, R>
+    ) => (agr: MMap<R>, value: T) => {
+        const key = getKey(value)
+        inCase(agr[key]).present.throw(`Key: "${key}" has duplicates`);
+        // tslint:disable-next-line:no-any
+        (agr[key] as any) = getValue(value)
         return agr
     }
 

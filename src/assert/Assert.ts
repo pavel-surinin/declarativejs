@@ -6,6 +6,9 @@ export namespace Assert {
 
     /**
      * Checks is value empty.
+     * Object is checked to have zero keys. 
+     * Arrays is checked to have zero length.
+     * String is checked to be empty ''.
      * @param value can be array, string or object, otherwise will return false
      */
     export const isEmpty = <T>(value: T) => {
