@@ -6,15 +6,341 @@ Open source javascript library for declarative coding
 [![Build Status](https://travis-ci.org/pavel-surinin/declarative-js.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
 
 # Table of Contents
-1. [is](#is)
-2. [inCase](#incase)
-3. [optional](#optional)
-4. [Array Functions](#arrayfunctions)
+1. [Array Functions](#arrayfunctions)
     - [Filters](#filters)
     - [Mappers](#mappers)
     - [Reducers](#reducers)
+2. [optional](#optional)
+3. [is](#is)
+4. [inCase](#incase)
 5. [JMap](#jmap)
-5. [MethodMap](#methodmap)
+6. [MethodMap](#methodmap)
+
+
+## ArrayFunctions
+
+### Filters
+
+#### filter out undefined
+```javascript
+import { toBe } from 'declarative-js'
+
+[undefined, 'a', 'b'].filter(toBe.present) // ['a', 'b']
+```
+
+#### filter out empty
+```javascript
+import { toBe } from 'declarative-js'
+
+['', 'a', 'b'].filter(toBe.notEmpty) // ['a', 'b']
+```
+
+#### filter to be equal to ...
+```javascript
+import { toBe } from 'declarative-js'
+
+['', 'a', 'b', 'a', 'c'].filter(toBe.equal('a')) // ['a', 'a']
+```
+
+#### filter to be not equal to ...
+```javascript
+import { toBe } from 'declarative-js'
+
+['a', 'b', 'a', 'c'].filter(toBe.notEqual('a')) // ['b', 'c']
+```
+
+#### filter to be unique
+it works on primitives and objects as well. This function comparing references and content.
+
+```javascript
+import { toBe } from 'declarative-js'
+
+['a', 'b', 'a', 'a', 'c'].filter(toBe.unique) // ['a', 'b', 'c']
+```
+
+```javascript
+import { toBe } from 'declarative-js'
+
+[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
+```
+
+### Mappers
+
+#### toObjValues
+
+As javascript `Object` class has static method `keys`, there is similar method to get object values
+
+```javascript
+import { Mapper } from 'declarative-js'
+import toObjValues = Reducers.toObjValues
+
+[{a: 1, b: 2}, {a: 3, b: 4}].map(toObjValues) // [[1, 2], [3, 4]]
+``` 
+
+### Reducers
+
+#### grpupBy
+
+Groups by key resoved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items.
+Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
+ 
+        
+```javascript
+import { Reducers } from 'declarative-js'
+import groupBy = Reducers.groupBy
+import Map = Reducers.Map
+
+['a', 'a', 'b'].reduce(groupBy(v => v), Map()) // {a: ['a', 'a'], b: ['b'] }
+reduced.keys() //   ['a', 'b']
+reduced.values() // [['a', 'a'], ['b']]
+
+``` 
+
+#### groupByValueOfKey
+
+Groups objects by value extracted from object by key provided in parameters to [JMap](#Jmap) where key is `string` and value is an `array` of items. 
+Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
+ 
+        
+```javascript
+import { Reducers } from 'declarative-js'
+import groupByValueOfKey = Reducers.groupByValueOfKey
+import Map = Reducers.Map
+
+const arr = [{name: 'Mike'}, {name: 'John'}, {name: 'John'}]
+arr.reduce(groupByValueOfKey('name'), Map())
+reduced.keys() //['Mike', 'John'] 
+reduced.values() //[[{name: 'Mike'}], [{name: 'John'}, {name: 'John'}]]
+``` 
+
+#### flat
+Flats 2d `array` to `array` 
+        
+```javascript
+import { Reducers } from 'declarative-js'
+import flat = Reducers.flat
+
+[[1, 2], [2, 3], [3, 4]].reduce(flat) // [1, 2, 3, 4, 5, 6]
+```        
+
+#### toMap
+
+Collects items by key, from callback to [JMap](#Jmap). 
+Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
+If function resolves key, that already exists it will throw an `Error`
+  
+```javascript
+import { Reducers } from 'declarative-js'
+import toMap = Reducers.toMap
+import Map = Reducers.Map
+
+const reduced = [{name: 'john'}, {name: 'mike'}].reduce(toMap(va => va.name), Map())
+reduced.keys() // ['john', 'mike']
+reduced.values() // [{name: 'john'}, {name: 'mike'}]
+```   
+
+#### toMapAndValue
+
+Collects items by key, from callback to [JMap](#Jmap). 
+Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
+If function resolves key, that already exists it will throw an `Error`
+Second callback is value mapper.
+
+```javascript
+import { Reducers } from 'declarative-js'
+import toMapAndValue = Reducers.toMapAndValue
+import Map = Reducers.Map
+
+const reduced = [{name: 'john', age: 11}, {name: 'mike', age: 12}].reduce(toMapAndValue(va => va.name, va => va.age), Map())
+reduced.keys() // ['john', 'mike']
+reduced.values() // [11, 12]
+```   
+
+#### toObject
+Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
+
+```javascript
+import { Reducers } from 'declarative-js'
+import toObject = Reducers.toObject
+
+[{name: 'john'}, {name: 'mike'}].reduce(toObject(va => va.name), {})
+// {
+//    john: {name: 'john'},
+//    mike: {name: 'mike'}
+// }
+```
+
+#### toObjectAndValue
+Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
+Second callback is value mapper.
+
+```javascript
+import { Reducers } from 'declarative-js'
+import toObjectAndValue = Reducers.toObjectAndValue
+
+[{name: 'john', age: 1}, {name: 'mike', age: 2}].reduce(toObjectAndValue(va => va.name, va => va.age), {})
+// {
+//    john: 1,
+//    mike: 2
+// }
+```
+
+#### min
+Finds min value of an array of numbers
+
+```javascript
+import { Reducers } from 'declarative-js'
+import min = Reducers.min
+
+[1, 2, 3].reduce(min)) // 1
+```
+
+#### max
+Finds min value of an array of numbers
+
+```javascript
+import { Reducers } from 'declarative-js'
+import max = Reducers.max
+
+[1, 2, 3].reduce(max)) // 3
+```
+
+#### sum
+Calculates sum of numbers in array
+
+```javascript
+import { Reducers } from 'declarative-js'
+import sum = Reducers.sum
+
+[1, 2, 3].reduce(sum)) // 6
+```
+
+
+## OPTIONAL
+
+Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
+This funtion checks value to be non `null` or `undefined`. It has two branches of functions, `.map(x)` when value is present and second when value is absent `.or.x`
+
+### optional(value).toArray
+
+Converts value to array. If value is not present returns empty array. If value is single object returns `array` of one object . If value is `array` returns `array`.
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    optional('hi').toArray() // ['hi']
+    optional(['hi', 'Mr.']).toArray() // ['hi', 'Mr.']
+    optional(undefined).toArray() // []
+```
+
+### optional(value).isAbsent
+
+```javascript
+    optional(myVar).isAbsent() //true or false
+```
+
+### optional(value).ifAbsent
+
+```javascript
+    optional(myVar).ifAbsent(() => console.warn('I am not here'))
+```
+
+### optional(value).isPresent
+
+```javascript
+    optional(myVar).isPresent() //true or false
+```
+
+### optional(value).ifPresent
+
+```javascript
+    optional(myVar).ifPresent(() => console.warn('I am here'))
+```
+
+### optional(value).or
+
+```javascript
+import { optional } from 'declarative-js'
+
+// instant  
+optional(myVar).or.else('Alternative')
+// lazy
+optional(myVar).or.elseGet(() => 'Alternative')
+// error
+optional(myVar).or.throw('This is bad')
+```
+
+### optional(value).map
+
+Every map call is checking is mapped value defined.
+If mapped value is undefined, other `map` calls will not be executed.  
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    const toGreeting = name => `Hi, ${name}!`
+    optional(myVar)
+        .map(x => x.event)
+        .map(event => event.name)
+        .map(toGreeting)
+        .get() // if some map evaluated to undefined an error will be thrown
+```
+
+### optional(value).map(...).filter
+
+After `map` call `.filter()` method is available, that accepts predicate `(value: T) => boolean`. If filters predicate returns `false`, other piped `filter` or `map` calls will no be executed. 
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    const toGreeting = name => `Hi, ${name}!`
+    optional(myVar)
+        .map(x => x.event)
+        .map(event => event.name)
+        .filter(name => name === 'John')
+        .map(toGreeting)
+        .get() // if filter returned false an error will be thrown
+```
+
+
+### optional(value).map(...).toArray
+
+After `map` call `.toArray()` method is available that does the same as `optional(value).toArray()`. 
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    optional('hi')
+        .map(x => x.split(''))
+        .toArray() // ['h', 'i']
+    
+    optional(undefined)
+        .map(x => x.split(''))
+        .toArray() // []    
+```
+
+### optional(value).map(...).or
+
+After mapping if some value was `undefined` or `filter` in pipe returned `fasle`, `or` functions will be called. These functions are the same as `or` in `inCase` function.
+
+```javascript
+    import { optional } from 'declarative-js'
+
+    const toGreeting = name => `Hi, ${name}!`
+    optional(myVar)
+        .map(x => x.event)
+        .map(event => event.name)
+        .filter(name => name === 'John')
+        .map(toGreeting)
+        .or.else('Hi stranger')
+        // or.elseGet(() => 'Hi stranger')
+        // or.throw('Ups, somethng went worng')
+```
+- or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
+- or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
+- or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
+
+
 ## IS
 
 `null` assertion
@@ -190,327 +516,6 @@ or with no message
 - or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
 - or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
 - or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
-
-## OPTIONAL
-
-Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
-
-### optional(value).toArray
-
-Converts value to array. If value is not present returns empty array. If value is single object returns `array` of one object . If value is `array` returns `array`.
-
-```javascript
-    import { optional } from 'declarative-js'
-
-    optional('hi').toArray() // ['hi']
-    optional(['hi', 'Mr.']).toArray() // ['hi', 'Mr.']
-    optional(undefined).toArray() // []
-```
-
-### optional(value).isAbsent
-
-```javascript
-    optional(myVar).isAbsent() //true or false
-```
-
-### optional(value).ifAbsent
-
-```javascript
-    optional(myVar).ifAbsent(() => console.warn('I am not here'))
-```
-
-### optional(value).isPresent
-
-```javascript
-    optional(myVar).isPresent() //true or false
-```
-
-### optional(value).ifPresent
-
-```javascript
-    optional(myVar).ifPresent(() => console.warn('I am here'))
-```
-
-### optional(value).or
-
-```javascript
-    import { optional } from 'declarative-js'
-
-// instant
-    optional(myVar).or.else('Alternative')
-    // lazy
-    optional(myVar).or.elseGet(() => 'Alternative')
-    // error
-    optional(myVar).or.throw('This is bad')
-```
-
-### optional(value).map
-
-Every map call is checking is mapped value defined.
-If mapped value is undefined, other `map` calls will not be executed.  
-
-```javascript
-    import { optional } from 'declarative-js'
-
-    const toGreeting = name => `Hi, ${name}!`
-    optional(myVar)
-        .map(x => x.event)
-        .map(event => event.name)
-        .map(toGreeting)
-        .get() // if some map evaluated to undefined an error will be thrown
-```
-
-### optional(value).map(...).filter
-
-After `map` call `.filter()` method is available, that accepts predicate `(value: T) => boolean`. If filters predicate returns `false`, other piped `filter` or `map` calls will no be executed. 
-
-```javascript
-    import { optional } from 'declarative-js'
-
-    const toGreeting = name => `Hi, ${name}!`
-    optional(myVar)
-        .map(x => x.event)
-        .map(event => event.name)
-        .filter(name => name === 'John')
-        .map(toGreeting)
-        .get() // if filter returned false an error will be thrown
-```
-
-
-### optional(value).map(...).toArray
-
-After `map` call `.toArray()` method is available that does the same as `optional(value).toArray()`. 
-
-```javascript
-    import { optional } from 'declarative-js'
-
-    optional('hi')
-        .map(x => x.split(''))
-        .toArray() // ['h', 'i']
-    
-    optional(undefined)
-        .map(x => x.split(''))
-        .toArray() // []    
-```
-
-### optional(value).map(...).or
-
-After mapping if some value was `undefined` or `filter` in pipe returned `fasle`, `or` functions will be called. These functions are the same as `or` in `inCase` function.
-
-```javascript
-    import { optional } from 'declarative-js'
-
-    const toGreeting = name => `Hi, ${name}!`
-    optional(myVar)
-        .map(x => x.event)
-        .map(event => event.name)
-        .filter(name => name === 'John')
-        .map(toGreeting)
-        .or.else('Hi stranger')
-        // or.elseGet(() => 'Hi stranger')
-        // or.throw('Ups, somethng went worng')
-```
-- or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
-- or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
-- or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
-
-## ArrayFunctions
-
-### Filters
-
-#### filter out undefined
-```javascript
-import { toBe } from 'declarative-js'
-
-[undefined, 'a', 'b'].filter(toBe.present) // ['a', 'b']
-```
-
-#### filter out empty
-```javascript
-import { toBe } from 'declarative-js'
-
-['', 'a', 'b'].filter(toBe.notEmpty) // ['a', 'b']
-```
-
-#### filter to be equal to ...
-```javascript
-import { toBe } from 'declarative-js'
-
-['', 'a', 'b', 'a', 'c'].filter(toBe.equal('a')) // ['a', 'a']
-```
-
-#### filter to be not equal to ...
-```javascript
-import { toBe } from 'declarative-js'
-
-['a', 'b', 'a', 'c'].filter(toBe.notEqual('a')) // ['b', 'c']
-```
-
-#### filter to be unique
-it works on primitives and objects as well. This function comparing references and content.
-
-```javascript
-import { toBe } from 'declarative-js'
-
-['a', 'b', 'a', 'a', 'c'].filter(toBe.unique) // ['a', 'b', 'c']
-```
-
-```javascript
-import { toBe } from 'declarative-js'
-
-[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
-```
-
-### Mappers
-
-#### toObjValues
-
-As javascript `Object` class has static method `keys`, there is similar method to get object values
-
-```javascript
-import { Mapper } from 'declarative-js'
-import toObjValues = Reducers.toObjValues
-
-[{a: 1, b: 2}, {a: 3, b: 4}].map(toObjValues) // [[1, 2], [3, 4]]
-``` 
-
-### Reducers
-
-#### grpupBy
-
-Groups by key resoved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items.
-Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
- 
-        
-```javascript
-import { Reducers } from 'declarative-js'
-import groupBy = Reducers.groupBy
-import Map = Reducers.Map
-
-['a', 'a', 'b'].reduce(groupBy(v => v), Map()) // {a: ['a', 'a'], b: ['b'] }
-reduced.keys() //   ['a', 'b']
-reduced.values() // [['a', 'a'], ['b']]
-
-``` 
-
-#### groupByValueOfKey
-
-Groups objects by value extracted from object by key provided in parameters to [JMap](#Jmap) where key is `string` and value is an `array` of items. 
-Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
- 
-        
-```javascript
-import { Reducers } from 'declarative-js'
-import groupByValueOfKey = Reducers.groupByValueOfKey
-import Map = Reducers.Map
-
-const arr = [{name: 'Mike'}, {name: 'John'}, {name: 'John'}]
-arr.reduce(groupByValueOfKey('name'), Map())
-reduced.keys() //['Mike', 'John'] 
-reduced.values() //[[{name: 'Mike'}], [{name: 'John'}, {name: 'John'}]]
-``` 
-
-#### flat
-Flats 2d `array` to `array` 
-        
-```javascript
-import { Reducers } from 'declarative-js'
-import flat = Reducers.flat
-
-[[1, 2], [2, 3], [3, 4]].reduce(flat) // [1, 2, 3, 4, 5, 6]
-```        
-
-#### toMap
-
-Collects items by key, from callback to [JMap](#Jmap). 
-Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
-If function resolves key, that already exists it will throw an `Error`
-  
-```javascript
-import { Reducers } from 'declarative-js'
-import toMap = Reducers.toMap
-import Map = Reducers.Map
-
-const reduced = [{name: 'john'}, {name: 'mike'}].reduce(toMap(va => va.name), Map())
-reduced.keys() // ['john', 'mike']
-reduced.values() // [{name: 'john'}, {name: 'mike'}]
-```   
-
-#### toMapAndValue
-
-Collects items by key, from callback to [JMap](#Jmap). 
-Custom implementation of Map canbe passed as a second parameter. It must implelent interface [MethodMap](#methodmap).
-If function resolves key, that already exists it will throw an `Error`
-Second callback is value mapper.
-
-```javascript
-import { Reducers } from 'declarative-js'
-import toMapAndValue = Reducers.toMapAndValue
-import Map = Reducers.Map
-
-const reduced = [{name: 'john', age: 11}, {name: 'mike', age: 12}].reduce(toMapAndValue(va => va.name, va => va.age), Map())
-reduced.keys() // ['john', 'mike']
-reduced.values() // [11, 12]
-```   
-
-#### toObject
-Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
-
-```javascript
-import { Reducers } from 'declarative-js'
-import toObject = Reducers.toObject
-
-[{name: 'john'}, {name: 'mike'}].reduce(toObject(va => va.name), {})
-// {
-//    john: {name: 'john'},
-//    mike: {name: 'mike'}
-// }
-```
-
-#### toObjectAndValue
-Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
-Second callback is value mapper.
-
-```javascript
-import { Reducers } from 'declarative-js'
-import toObjectAndValue = Reducers.toObjectAndValue
-
-[{name: 'john', age: 1}, {name: 'mike', age: 2}].reduce(toObjectAndValue(va => va.name, va => va.age), {})
-// {
-//    john: 1,
-//    mike: 2
-// }
-```
-
-#### min
-Finds min value of an array of numbers
-
-```javascript
-import { Reducers } from 'declarative-js'
-import min = Reducers.min
-
-[1, 2, 3].reduce(min)) // 1
-```
-
-#### max
-Finds min value of an array of numbers
-
-```javascript
-import { Reducers } from 'declarative-js'
-import max = Reducers.max
-
-[1, 2, 3].reduce(max)) // 3
-```
-
-#### sum
-Calculates sum of numbers in array
-
-```javascript
-import { Reducers } from 'declarative-js'
-import sum = Reducers.sum
-
-[1, 2, 3].reduce(sum)) // 6
-```
 
 ## MethodMap
 
