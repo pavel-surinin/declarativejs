@@ -10,9 +10,9 @@ Open source javascript library for declarative coding
     - [Filters](#filters)
     - [Mappers](#mappers)
     - [Reducers](#reducers)
-2. [optional](#optional)
+2. [Optional](#optional)
 3. [is](#is)
-4. [inCase](#incase)
+4. [InCase](#incase)
 5. [JMap](#jmap)
 6. [MethodMap](#methodmap)
 
@@ -406,7 +406,7 @@ Function `inCase` can be splitted in two parts:
 
 ```javascript
     import { inCase } from 'declarative-js'
-
+ 
     inCase(myVar).empty.do(() => console.warn('myVar is empty'))
 ```
 
@@ -434,30 +434,31 @@ Examples of asserting part:
 ```javascript
     import { inCase } from 'declarative-js'
 
-    inCase(myVar).true.do(() => console.warn('warn'))
-    inCase(myVar).false.do(() => console.warn('warn'))
-    inCase(myVar).empty.do(() => console.warn('warn'))
-    inCase(myVar).not.empty.do(() => console.warn('warn'))
-    inCase(myVar).null.do(() => console.warn('warn'))
-    inCase(myVar).not.null.do(() => console.warn('warn'))
-    inCase(myVar).undefined.do(() => console.warn('warn'))
-    inCase(myVar).not.undefined.do(() => console.warn('warn'))
-    inCase(myVar).present.do(() => console.warn('warn'))
-    inCase(myVar).not.present.do(() => console.warn('warn'))
+    inCase(myVar).true().do(() => console.warn('warn'))
+    inCase(myVar).false().do(() => console.warn('warn'))
+    inCase(myVar).empty().do(() => console.warn('warn'))
+    inCase(myVar).notEmpty().do(() => console.warn('warn'))
+    inCase(myVar).null().do(() => console.warn('warn'))
+    inCase(myVar).nonNull().do(() => console.warn('warn'))
+    inCase(myVar).undefined().do(() => console.warn('warn'))
+    inCase(myVar).defined().do(() => console.warn('warn'))
+    inCase(myVar).present().do(() => console.warn('warn'))
+    inCase(myVar).notPresent().do(() => console.warn('warn'))
     inCase(myVar)
-        .meets.all(x => x ==='a', x => x ==='b')
+        .matches().all(x => x ==='a', x => x ==='b')
         .do(() => console.warn('warn'))
     inCase(myVar)
-        .meets.some(x => x ==='a', x => x ==='b')
+        .matches().some(x => x ==='a', x => x ==='b')
         .do(() => console.warn('warn'))
     inCase(myVar)
-        .meets.none(x => x ==='a', x => x ==='b')
+        .matches().none(x => x ==='a', x => x ==='b')
         .do(() => console.warn('warn'))
     inCase(myVar)
-        .meets.only(x => x ==='a')
+        .matches().only(x => x ==='a')
         .do(() => console.warn('warn'))            
 ```
 ### Action
+At this momnet instance of `Then` class is returned 
 Examples what will be if asserting returns true
 
 #### incase(value).\<predicate>.do
@@ -505,17 +506,16 @@ or with no message
             username: name,
             message: msg
         }))
-        .or.else({
+        .orElse({
             username: 'incognito',
             message: 'please login'
         })
 ```
 
-`map` after mapping has these methods
-- get `map(toSomething).get()` that will return mapped value in case condition is `true` or throw an error id condition is `false`
-- or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
-- or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
-- or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
+- get `map(toSomething).get()` that will return Optional of mapped value in case condition is `true` or empty Optional if condition is `false`
+- orElse `.map(toSomething).orElse(0)` that will return value if assertion part is `false`or return value if condition is `true`
+- orElseGet `.map(toSomething).orElseGet(() => calculate())` is lazy callback to return a value if assertion part is `false`or return value if condition is `true`
+- orThrow `.map(toSomething).orThrow('some message')` that will throw `Error` if assertion part is `false` or return value if condition is `true`
 
 ## MethodMap
 

@@ -1,70 +1,70 @@
 import { Assert } from '../assert/Assert'
-import { inCase } from '../if/InCase'
-import { or } from '../if/Or'
-import isNull = Assert.isNull
-import isUndefined = Assert.isUndefined
-import is = Assert.is
-import { toArray, AlwaysArray } from '../ToArray'
+import { toArray, AlwaysArray } from '../ToArray';
 
-const passThrough = <T>(v: T) => v
+export type Mapper<T, R> = (from?: T) => R
 
-export interface ToMap<T, R> {
-    get: () => R;
-    map: <E>(chMapper: (chValue: R) => E) => ToMap<R, E>;
-    filter: (predicate: (prValue: R) => boolean) => ToMap<T, R>;
-    or: {
-        throw: (errMessage?: string | undefined) => R;
-        else: (elseValue: R) => R;
-        elseGet: (elseProducer: () => R) => R;
-    };
-    toArray: () => AlwaysArray<R>
-};
+export class Optional<T> {
 
-const toMap = <T, R>(value: T, mapper: (val: T) => R, isEmpty: boolean) => ({
-    get: () => inCase(isEmpty)
-        .equals(false)
-        .map(() => mapper(value))
-        .or.throw('Value is not defined'),
-    map: <E>(chMapper: (chValue: R) => E ): ToMap<R, E> => toMap(
-        isEmpty ? {} as R : mapper(value)as R, 
-        chMapper, 
-        isEmpty || !is(mapper(value)).present
-    ),
-    filter: (predicate: (prValue: R) => boolean): ToMap<T, R> => toMap(
-        isEmpty ? {} as R : mapper(value),
-        passThrough,
-        isEmpty  || !predicate(mapper(value)
-    )),
-    or: or({
-        mapper: mapper,
-        predicate: () => !isEmpty,
-        value
-    }),
-    toArray: () => {
-        if (isEmpty) {
-            // tslint:disable-next-line
-            return [] as any as AlwaysArray<R>              
-        } else {
-            return toArray(mapper(value))
+    constructor(private readonly value?: T) { }
+
+    orElse(value: T) {
+        return this.isPresent()
+            ? this.value
+            : value
+    }
+    orElseGet(supplier: () => T) {
+        return this.isPresent()
+            ? this.value
+            : supplier()
+    }
+    orElseThrow(errorMessage?: string) {
+        if (!this.isPresent()) {
+            throw new Error(errorMessage)
+        }
+        return this.value
+    }
+
+    isPresent(): boolean {
+        return Assert.isPresent(this.value)
+    }
+
+    isAbsent(): boolean {
+        return Assert.isNotPresent(this.value)
+    }
+
+    ifPresent(consumer: () => void): void {
+        if (this.isPresent()) {
+            consumer()
         }
     }
-})
 
-export const optional = <T> (value?: T) => ({
-    filter: (predicate: (v: T) => boolean) => toMap(
-        value as T, 
-        () => value as T, 
-        !is(value).present || !predicate(value as T)
-    ),
-    isPresent: () => !isNull(value) && !isUndefined(value),
-    isAbsent: () => isNull(value) || isUndefined(value),
-    ifPresent: (consumer: () => void) => inCase(value).present.do(consumer),
-    ifAbsent: (consumer: () => void) => inCase(value).not.present.do(consumer),
-    map: <R>(mapper: (val: T) => R) => toMap(value as T, mapper, !is(value).present),
-    or: or({
-        mapper: () => value as T,
-        predicate: () => is(value).present,
-        value
-    }),
-    toArray: () => toArray(value)
-})
+    ifAbsent(consumer: () => void): void {
+        if (this.isAbsent()) {
+            consumer()
+        }
+    }
+
+    get() {
+        if (Assert.isNotPresent(this.value)) {
+            throw new Error('Value is not defined')
+        }
+        return this.value
+    }
+
+    map<R>(mapper: Mapper<T, R>): Optional<R> {
+        return this.isPresent() ? new Optional(mapper(this.value)) : new Optional()
+    }
+
+    filter(predicate: (value?: T) => boolean): Optional<T> {
+        return predicate(this.value) ? this : new Optional()
+    }
+
+    toArray(): AlwaysArray<T> {
+        return toArray(this.value)
+    }
+
+}
+
+export const optional = function <T>(value?: T): Optional<T> {
+    return new Optional(value)
+}

@@ -24,7 +24,7 @@ export namespace Assert {
         return false;
     }
     
-    export const isUndefined = <T>(value: T) => value === undefined
+    export const isUndefined = <T>(value: T) => value === void 0
     
     export const isNull = <T>(value: T) => value === null
     

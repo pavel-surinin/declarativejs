@@ -39,48 +39,49 @@ describe('Optional', () => {
                     .toThrow('Value is not defined') 
             })
             it('should throw on mapping to undefined', () => {
-                const pipe = optional(definedObject)
-                    .map(x => x.und)
-                    .map(x => x!.length)
-                    .get
-                expect(() => pipe()).toThrow('Value is not defined');
+                expect(() => {
+                    optional(definedObject)
+                        .map(x => x.und)
+                        .map(x => x!.length)
+                        .get()
+                }).toThrow('Value is not defined');
             });
         })
         describe('or', () => {
             it('should get "or" after optional()', () => {
                 const result = optional(undefinedObject as string | undefined)
-                    .or.else('a')
+                    .orElse('a')
                 expect(result).toBe('a');
             })
             it('should get "or" after optional() (elseGet)', () => {
                 const result = optional(undefinedObject as string | undefined)
-                    .or.elseGet(() => 'a')
+                    .orElseGet(() => 'a')
                 expect(result).toBe('a');
             })
             it('should get "or" after optional() not follow or', () => {
                 const result = optional(definedObject)
-                    .or.elseGet(() => ({p: 111}))
+                    .orElseGet(() => ({p: 111}))
                 expect(result).toMatchObject(definedObject);
             })
             it('should follow on undefined or.else', () => {
                 const result = optional(definedObject)
                     .map(v => v.und)
                     .map(v => v + 'b')
-                    .or.else('a')
+                    .orElse('a')
                 expect(result).toBe('a');    
             })
             it('should not follow on defined or.else', () => {
                 const result = optional(definedObject)
                     .map(v => v.p)
                     .map(v => v + 1)
-                    .or.else(10)
+                    .orElse(10)
                 expect(result).toBe(2);    
             })
             it('should follow or on undefined in start of pipe', () => {
                 const result = optional(definedObject.und)
                     .map(v => v.concat('a'))
                     .map(v => v + 'b')
-                    .or.else('a')
+                    .orElse('a')
                 expect(result).toBe('a');    
             })
             it('should follow on defined with false filter or.else', () => {
@@ -88,7 +89,7 @@ describe('Optional', () => {
                     .map(v => v.p)
                     .map(v => v + 1)
                     .filter(v => v !== 2)
-                    .or.elseGet(() => 10)
+                    .orElseGet(() => 10)
                 expect(result).toBe(10);    
             })
         })
@@ -115,12 +116,13 @@ describe('Optional', () => {
                 expect(a).toBe(1)
             })
             it('should filter to fail', () => {
-                const pipe = optional(definedObject)
-                    .map(d => d.p)
-                    .filter(p => p === null)
-                    .filter(p => p !== 2)
-                    .get
-                expect(() => pipe()).toThrow('Value is not defined')
+                expect(() => {
+                    optional(definedObject)
+                        .map(d => d.p)
+                        .filter(p => p === null)
+                        .filter(p => p !== 2)
+                        .get()
+                }).toThrow('Value is not defined')
             })
             it('should filter.map ', () => {
                 const result = optional(definedObject)

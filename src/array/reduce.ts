@@ -1,5 +1,6 @@
 import { inCase } from '../if/InCase'
 import { JMap, MethodMap } from '../map/map';
+import { Assert } from '..';
 
 // tslint:disable-next-line:no-any
 function use(...args: any[]) {
@@ -35,12 +36,11 @@ export namespace Reducer {
         <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T[]>, value: T): MethodMap<T[]> => {
             const key = getKey(value)
             const extractedValue = agr.get(key);
-            inCase(extractedValue)
-                .present
-                .do(() => extractedValue!.push(value))
-            inCase(extractedValue)
-                .not.present
-                .do(() => agr.put(key, [value]))
+            if (extractedValue !== void 0) {
+                extractedValue.push(value)
+            } else {
+                agr.put(key, [value])
+            }
             return agr
         }
 
@@ -57,8 +57,9 @@ export namespace Reducer {
         <T, K extends keyof T>(key: K) => (agr: MethodMap<T[]>, value: T): MethodMap<T[]> => {
             const derivedKey = value[key]
             if (typeof derivedKey === 'string') {
-                if (agr.get(derivedKey)) {
-                    agr.get(derivedKey)!.push(value)
+                const derivedValue = agr.get(derivedKey);
+                if (derivedValue) {
+                    derivedValue.push(value)
                 } else {
                     agr.put(derivedKey, [value])
                 }
@@ -108,9 +109,9 @@ export namespace Reducer {
      */
     export const toMap = <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T>, value: T) => {
         const key = getKey(value)
-        inCase(agr.put(key, value))
-            .present
-            .throw(`Key: "${key}" has duplicates`);
+        if (agr.put(key, value) !== void 0) {
+            throw new Error(`Key: "${key}" has duplicates`)
+        }
         return agr
     }
 
@@ -141,9 +142,9 @@ export namespace Reducer {
         getValue: Getter<T, R>
     ) => (agr: MethodMap<R>, value: T) => {
         const key = getKey(value)
-        inCase(agr.put(key, getValue(value)))
-            .present
-            .throw(`Key: "${key}" has duplicates`)
+        if (agr.put(key, getValue(value)) !== void 0) {
+            throw new Error(`Key: "${key}" has duplicates`)
+        }
         return agr
     }
 
@@ -168,7 +169,9 @@ export namespace Reducer {
      */
     export const toObject = <T>(getKey: KeyGetter<T>) => (agr: MMap<T>, value: T) => {
         const key = getKey(value)
-        inCase(agr[key]).present.throw(`Key: "${key}" has duplicates`);
+        if (agr[key] !== void 0) {
+            throw new Error(`Key: "${key}" has duplicates`)
+        }
         // tslint:disable-next-line:no-any
         (agr[key] as any) = value
         return agr
@@ -198,7 +201,9 @@ export namespace Reducer {
         getKey: KeyGetter<T>, getValue: Getter<T, R>
     ) => (agr: MMap<R>, value: T) => {
         const key = getKey(value)
-        inCase(agr[key]).present.throw(`Key: "${key}" has duplicates`);
+        if (agr[key] !== void 0) {
+            throw new Error(`Key: "${key}" has duplicates`)
+        }
         // tslint:disable-next-line:no-any
         (agr[key] as any) = getValue(value)
         return agr
