@@ -1,6 +1,6 @@
 {
   "name": "declarative-js",
-  "version": "3.0.19",
+  "version": "3.0.18",
   "main": "index.js",
   "types": "index.d.ts",
   "author": "Pavel Surinin <pavel.surinin@gmail.com>",
@@ -23,6 +23,6 @@
     "test:coverage": "npm test -- --coverage",
     "build": "npm run lint && npm run compile && npm run test:coverage",
     "pre-publish": "npm run build && cp package.json target/out/package.json && cp README.md target/out/README.md",
-    "publish:patch": "npm version patch && npm run pre-publish && npm publish target/out"
+    "publish:patch": "npm run pre-publish && npm version patch && npm publish target/out"
   }
 }

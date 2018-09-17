@@ -1,7 +1,7 @@
 import { Assert } from '../assert/Assert'
 import { toArray, AlwaysArray } from '../ToArray';
 
-export type Mapper<T, R> = (from?: T) => R
+export type Fuction<T, R> = (from?: T) => R
 
 export class Optional<T> {
 
@@ -51,7 +51,7 @@ export class Optional<T> {
         return this.value
     }
 
-    map<R>(mapper: Mapper<T, R>): Optional<R> {
+    map<R>(mapper: Fuction<T, R>): Optional<R> {
         return this.isPresent() ? new Optional(mapper(this.value)) : new Optional()
     }
 

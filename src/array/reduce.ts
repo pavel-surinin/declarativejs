@@ -1,6 +1,4 @@
-import { inCase } from '../if/InCase'
 import { JMap, MethodMap } from '../map/map';
-import { Assert } from '..';
 
 // tslint:disable-next-line:no-any
 function use(...args: any[]) {
