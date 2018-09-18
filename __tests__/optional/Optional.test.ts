@@ -42,7 +42,7 @@ describe('Optional', () => {
                 expect(() => {
                     optional(definedObject)
                         .map(x => x.und)
-                        .map(x => x!.length)
+                        .map(x => x.length)
                         .get()
                 }).toThrow('Value is not defined');
             });
