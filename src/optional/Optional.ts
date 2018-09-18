@@ -7,21 +7,21 @@ export class Optional<T> {
 
     constructor(private readonly value?: T) { }
 
-    orElse(value: T) {
+    orElse(value: T): T {
         return this.isPresent()
-            ? this.value
+            ? this.value!
             : value
     }
-    orElseGet(supplier: () => T) {
+    orElseGet(supplier: () => T): T {
         return this.isPresent()
-            ? this.value
+            ? this.value!
             : supplier()
     }
-    orElseThrow(errorMessage?: string) {
+    orElseThrow(errorMessage?: string): T | never {
         if (!this.isPresent()) {
             throw new Error(errorMessage)
         }
-        return this.value
+        return this.value!
     }
 
     isPresent(): boolean {

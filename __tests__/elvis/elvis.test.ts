@@ -1,7 +1,6 @@
 import { get } from '../../src/elvis/elvis'
 import { optional } from '../../src/optional/Optional'
 import { get as opget } from 'object-path'
-import Optional from 'optional-js'
 import { Optional as OptExp } from '../../src/optional/optional'
 
 let data: { a: { b: { 
@@ -35,18 +34,6 @@ describe('elvis', () => {
         expect(el.error).toBeInstanceOf(Error)
     })
     describe.skip('undefined speed', () => {
-        it('optional-js', () => {
-            let res;
-            for (let index = 0; index < 1000000; index++) {
-                data.a = undefined
-                res = Optional.ofNullable(data)
-                    .map(d => d.a)
-                    .map(a => a.b)
-                    .map(b => b.c)
-                    .orElse('e')
-            }
-            expect(res).toBe('e')
-        })
         it('optional exp', () => {
             let res;
             for (let index = 0; index < 1000000; index++) {
@@ -71,17 +58,6 @@ describe('elvis', () => {
         })
     })
     describe.skip('defined speed', () => {
-        it('optional-js', () => {
-            let res;
-            for (let index = 0; index < 1000000; index++) {
-                res = Optional.ofNullable(data)
-                    .map(d => d.a)
-                    .map(a => a.b)
-                    .map(b => b.c)
-                    .orElse('e')
-            }
-            expect(res).toBe('d')
-        })
         it('optional exp', () => {
             let res;
             for (let index = 0; index < 1000000; index++) {

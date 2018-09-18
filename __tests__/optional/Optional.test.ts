@@ -72,7 +72,7 @@ describe('Optional', () => {
             })
             it('should not follow on defined or.else', () => {
                 const result = optional(definedObject)
-                    .map(v => v.p)
+                    .map(v => v.p as number)
                     .map(v => v + 1)
                     .orElse(10)
                 expect(result).toBe(2);    
@@ -187,7 +187,6 @@ describe('Optional', () => {
             optional(undefined).ifAbsent(eventTracker.do)
             expect(spy.do).toHaveBeenCalled()
         })
-        
         it('should not call function if defined', () => {
             optional(definedObject).ifAbsent(eventTracker.do)
             expect(spy.do).not.toHaveBeenCalled()
