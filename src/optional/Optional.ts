@@ -48,11 +48,11 @@ export class Optional<T> {
         if (Assert.isNotPresent(this.value)) {
             throw new Error('Value is not defined')
         }
-        return this.value
+        return this.value!
     }
 
     map<R>(mapper: Fuction<T, R>): Optional<R> {
-        return this.isPresent() ? new Optional(mapper(this.value)) : new Optional()
+        return this.isPresent() ? new Optional(mapper(this.value!))! : new Optional()
     }
 
     filter(predicate: (value?: T) => boolean): Optional<T> {
