@@ -45,14 +45,14 @@ export class Optional<T> {
         }
     }
 
-    get() {
+    get(): NonNullable<T> {
         if (Assert.isNotPresent(this.value)) {
             throw new Error('Value is not defined')
         }
         return this.value!
     }
 
-    map<R>(mapper: Fuction<T, R>): Optional<NonNull<R>> {
+    map<R>(mapper: Fuction<T, R>): Optional<NonNullable<R>> {
         return this.isPresent() ? new Optional(mapper(this.value!)!)! : new Optional()
     }
 

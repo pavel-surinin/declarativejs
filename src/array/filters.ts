@@ -12,9 +12,14 @@ export const toBe = {
             const indexOfStringified = arr
                 .map(v => JSON.stringify(v))
                 .indexOf(JSON.stringify(value))
-            return Assert
-                .is(indexOfStringified).equals(valueIndexOf)
+            return indexOfStringified === valueIndexOf
         }
         return valueIndexOf === index && assertIsDeepUnique() 
+    },
+    uniqueBy: <T, R>(toComparableProp: (val: T) => R) => (value: T, index: number, arr: T[]) => {
+        const firstComparableElementIndex = arr
+            .map(toComparableProp)
+            .indexOf(toComparableProp(value))
+        return index === firstComparableElementIndex
     }
 }

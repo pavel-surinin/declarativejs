@@ -15,7 +15,7 @@ export namespace Reducer {
 
     export type KeyGetter<C> = Getter<C, string>
 
-    export const Map = <T>(obj?: MMap<T>) => new JMap<T>(obj)
+    export const Map = <T>(obj?: MMap<T>): MethodMap<T> => new JMap<T>(obj)
 
     /**
      * Function to use in array reduce function as callback to group by provided key.

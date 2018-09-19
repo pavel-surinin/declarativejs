@@ -50,7 +50,7 @@ import { toBe } from 'declarative-js'
 ```
 
 #### filter to be unique
-it works on primitives and objects as well. This function comparing references and content.
+it works on primitives and objects as well. This function comparing references and content. To compare object `JSON.stringify` is used. So if some heavy objectsmust be compared, this function can be very expensive. 
 
 ```javascript
 import { toBe } from 'declarative-js'
@@ -62,6 +62,15 @@ import { toBe } from 'declarative-js'
 import { toBe } from 'declarative-js'
 
 [{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
+```
+
+#### filter to be uniqueBy 
+Less expensive function `toBe.uniqueBy(callback)`,  when some unique identifier is set by user.  
+
+```javascript
+import { toBe } from 'declarative-js'
+
+[{id: '123', a: 1}, {id: '123', a: 1}, {id: '456', a: 1}].filter(toBe.uniqueBy(x => x.id)) // [{id: '123', a: 1}, {id: '456', a: 1}]
 ```
 
 ### Mappers

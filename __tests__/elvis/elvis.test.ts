@@ -1,7 +1,4 @@
 import { get } from '../../src/elvis/elvis'
-import { optional } from '../../src/optional/Optional'
-import { get as opget } from 'object-path'
-import { Optional as OptExp } from '../../src/optional/optional'
 
 let data: { a: { b: { 
     c: string } } }
@@ -32,51 +29,5 @@ describe('elvis', () => {
         const el = get(() => data.a.b.c, 'd')
         expect(el.value).toBe('d')
         expect(el.error).toBeInstanceOf(Error)
-    })
-    describe.skip('undefined speed', () => {
-        it('optional exp', () => {
-            let res;
-            for (let index = 0; index < 1000000; index++) {
-                data.a = undefined
-                res = new OptExp(data)
-                    .map(d => d.a)
-                    .map(a => a.b)
-                    .map(b => b.c)
-                    .orElse('e')
-            }
-            expect(res).toBe('e')
-        })
-        it('if', () => {
-            let res
-            for (let index = 0; index < 1000000; index++) {
-                data.a = undefined
-                res = data && data.a && data.a.b && data.a.b.c
-                    ? data.a.b.c
-                    : 'e'
-            }
-            expect(res).toBe('e')
-        })
-    })
-    describe.skip('defined speed', () => {
-        it('optional exp', () => {
-            let res;
-            for (let index = 0; index < 1000000; index++) {
-                res = new OptExp(data)
-                    .map(d => d.a)
-                    .map(a => a.b)
-                    .map(b => b.c)
-                    .orElse('e')
-            }
-            expect(res).toBe('d')
-        })
-        it('if', () => {
-            let res
-            for (let index = 0; index < 1000000; index++) {
-                res = data && data.a && data.a.b && data.a.b.c
-                    ? data.a.b.c
-                    : 'e'
-            }
-            expect(res).toBe('d')
-        })
     })
 })
