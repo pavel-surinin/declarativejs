@@ -58,4 +58,10 @@ describe('Filters', () => {
             .filter(toBe.uniqueBy(x => x.name))
         expect(fa).toHaveLength(2)
     })
+    it('should filter to be uniqueByProp some property', () => {
+        const fa = sampleArray
+            .filter(toBe.present)
+            .filter(toBe.uniqueByProp('name'))
+        expect(fa).toHaveLength(2)
+    })
 })

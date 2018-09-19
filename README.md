@@ -73,6 +73,15 @@ import { toBe } from 'declarative-js'
 [{id: '123', a: 1}, {id: '123', a: 1}, {id: '456', a: 1}].filter(toBe.uniqueBy(x => x.id)) // [{id: '123', a: 1}, {id: '456', a: 1}]
 ```
 
+#### filter to be uniqueByPropName
+Less expensive function `toBe.uniqueByPropName(propName)`,  when some unique identifier is set by user. This identifier is extracted from object by property name, which must be a string
+
+```javascript
+import { toBe } from 'declarative-js'
+
+[{id: '123', a: 1}, {id: '123', a: 1}, {id: '456', a: 1}].filter(toBe.uniqueByProp('id')) // [{id: '123', a: 1}, {id: '456', a: 1}]
+```
+
 ### Mappers
 
 #### toObjValues

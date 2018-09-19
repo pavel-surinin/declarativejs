@@ -21,5 +21,13 @@ export const toBe = {
             .map(toComparableProp)
             .indexOf(toComparableProp(value))
         return index === firstComparableElementIndex
+    },
+    uniqueByProp: <T, K extends keyof T>(propName: K) => (value: T, index: number, arr: T[]) => {
+        const firstComparableElementIndex = arr
+            // tslint:disable-next-line:no-any
+            .map(x => (x as any)[propName])
+            // tslint:disable-next-line:no-any
+            .indexOf((value as any)[propName])
+        return index === firstComparableElementIndex
     }
 }
