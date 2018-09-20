@@ -233,6 +233,81 @@ import sum = Reducers.sum
 [1, 2, 3].reduce(sum)) // 6
 ```
 
+## Sorter
+
+```javascript
+const names = [
+    { name: 'andrew', lastName: 'Bb', age: 1 },
+    { name: 'billy', lastName: 'Cc', age: 5 },
+    { name: 'andrew', lastName: 'Bb', age: 2 },
+    { name: 'billy', lastName: 'Cc', age: 1 },
+    { name: 'andrew', lastName: 'Aa', age: 1 },
+]
+```
+
+### ascending 
+
+Sorts array in ascending order by values provided from callbacks. First callback has highest priority in sorting and so on. 
+
+```javascript
+import { Sort } from 'declarative-js'
+import ascending = Sort.ascending
+
+names.sort(ascending(
+    x => x.name, 
+    x => x.lastName, 
+    x => x.age
+));
+// sorted names by name, lastName and age 
+// [
+//    { name: 'andrew', lastName: 'Aa', age: 1 },
+//    { name: 'andrew', lastName: 'Bb', age: 1 },
+//    { name: 'andrew', lastName: 'Bb', age: 2 },
+//    { name: 'billy', lastName: 'Cc', age: 1 },
+//    { name: 'billy', lastName: 'Cc', age: 5 },
+// ]                
+```
+
+### descending 
+
+Sorts array in descending order by values provided from callbacks. First callback has highest priority in sorting and so on.
+
+```javascript
+import { Sort } from 'declarative-js'
+import descending = Sort.descending
+
+names.sort(descending(
+    x => x.name, 
+    x => x.lastName, 
+    x => x.age
+));
+// sorted names by name, lastName and age
+// [
+//    { name: 'billy', lastName: 'Cc', age: 5 },
+//    { name: 'billy', lastName: 'Cc', age: 1 },
+//    { name: 'andrew', lastName: 'Bb', age: 2 },
+//    { name: 'andrew', lastName: 'Bb', age: 1 },
+//    { name: 'andrew', lastName: 'Aa', age: 1 },
+// ]                
+```
+
+### by custom logic
+Function that will sort items in array with custom values, by provided oredr.
+It accepts as a parameter object with valueToOrderElement mapper and array of custom order rule
+
+```javascript
+import { Sort } from 'declarative-js'
+import by = Sort.by
+
+const result = testTodoData.sort(by(
+    { toValue: x => x.severity, order: ['low', 'medium', 'high'] },
+    { toValue: x => x.task, order: ['Sleep', 'Drink'] }
+  ))
+// { task: 'Sleep', severity: 'low' },
+// { task: 'Drink', severity: 'low' },
+// { task: 'Eat', severity: 'medium' },
+// { task: 'Code', severity: 'high' },
+```
 
 ## OPTIONAL
 
@@ -281,11 +356,11 @@ Converts value to array. If value is not present returns empty array. If value i
 import { optional } from 'declarative-js'
 
 // instant  
-optional(myVar).or.else('Alternative')
+optional(myVar).orElse('Alternative')
 // lazy
-optional(myVar).or.elseGet(() => 'Alternative')
+optional(myVar).orElseGet(() => 'Alternative')
 // error
-optional(myVar).or.throw('This is bad')
+optional(myVar).orElseThrow('This is bad')
 ```
 
 ### optional(value).map
@@ -336,28 +411,6 @@ After `map` call `.toArray()` method is available that does the same as `optiona
         .map(x => x.split(''))
         .toArray() // []    
 ```
-
-### optional(value).map(...).or
-
-After mapping if some value was `undefined` or `filter` in pipe returned `fasle`, `or` functions will be called. These functions are the same as `or` in `inCase` function.
-
-```javascript
-    import { optional } from 'declarative-js'
-
-    const toGreeting = name => `Hi, ${name}!`
-    optional(myVar)
-        .map(x => x.event)
-        .map(event => event.name)
-        .filter(name => name === 'John')
-        .map(toGreeting)
-        .or.else('Hi stranger')
-        // or.elseGet(() => 'Hi stranger')
-        // or.throw('Ups, somethng went worng')
-```
-- or.else `.map(toSomething).or.else(0)` that will return value if assertion part is false
-- or.elseGet `.map(toSomething).or.elseGet(() => calculate())` is lazy callback to return a value if assertion part is false
-- or.throw `.map(toSomething).or.throw('some message')` that will throw `Error` is assertion part is false
-
 
 ## IS
 
