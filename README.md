@@ -10,6 +10,7 @@ Open source javascript library for declarative coding
     - [Filters](#filters)
     - [Mappers](#mappers)
     - [Reducers](#reducers)
+    - [Sorters](#sorters)
 2. [Optional](#optional)
 3. [is](#is)
 4. [InCase](#incase)
@@ -233,17 +234,7 @@ import sum = Reducers.sum
 [1, 2, 3].reduce(sum)) // 6
 ```
 
-## Sorter
-
-```javascript
-const names = [
-    { name: 'andrew', lastName: 'Bb', age: 1 },
-    { name: 'billy', lastName: 'Cc', age: 5 },
-    { name: 'andrew', lastName: 'Bb', age: 2 },
-    { name: 'billy', lastName: 'Cc', age: 1 },
-    { name: 'andrew', lastName: 'Aa', age: 1 },
-]
-```
+## Sorters
 
 ### ascending 
 
