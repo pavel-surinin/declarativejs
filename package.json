@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@types/jest": "22.2.3",
+    "coveralls": "3.0.2",
     "jest": "22.4.3",
     "ts-jest": "22.4.5",
     "tslint": "5.10.0",
@@ -23,6 +24,7 @@
     "test:coverage": "npm test -- --coverage",
     "build": "npm run lint && npm run compile && npm run test:coverage",
     "pre-publish": "npm run build && cp package.json target/out/package.json && cp README.md target/out/README.md",
-    "publish:patch": "npm run pre-publish && npm version patch && npm publish target/out"
+    "publish:patch": "npm run pre-publish && npm version patch && npm publish target/out",
+    "coveralls": "cat target/coverage/lcov.info | coveralls"
   }
 }
