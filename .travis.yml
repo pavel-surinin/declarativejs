@@ -2,5 +2,8 @@ language: node_js
 node_js:
   - "8.8.1"
 
-  after_script:
+script:
+  - npm test -- --coverage
+
+after_script:
   - npm run coveralls
