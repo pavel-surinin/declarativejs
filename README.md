@@ -3,7 +3,8 @@
 Library for declarative coding, that has array functions to filter, group by, collect to map and object and sort in javascript. Contatins javascript optional for handling any types of `null` in javascript. It is also fully typed for `typescript`. 
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
-[![Build Status](https://travis-ci.org/pavel-surinin/declarative-js.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
+[![Build Status](https://travis-ci.org/pavel-surinin/declarative-js.svg?branch=master)]
+[![Coverage Status](https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master)]
 
 # Table of Contents
 1. [Array Functions](#arrayfunctions)
