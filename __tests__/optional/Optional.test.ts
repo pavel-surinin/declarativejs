@@ -21,6 +21,23 @@ describe('Optional', () => {
             expect(optional(definedObject).isPresent()).toBeTruthy()
         })
     })
+    describe('orElseThrow', () => {
+        it('should throw on undefined', () => {
+            expect(() => optional(undefinedObject).orElseThrow('message')).toThrow('message')
+        })
+        it('should throw on null', () => {
+            expect(() => optional(null).orElseThrow('message')).toThrow('message')
+        })
+        it('should throw on filtered out', () => {
+            expect(() => optional('a').filter(v => v !== 'a').orElseThrow('message')).toThrow('message')
+        })
+        it('should throw on mapping to undefined', () => {
+            expect(() => optional('a').map(v => undefined).orElseThrow('message')).toThrow('message')
+        })
+        it('should return value', () => {
+            expect(optional('a').orElseThrow('message')).toBe('a')
+        })
+    })
     describe('map', () => {
         describe('get', () => {
             it('should get value if it is present', () => {

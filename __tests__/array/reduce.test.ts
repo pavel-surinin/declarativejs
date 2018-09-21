@@ -77,4 +77,14 @@ describe('Collectors', () => {
         const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }].reduce(Reducer.toObjectAndValue(x => x.a, x => x.b), {})
         expect(res).toMatchObject({ a: 1, b: 2 })
     })
+    it('should throw on duplicates toMapAndValue', () => {
+        expect(() => {
+            [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(Reducer.toMapAndValue(x => x.a, x => x.b), Reducer.Map())
+        }).toThrow('"a" has duplicates')
+    })
+    it('should throw on duplicates tObjectAndValue', () => {
+        expect(() => {
+            [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(Reducer.toObjectAndValue(x => x.a, x => x.b), {})
+        }).toThrow('"a" has duplicates')
+    })
 })

@@ -102,7 +102,10 @@ describe('Sort', () => {
     })
     it('should sort by custom priority', () => {
         const result =
-            testTodoData.sort(by(
+        [
+                { task: 'Sleep', severity: 'low' },
+                ...testTodoData
+            ].sort(by(
                 {
                     toValue: x => x.severity,
                     order: ['low', 'medium', 'high']
@@ -113,6 +116,7 @@ describe('Sort', () => {
                 }
             ))
         expect(result).toMatchObject([
+            { task: 'Sleep', severity: 'low' },
             { task: 'Sleep', severity: 'low' },
             { task: 'Drink', severity: 'low' },
             { task: 'Eat', severity: 'medium' },
