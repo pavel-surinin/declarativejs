@@ -1,4 +1,5 @@
 import { JMap, MethodMap } from '../map/map';
+import eq from 'fast-deep-equal'
 
 // tslint:disable-next-line:no-any
 function use(...args: any[]) {
@@ -219,5 +220,49 @@ export namespace Reducer {
 
     export const sum = (agr: number, value: number) => {
         return agr + value;
+    }
+
+    export enum MergeStrategy {
+        /**
+         * Overrides value by duplicated key while merging objects
+         */
+        OVERRIDE = 'override',
+        /**
+         * Keys in objects must be unique
+         */
+        UNIQUE = 'unique',
+        /**
+         * Keys in objects may have duplicates, but values in these key must be equal
+         */
+        CHECKED = 'checked'
+    } 
+
+    /**
+     * Reduces array of objects to one object, There is three merge strategies 
+     * @see MergeStrategy
+     * @param merge {@link MergeStrategy} = default is OVERRIDE
+     */
+    export const toMergedObject = (merge: MergeStrategy = MergeStrategy.OVERRIDE) => 
+        <T extends object, R extends object> (agr: R, value: T): T & R => {
+        Object.keys(value).forEach(k => {
+            // tslint:disable-next-line:no-any
+            const valueFromAggr = (agr as any)[k];
+            // tslint:disable-next-line:no-any
+            const valueFromObject = (value as any)[k];
+            if (merge === MergeStrategy.UNIQUE && valueFromAggr !== null && valueFromAggr !== void 0 ) {
+                throw new Error('Object ' + JSON.stringify(agr, null , 2) + ' already has key ' + k)
+            }
+            if (merge === MergeStrategy.CHECKED 
+                && valueFromAggr !== null 
+                && valueFromAggr !== void 0 
+                && !eq(valueFromAggr, valueFromObject)
+            ) {
+                // tslint:disable-next-line:max-line-length
+                throw new Error('Object ' + JSON.stringify(agr, null , 2) + ' already has key ' + k + ' and values are different')
+            }
+            // tslint:disable-next-line:no-any
+            (agr as any)[k] = valueFromObject
+            })
+        return agr as T & R
     }
 }

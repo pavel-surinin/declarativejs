@@ -87,4 +87,20 @@ describe('Collectors', () => {
             [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(Reducer.toObjectAndValue(x => x.a, x => x.b), {})
         }).toThrow('"a" has duplicates')
     })
+    it('should merge array of objects to one object', () => {
+        const objs = [ {e: 1}, {d: 2}, {c: 3} ]
+        expect(objs.reduce(Reducer.toMergedObject(), {})).toMatchObject({e: 1, d: 2, c: 3})
+    })
+    it('should not throw on merge array of objects to one object with duplicate keys equal value - Checked', () => {
+        const objs = [ {e: 1}, {d: 2}, {e: 1} ]
+        expect(() => objs.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).not.toThrow()
+    })
+    it('should throw on merge array of objects to one object with duplicate keys', () => {
+        const objs = [ {e: 1}, {d: 2}, {e: 1} ]
+        expect(() => objs.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.UNIQUE), {})).toThrow()
+    })
+    it('should throw on merge array of objects to one object with duplicate keys and diff value', () => {
+        const objs = [ {e: 1}, {d: 2}, {e: 3} ]
+        expect(() => objs.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).toThrow()
+    })
 })

@@ -205,6 +205,44 @@ import toObjectAndValue = Reducers.toObjectAndValue
 // }
 ```
 
+#### toMergedObject
+Reduces array of objects to one object
+There is three merge strategies
+
+```javascript
+    export enum MergeStrategy {
+        /**
+         * Overrides value by duplicated key while merging objects
+         */
+        OVERRIDE = 'override',
+        /**
+         * Keys in objects must be unique
+         */
+        UNIQUE = 'unique',
+        /**
+         * Keys in objects may have duplicates, but values in these key must be equal
+         */
+        CHECKED = 'checked'
+    } 
+```
+
+Default strategy is `OVERRIDE`. 
+
+
+```javascript
+import { Reducers } from 'declarative-js'
+import toMergedObject = Reducers.toMergedObject
+import MergeStrategy = Reducers.MergeStrategy
+
+[ {e: 1}, {d: 2}, {c: 3} ].reduce(toMergedObject(), {}) // {e: 1, d: 2, c: 3}
+
+// values by duplicated keys can be equal
+[ {e: 1}, {e: 1}, {c: 3} ].reduce(toMergedObject(MergeStrategy.CHECKED), {}) // {e: 1, c: 3}
+
+[ {e: 1}, {e: 1}, {c: 3} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) // ERROR
+[ {e: 1}, {e: 2}, {c: 3} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) // ERROR
+```
+
 #### min
 Finds min value of an array of numbers
 
