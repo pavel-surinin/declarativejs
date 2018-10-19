@@ -5,6 +5,13 @@ describe('Assert', () => {
     it('should check to be undefined', () => {
         expect(is(undefined).undefined).toBeTruthy()
     })
+    it('should check to be deep equal', () => {
+        expect(is({a: {b: 1}}).deepEquals({a: {b: 1}})).toBeTruthy()
+        expect(is({a: {b: 1}}).deepEquals({a: {b: 2}})).toBeFalsy()
+        
+        expect(is({a: {b: 1}}).not.deepEquals({a: {b: 1}})).toBeFalsy()
+        expect(is({a: {b: 1}}).not.deepEquals({a: {b: 2}})).toBeTruthy()
+    })
     it('should check to be null', () => {
         expect(is(null).null).toBeTruthy()
     })

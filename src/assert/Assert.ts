@@ -1,4 +1,5 @@
 import { predict } from '../if/InCase'
+import equal from 'fast-deep-equal'
 
 export namespace Assert {
     
@@ -33,7 +34,14 @@ export namespace Assert {
      */
     // tslint:disable-next-line:no-any
     export const isEqual = <T>(value1: T) => (value2: any) => value1 === value2
-    
+
+    /**
+     * Checks value to be deep equal with 'fast-deep-equal' library
+     * @see https://www.npmjs.com/package/fast-deep-equal
+     */
+    // tslint:disable-next-line:no-any
+    export const isDeepEqual = <T>(value1: T) => (value2: any) => equal(value1, value2)
+
     /**
      * Checks value to be not null and not undefined
      * @param value 
@@ -58,8 +66,11 @@ export namespace Assert {
             null: !isNull(value),
             typeof: (type: JSType) => typeof value !== type,
             // tslint:disable-next-line:no-any
-            equals: (valueToCampare: any) => !isEqual(value)(valueToCampare),
-            present: !isPresent(value)
+            equals: (valueToCompare: any) => !isEqual(value)(valueToCompare),
+            // tslint:disable-next-line:no-any
+            deepEquals: (valueToCompare: any) => !isDeepEqual(value)(valueToCompare),
+            present: !isPresent(value),
+
         },
         undefined: isUndefined(value),
         empty: isEmpty(value),
@@ -70,7 +81,9 @@ export namespace Assert {
          */
         meets: predict(value),
         // tslint:disable-next-line:no-any
-        equals: (valueToCampare: any) => isEqual(value)(valueToCampare),
+        equals: (valueToCompare: any) => isEqual(value)(valueToCompare),
+        // tslint:disable-next-line:no-any
+        deepEquals: (valueToCompare: any) => isDeepEqual(value)(valueToCompare),
         present: isPresent(value)
     })
 }

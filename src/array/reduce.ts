@@ -25,7 +25,7 @@ export namespace Reducer {
      *         [1,2,3].reduce(groupBy(number => number % 2 === 0 ? even : odd), Reducer.Map())
      *     </code>
      * </pre>
-     * As seond parameter in reduce function need to pass <code>new JMap()</code>
+     * As second parameter in reduce function need to pass <code>new JMap()</code>
      * @param {MethodMap<T[]>} obj           to collect in
      * @param {T} val                   value to put in object
      * @param {string} key              key to group by
@@ -75,7 +75,7 @@ export namespace Reducer {
      *         [[1,2],[3,4]].reduce(flat, [])
      *     </code>
      * </pre>
-     * As seond parameter in reduce function need to pass <code>[]</code>
+     * As second parameter in reduce function need to pass <code>[]</code>
      * @param {T[]} previousValue   to collect in
      * @param {T[]} currentValue    to concatenate with
      * @returns {T[]}               concatenated array
@@ -97,7 +97,7 @@ export namespace Reducer {
      *              .reduce(toMap(val => val.id), Reducer.Map())
      *     </code>
      * </pre>
-     * As seond parameter in reduce function need to pass {@link MethodMap<T>}. 
+     * As second parameter in reduce function need to pass {@link MethodMap<T>}. 
      * It can be imported from same namespace {@link Reducer}
      * @type {T}                            value type
      * @type {R}                            value type in map
@@ -126,7 +126,7 @@ export namespace Reducer {
      *              .reduce(toObjectAndValue(val => val.id, val => val.name), Reducer.Map())
      *     </code>
      * </pre>
-     * As seond parameter in reduce function need to pass {@link MethodMap<T>}. 
+     * As second parameter in reduce function need to pass {@link MethodMap<T>}. 
      * It can be imported from same namespace {@link Reducer}
      * @type {T}                            value type
      * @type {R}                            value type in map

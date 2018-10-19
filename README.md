@@ -1,6 +1,6 @@
 
 # declarative-js
-Library for declarative coding, that has array functions to filter, group by, collect to map and object and sort in javascript. Contatins javascript optional for handlingany types of null in javascript.It is also fully typed for `typescript`. 
+Library for declarative coding, that has array functions to filter, group by, collect to map and object and sort in javascript. Contains javascript optional for handling any types of null in javascript.It is also fully typed for `typescript`. 
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
 [![Build Status](https://travis-ci.org/pavel-surinin/declarative-js.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
@@ -99,9 +99,9 @@ import toObjValues = Reducers.toObjValues
 
 ### Reducers
 
-#### grpupBy
+#### groupBy
 
-Groups by key resoved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items.
+Groups by key resolved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items.
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
  
         
@@ -210,20 +210,20 @@ Reduces array of objects to one object
 There is three merge strategies
 
 ```javascript
-    export enum MergeStrategy {
-        /**
-         * Overrides value by duplicated key while merging objects
-         */
-        OVERRIDE = 'override',
-        /**
-         * Keys in objects must be unique
-         */
-        UNIQUE = 'unique',
-        /**
-         * Keys in objects may have duplicates, but values in these key must be equal
-         */
-        CHECKED = 'checked'
-    } 
+enum MergeStrategy {
+    /**
+     * Overrides value by duplicated key while merging objects
+     */
+    OVERRIDE = 'override',
+    /**
+     * Keys in objects must be unique
+     */
+    UNIQUE = 'unique',
+    /**
+     * Keys in objects may have duplicates, but values in these key must be equal
+     */
+    CHECKED = 'checked'
+} 
 ```
 
 Default strategy is `OVERRIDE`. 
@@ -452,7 +452,7 @@ After `map` call `.toArray()` method is available that does the same as `optiona
     is(myVar).not.null
 ```
 
-`unefined` assertion
+`undefined` assertion
 ```javascript
     is(myVar).undefined
     is(myVar).not.undefined
@@ -484,6 +484,19 @@ After `map` call `.toArray()` method is available that does the same as `optiona
     is(mayVar).not.equals('dummy')
 ```
 
+`equals` assertion. Asserts to be equal.
+```javascript
+    is(mayVar).equals('dummy')
+    is(mayVar).not.equals('dummy')
+```
+
+`deepEquals` assertion. Assert objects to be deep equal.
+Under the hood [fast-deep=equal](https://www.npmjs.com/package/fast-deep-equal) is used to compare two objects
+```javascript
+    is({a: {b: 1}}).deepEquals({a: {b: 1}}) // true
+    is({a: {b: 1}}).not.deepEquals({a: {b: 1}}) // false
+```
+
 `meets` assertion. Assert to meet predicates `(value: T) => boolean`
 ```javascript
     //predicates
@@ -499,7 +512,7 @@ After `map` call `.toArray()` method is available that does the same as `optiona
 
 ## INCASE
 
-Function `inCase` can be splitted in two parts: 
+Function `inCase` can be contains two parts: 
 
 1. `inCase` some condition is `true` (all condition are the same as in `is` assertion functions)
 
@@ -530,7 +543,7 @@ Which is great, but if it is in arrow function...
         }
     }
 ```
-### Asseritng
+### Asserting
 Examples of asserting part:
 ```javascript
     import { inCase } from 'declarative-js'

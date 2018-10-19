@@ -1,11 +1,11 @@
 import { Assert } from '../assert/Assert'
+import equal from 'fast-deep-equal'
 
 export const toBe = {
     present: <T>(value: T) => Assert.is(value).present,
     notEmpty: <T>(value: T) => Assert.is(value).not.empty,
-    equal: <T>(valueToMatch: T) => (value: T) => Assert
-        .is(value).equals(valueToMatch),
-    notEqual: <T>(valueToMatch: T) => (value: T) => Assert.isNotEqual(valueToMatch)(value),
+    equal: <T>(valueToMatch: T) => (value: T) => equal(valueToMatch, value),
+    notEqual: <T>(valueToMatch: T) => (value: T) => !equal(valueToMatch, value),
     unique: <T>(value: T, index: number, arr: T[]) => {
         const valueIndexOf = arr.indexOf(value)
         const assertIsDeepUnique = () => {

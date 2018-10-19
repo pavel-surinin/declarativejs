@@ -10,6 +10,7 @@
     "url": "https://github.com/pavel-surinin/declarative-js.git"
   },
   "dependencies": {
+    "changelog-maker": "^2.2.7",
     "fast-deep-equal": "2.0.1"
   },
   "devDependencies": {
