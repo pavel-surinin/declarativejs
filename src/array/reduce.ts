@@ -27,8 +27,8 @@ export namespace Reducer {
      * </pre>
      * As second parameter in reduce function need to pass <code>new JMap()</code>
      * @param {MethodMap<T[]>} obj           to collect in
-     * @param {T} val                   value to put in object
-     * @param {string} key              key to group by
+     * @param {T} val                        value to put in object
+     * @param {string} key                   key to group by
      * @returns {MethodMap<T[]>}             updated object
      */
     export const groupBy =
@@ -158,7 +158,7 @@ export namespace Reducer {
      *              .reduce(toObject(val => val.id), {})
      *     </code>
      * </pre>
-     * As seond parameter in reduce function need to pass <code>{}</code>
+     * As second parameter in reduce function need to pass <code>{}</code>
      * @type {T}                            value type
      * @type {R}                            value type in map
      * @param {KeyGetter<T>} getKey         callback to get key from value
@@ -187,7 +187,7 @@ export namespace Reducer {
      *              .reduce(toObjectAndValue(val => val.id, val => val.name), {})
      *     </code>
      * </pre>
-     * As seond parameter in reduce function need to pass <code>{}</code>
+     * As second parameter in reduce function need to pass <code>{}</code>
      * @type {T}                            value type
      * @type {R}                            value type in map
      * @param {KeyGetter<T>} getKey         callback to get key from value

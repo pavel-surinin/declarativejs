@@ -1,25 +1,62 @@
 
 # declarative-js
-Library for declarative coding, that has array functions to filter, group by, collect to map and object and sort in javascript. Contains javascript optional for handling any types of null in javascript.It is also fully typed for `typescript`. 
+Library for declarative coding, that has array functions to filter, group, collect to map and object, and sort in javascript. Contains javascript optional for handling `null` and `undefined` in javascript. It is also fully typed for `typescript`. 
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
 [![Build Status](https://travis-ci.org/pavel-surinin/declarative-js.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
 [![Coverage Status](https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master)](https://coveralls.io/github/pavel-surinin/declarative-js?branch=master)
 
-# Table of Contents
-1. [Array Functions](#arrayfunctions)
-    - [Filters](#filters)
-    - [Mappers](#mappers)
-    - [Reducers](#reducers)
-    - [Sorters](#sorters)
-2. [Optional](#optional)
-3. [is](#is)
-4. [InCase](#incase)
-5. [JMap](#jmap)
-6. [MethodMap](#methodmap)
+- [declarative-js](#declarative-js)
+    - [Array Functions](#array-functions)
+        - [Filters](#filters)
+            - [filter out undefined](#filter-out-undefined)
+            - [filter out empty](#filter-out-empty)
+            - [filter to be equal to ...](#filter-to-be-equal-to)
+            - [filter to be not equal to ...](#filter-to-be-not-equal-to)
+            - [filter to be unique](#filter-to-be-unique)
+            - [filter to be uniqueBy](#filter-to-be-uniqueby)
+            - [filter to be uniqueByPropName](#filter-to-be-uniquebypropname)
+        - [Mappers](#mappers)
+            - [toObjValues](#toobjvalues)
+        - [Reducers](#reducers)
+            - [groupBy](#groupby)
+            - [groupByValueOfKey](#groupbyvalueofkey)
+            - [flat](#flat)
+            - [toMap](#tomap)
+            - [toMapAndValue](#tomapandvalue)
+            - [toObject](#toobject)
+            - [toObjectAndValue](#toobjectandvalue)
+            - [toMergedObject](#tomergedobject)
+            - [min](#min)
+            - [max](#max)
+            - [sum](#sum)
+            - [Map](#map)
+        - [Sorters](#sorters)
+            - [ascending](#ascending)
+            - [descending](#descending)
+            - [by custom logic](#by-custom-logic)
+    - [OPTIONAL](#optional)
+        - [optional(value).toArray](#optionalvaluetoarray)
+        - [optional(value).isAbsent](#optionalvalueisabsent)
+        - [optional(value).ifAbsent](#optionalvalueifabsent)
+        - [optional(value).isPresent](#optionalvalueispresent)
+        - [optional(value).ifPresent](#optionalvalueifpresent)
+        - [optional(value).or](#optionalvalueor)
+        - [optional(value).map](#optionalvaluemap)
+        - [optional(value).map(...).filter](#optionalvaluemapfilter)
+        - [optional(value).map(...).toArray](#optionalvaluemaptoarray)
+    - [IS](#is)
+    - [INCASE](#incase)
+        - [Asserting](#asserting)
+        - [Action](#action)
+            - [incase(value).\<predicate>.do](#incasevaluepredicatedo)
+            - [incase(value).\<predicate>.throw](#incasevaluepredicatethrow)
+            - [incase(value).\<predicate>.toArray](#incasevaluepredicatetoarray)
+            - [incase(value).\<predicate>.map](#incasevaluepredicatemap)
+    - [MethodMap](#methodmap)
+    - [JMap](#jmap)
 
-
-## ArrayFunctions
+## Array Functions
 
 ### Filters
 
@@ -140,7 +177,7 @@ Flats 2d `array` to `array`
 import { Reducers } from 'declarative-js'
 import flat = Reducers.flat
 
-[[1, 2], [2, 3], [3, 4]].reduce(flat) // [1, 2, 3, 4, 5, 6]
+[[1, 2], [2, 3], [3, 4]].reduce(flat, []) // [1, 2, 3, 4, 5, 6]
 ```        
 
 #### toMap
@@ -273,9 +310,25 @@ import sum = Reducers.sum
 [1, 2, 3].reduce(sum)) // 6
 ```
 
-## Sorters
+#### Map
+Returns map that is used `Reducer.groupBy`, `Reducer.groupByValueOfKey`, `Reducer.toMap`, `Reducer.toMapAndValue` as a second parameter after callback. As this map has methods `entries`, `keys`, `values` [(docs)](#methodmap) it is simple to chain functions without calling `Object.keys` instead, if object is returned.
 
-### ascending 
+```javascript
+
+import { Reducers } from 'declarative-js'
+import toMapAndValue = Reducers.toMapAndValue
+import Map = Reducers.Map
+
+[{name: 'john'}, {name: 'mike'}]
+    .reduce(toMapAndValue(va => va.name), Map()) 
+    //returns instance of {@link MethodMap}
+    .entries()
+    ...
+```
+
+### Sorters
+
+#### ascending 
 
 Sorts array in ascending order by values provided from callbacks. First callback has highest priority in sorting and so on. 
 
@@ -298,7 +351,7 @@ names.sort(ascending(
 // ]                
 ```
 
-### descending 
+#### descending 
 
 Sorts array in descending order by values provided from callbacks. First callback has highest priority in sorting and so on.
 
@@ -321,8 +374,8 @@ names.sort(descending(
 // ]                
 ```
 
-### by custom logic
-Function that will sort items in array with custom values, by provided oredr.
+#### by custom logic
+Function that will sort items in array with custom values, by provided order.
 It accepts as a parameter object with valueToOrderElement mapper and array of custom order rule
 
 ```javascript
