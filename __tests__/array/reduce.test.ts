@@ -3,6 +3,7 @@ import { JMap } from '../../src/map/map'
 import groupBy = Reducer.groupBy
 import flat = Reducer.flat
 import toMap = Reducer.toMap
+import toMapAndValue = Reducer.toMapAndValue
 import toObject = Reducer.toObject
 import toObjectAndValue = Reducer.toObjectAndValue
 import groupByValueOfKey = Reducer.groupByValueOfKey
@@ -10,8 +11,70 @@ import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
 
-describe('Collectors', () => {
-    it('should grpupBy to JMap', () => {
+describe('Reducer', () => {
+    describe('Throw on invalid key', () => {
+        it('should throw when toObjectAndValue key is not defined', () => {
+            expect(
+                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toObjectAndValue(x => x.a, x => x), {})
+            ).toThrow('Resolved key must be a string, actual: value - undefined type - undefined')
+        })
+        it('should throw when toObjectAndValue key is not a string', () => {
+            expect(
+                // tslint:disable-next-line:no-any
+                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toObjectAndValue(x => (x as any).a, x => x), {})
+            ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
+        })
+        it('should throw when toObject key is not defined', () => {
+            expect(
+                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toObject(x => x.a), {})
+            ).toThrow('Resolved key must be a string, actual: value - undefined type - undefined')
+        })
+        it('should throw when toObject key is not a string', () => {
+            expect(
+                // tslint:disable-next-line:no-any
+                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toObject(x => (x as any).a), {})
+            ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
+        })
+        it('should throw when toMapAndValue key is not defined', () => {
+            expect(
+                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toMapAndValue(x => x.a, x => x), new JMap())
+            ).toThrow('Resolved key must be a string, actual: value - undefined type - undefined')
+        })
+        it('should throw when toMapAndValue key is not a string', () => {
+            expect(
+                // tslint:disable-next-line:no-any
+                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toMapAndValue(x => (x as any).a, x => x), new JMap())
+            ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
+        })
+        it('should throw when toMap key is not defined', () => {
+            expect(
+                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toMap(x => x.a), new JMap())
+            ).toThrow('Resolved key must be a string, actual: value - undefined type - undefined')
+        })
+        it('should throw when toMap key is not a string', () => {
+            expect(
+                // tslint:disable-next-line:no-any
+                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toMap(x => (x as any).a), new JMap())
+            ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
+        })
+        it('should throw when groupBy key is not defined', () => {
+            expect(
+                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(groupBy(x => x.a), new JMap())
+            ).toThrow('Resolved key must be a string, actual: value - undefined type - undefined')
+        })
+        it('should throw when groupBy key is not a string', () => {
+            expect(
+                // tslint:disable-next-line:no-any
+                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(groupBy(x => (x as any).a), new JMap())
+            ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
+        })
+        it('should throw when groupByValueOfKey value is not string to JMap', () => {
+            expect(
+                () => [{ a: {} }, { a: 3 }, { a: 1 }].reduce(groupByValueOfKey('a'), new JMap())
+            ).toThrow('Value of "a" in groupByValueOfKey(key)  must be string, instead get: object')
+        })
+    })
+    it('should groupBy to JMap', () => {
         const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v), new JMap())
         expect(reduced.keys()).toMatchObject(['a', 'b'])
         expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
@@ -21,11 +84,6 @@ describe('Collectors', () => {
             [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }].reduce(groupByValueOfKey('name'), new JMap())
         expect(reduced.keys()).toMatchObject(['Mike', 'John'])
         expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
-    })
-    it('should throwh when groupByValueOfKey value is not string to JMap', () => {
-        expect(
-            () => [{ a: {} }, { a: 3 }, { a: 1 }].reduce(groupByValueOfKey('a'), new JMap())
-        ).toThrow('Value of "a" in groupByValueOfKey(key)  must be string, instead get: object')
     })
     it('should flat from 2d array to simple array', () => {
         const reduced = [[1, 2], [2, 3], [3, 4]]
@@ -102,5 +160,6 @@ describe('Collectors', () => {
     it('should throw on merge array of objects to one object with duplicate keys and diff value', () => {
         const objs = [ {e: 1}, {d: 2}, {e: 3} ]
         expect(() => objs.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).toThrow()
+    })
     })
 })

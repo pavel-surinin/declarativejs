@@ -1,9 +1,17 @@
 import { JMap, MethodMap } from '../map/map';
 import eq from 'fast-deep-equal'
+import { inCase } from '..';
 
 // tslint:disable-next-line:no-any
 function use(...args: any[]) {
     return args && 0
+}
+
+function valid(key: string) {
+    inCase(key)
+            .notTypeof('string')
+            .throw(`Resolved key must be a string, actual: value - ${key} type - ${typeof key}` )
+    return key
 }
 
 export namespace Reducer {
@@ -26,14 +34,15 @@ export namespace Reducer {
      *     </code>
      * </pre>
      * As second parameter in reduce function need to pass <code>new JMap()</code>
-     * @param {MethodMap<T[]>} obj           to collect in
-     * @param {T} val                        value to put in object
-     * @param {string} key                   key to group by
+     * @param {MethodMap<T[]>} agr           to collect in
+     * @param {T} value                      value to put in object
+     * @param {(value: T) => string} getKey  callback to resolve key,to group by it
      * @returns {MethodMap<T[]>}             updated object
+     * @throws Error                         if resolved key from callback is not a string 
      */
     export const groupBy =
         <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T[]>, value: T): MethodMap<T[]> => {
-            const key = getKey(value)
+            const key = valid(getKey(value))
             const extractedValue = agr.get(key);
             if (extractedValue !== void 0) {
                 extractedValue.push(value)
@@ -51,6 +60,11 @@ export namespace Reducer {
      *   reduced.keys() //['Mike', 'John'] 
      *   reduced.values() //[[{name: 'Mike'}], [{name: 'John'}, {name: 'John'}]]
      * </pre>  
+     * @param {MethodMap<T[]>} agr           to collect in
+     * @param {T} value                      value to put in object
+     * @param {string} key     key to group by it
+     * @returns {MethodMap<T[]>}             updated object
+     * @throws Error                         if resolved key from callback is not a string      * 
      */
     export const groupByValueOfKey =
         <T, K extends keyof T>(key: K) => (agr: MethodMap<T[]>, value: T): MethodMap<T[]> => {
@@ -104,10 +118,11 @@ export namespace Reducer {
      * @param {KeyGetter<T>} getKey         callback to get key from value
      * @param {MethodMap<T>} agr            object to collect in
      * @param {T} value                     value that that is passed in function for each iteration
+     * @throws Error                        if resolved key from callback is not a string 
      * @throws Error                        if map has duplicate keys will thrown error
      */
     export const toMap = <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T>, value: T) => {
-        const key = getKey(value)
+        const key = valid(getKey(value))
         if (agr.put(key, value) !== void 0) {
             throw new Error(`Key: "${key}" has duplicates`)
         }
@@ -135,12 +150,13 @@ export namespace Reducer {
      * @param {[keyof: string]: T>} agr     object to collect in
      * @param {T} value                     value that that is passed in function for each iteration
      * @throws Error                        if map has duplicate keys will thrown error 
+     * @throws Error                        if resolved key from callback is not a string      * 
      */
     export const toMapAndValue = <T, R>(
         getKey: KeyGetter<T>,
         getValue: Getter<T, R>
     ) => (agr: MethodMap<R>, value: T) => {
-        const key = getKey(value)
+        const key = valid(getKey(value))
         if (agr.put(key, getValue(value)) !== void 0) {
             throw new Error(`Key: "${key}" has duplicates`)
         }
@@ -164,10 +180,11 @@ export namespace Reducer {
      * @param {KeyGetter<T>} getKey         callback to get key from value
      * @param {[keyof: string]: T>} agr     object to collect in
      * @param {T} value                     value that that is passed in function for each iteration
-     * @throws Error                        if map has duplicate keys will thrown error     * 
+     * @throws Error                        if map has duplicate keys will thrown error   
+     * @throws Error                        if resolved key from callback is not a string      *   * 
      */
     export const toObject = <T>(getKey: KeyGetter<T>) => (agr: MMap<T>, value: T) => {
-        const key = getKey(value)
+        const key = valid(getKey(value))
         if (agr[key] !== void 0) {
             throw new Error(`Key: "${key}" has duplicates`)
         }
@@ -195,11 +212,12 @@ export namespace Reducer {
      * @param {[keyof: string]: T>} agr     object to collect in
      * @param {T} value                     value that that is passed in function for each iteration
      * @throws Error                        if map has duplicate keys will thrown error 
+     * @throws Error                        if resolved key from callback is not a string      * 
      */
     export const toObjectAndValue = <T, R>(
         getKey: KeyGetter<T>, getValue: Getter<T, R>
     ) => (agr: MMap<R>, value: T) => {
-        const key = getKey(value)
+        const key = valid(getKey(value))
         if (agr[key] !== void 0) {
             throw new Error(`Key: "${key}" has duplicates`)
         }
