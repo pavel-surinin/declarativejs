@@ -79,8 +79,13 @@ describe('Reducer', () => {
         expect(reduced.keys()).toMatchObject(['a', 'b'])
         expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
     })
+    it('should groupBy to JMap experimental', () => {
+        const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v))
+        expect(reduced.keys()).toMatchObject(['a', 'b'])
+        expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
+    })
     it('should groupByValueOfKey to JMap', () => {
-        const reduced = 
+        const reduced =
             [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }].reduce(groupByValueOfKey('name'), new JMap())
         expect(reduced.keys()).toMatchObject(['Mike', 'John'])
         expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
@@ -146,20 +151,20 @@ describe('Reducer', () => {
         }).toThrow('"a" has duplicates')
     })
     it('should merge array of objects to one object', () => {
-        const objs = [ {e: 1}, {d: 2}, {c: 3} ]
-        expect(objs.reduce(Reducer.toMergedObject(), {})).toMatchObject({e: 1, d: 2, c: 3})
+        const objs = [{ e: 1 }, { d: 2 }, { c: 3 }]
+        expect(objs.reduce(Reducer.toMergedObject(), {})).toMatchObject({ e: 1, d: 2, c: 3 })
     })
     it('should not throw on merge array of objects to one object with duplicate keys equal value - Checked', () => {
-        const objs = [ {e: 1}, {d: 2}, {e: 1} ]
+        const objs = [{ e: 1 }, { d: 2 }, { e: 1 }]
         expect(() => objs.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).not.toThrow()
     })
     it('should throw on merge array of objects to one object with duplicate keys', () => {
-        const objs = [ {e: 1}, {d: 2}, {e: 1} ]
+        const objs = [{ e: 1 }, { d: 2 }, { e: 1 }]
         expect(() => objs.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.UNIQUE), {})).toThrow()
     })
     it('should throw on merge array of objects to one object with duplicate keys and diff value', () => {
-        const objs = [ {e: 1}, {d: 2}, {e: 3} ]
+        const objs = [{ e: 1 }, { d: 2 }, { e: 3 }]
         expect(() => objs.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).toThrow()
     })
-    })
+})
 })

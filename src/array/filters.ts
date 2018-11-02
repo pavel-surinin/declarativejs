@@ -7,27 +7,34 @@ export const toBe = {
     equal: <T>(valueToMatch: T) => (value: T) => equal(valueToMatch, value),
     notEqual: <T>(valueToMatch: T) => (value: T) => !equal(valueToMatch, value),
     unique: <T>(value: T, index: number, arr: T[]) => {
-        const valueIndexOf = arr.indexOf(value)
-        const assertIsDeepUnique = () => {
-            const indexOfStringified = arr
-                .map(v => JSON.stringify(v))
-                .indexOf(JSON.stringify(value))
-            return indexOfStringified === valueIndexOf
+        if (typeof value === 'string'
+            || typeof value === 'number'
+            || typeof value === 'symbol'
+        ) {
+            return arr.indexOf(value) === index
         }
-        return valueIndexOf === index && assertIsDeepUnique() 
+        for (let i = 0; i < arr.length; i++) {
+            if (equal(arr[i], value)) {
+                return i === index
+            }
+        }
+        return false
     },
     uniqueBy: <T, R>(toComparableProp: (val: T) => R) => (value: T, index: number, arr: T[]) => {
-        const firstComparableElementIndex = arr
-            .map(toComparableProp)
-            .indexOf(toComparableProp(value))
-        return index === firstComparableElementIndex
+        for (let i = 0; i < arr.length; i++) {
+            if (toComparableProp(arr[i]) === toComparableProp(value)) {
+                return i === index
+            }
+        }
+        return false
     },
     uniqueByProp: <T, K extends keyof T>(propName: K) => (value: T, index: number, arr: T[]) => {
-        const firstComparableElementIndex = arr
+        for (let i = 0; i < arr.length; i++) {
             // tslint:disable-next-line:no-any
-            .map(x => (x as any)[propName])
-            // tslint:disable-next-line:no-any
-            .indexOf((value as any)[propName])
-        return index === firstComparableElementIndex
+            if ((arr[i] as any)[propName] === (value as any)[propName]) {
+                return i === index
+            }
+        }
+        return false
     }
 }
