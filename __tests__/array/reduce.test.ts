@@ -79,11 +79,6 @@ describe('Reducer', () => {
         expect(reduced.keys()).toMatchObject(['a', 'b'])
         expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
     })
-    it('should groupBy to JMap experimental', () => {
-        const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v))
-        expect(reduced.keys()).toMatchObject(['a', 'b'])
-        expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
-    })
     it('should groupByValueOfKey to JMap', () => {
         const reduced =
             [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }].reduce(groupByValueOfKey('name'), new JMap())
