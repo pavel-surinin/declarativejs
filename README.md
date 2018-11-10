@@ -30,7 +30,9 @@ Library for declarative coding, that has array functions to filter, group, colle
             - [min](#min)
             - [max](#max)
             - [sum](#sum)
-            - [Map](#map)
+            - [Reducer.Map](#reducermap)
+            - [Reducer.ImmutableMap](#reducerimmutablemap)
+            - [Reducer.ImmutableObject](#reducerimmutableobject)
         - [Sorters](#sorters)
             - [ascending](#ascending)
             - [descending](#descending)
@@ -54,6 +56,7 @@ Library for declarative coding, that has array functions to filter, group, colle
             - [incase(value).\<predicate>.toArray](#incasevaluepredicatetoarray)
             - [incase(value).\<predicate>.map](#incasevaluepredicatemap)
     - [MethodMap](#methodmap)
+    - [ImmutableMap](#immutablemap)
     - [JMap](#jmap)
 
 ## Array Functions
@@ -138,9 +141,9 @@ import toObjValues = Reducers.toObjValues
 
 #### groupBy
 
-Groups by key resolved from callback to [JMap](#Jmap) where key is `string` and value is an `array` of items.
+Groups by key resolved from callback to map where key is `string` and value is an `array` of items.
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
- 
+Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
         
 ```javascript
 import { Reducers } from 'declarative-js'
@@ -155,9 +158,9 @@ reduced.values() // [['a', 'a'], ['b']]
 
 #### groupByValueOfKey
 
-Groups objects by value extracted from object by key provided in parameters to [JMap](#Jmap) where key is `string` and value is an `array` of items. 
+Groups objects by value extracted from object by key provided in parameters to map where key is `string` and value is an `array` of items. 
+Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map`  
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
- 
         
 ```javascript
 import { Reducers } from 'declarative-js'
@@ -182,7 +185,8 @@ import flat = Reducers.flat
 
 #### toMap
 
-Collects items by key, from callback to [JMap](#Jmap). 
+Collects items by key, from callback to map. 
+Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
 If function resolves key, that already exists it will throw an `Error`
   
@@ -198,8 +202,9 @@ reduced.values() // [{name: 'john'}, {name: 'mike'}]
 
 #### toMapAndValue
 
-Collects items by key, from callback to [JMap](#Jmap). 
+Collects items by key, from callback to map. 
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
+Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
 If function resolves key, that already exists it will throw an `Error`
 Second callback is value mapper.
 
@@ -215,12 +220,15 @@ reduced.values() // [11, 12]
 
 #### toObject
 Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
-
+If immutable object needs to be constructed, `Reducer.ImmutableObject` function call need to be passed as a second 
+parameter in `reduce` function
 ```javascript
 import { Reducers } from 'declarative-js'
 import toObject = Reducers.toObject
+import ImmutableObject = Reducers.ImmutableObject
 
 [{name: 'john'}, {name: 'mike'}].reduce(toObject(va => va.name), {})
+[{name: 'john'}, {name: 'mike'}].reduce(toObject(va => va.name), ImmutableObject())
 // {
 //    john: {name: 'john'},
 //    mike: {name: 'mike'}
@@ -230,12 +238,18 @@ import toObject = Reducers.toObject
 #### toObjectAndValue
 Collects items to object by key from callback. If function resolves key, that already exists it will throw an `Error`
 Second callback is value mapper.
+If immutable object needs to be constructed, `Reducer.ImmutableObject` function call need to be passed as a second 
+parameter in `reduce` function
 
 ```javascript
 import { Reducers } from 'declarative-js'
 import toObjectAndValue = Reducers.toObjectAndValue
+import ImmutableObject = Reducers.ImmutableObject
 
-[{name: 'john', age: 1}, {name: 'mike', age: 2}].reduce(toObjectAndValue(va => va.name, va => va.age), {})
+[{name: 'john', age: 1}, {name: 'mike', age: 2}]
+    .reduce(toObjectAndValue(va => va.name, va => va.age), {})
+[{name: 'john', age: 1}, {name: 'mike', age: 2}]
+    .reduce(toObjectAndValue(va => va.name, va => va.age), ImmutableObject())
 // {
 //    john: 1,
 //    mike: 2
@@ -310,7 +324,7 @@ import sum = Reducers.sum
 [1, 2, 3].reduce(sum)) // 6
 ```
 
-#### Map
+#### Reducer.Map
 Returns map that is used `Reducer.groupBy`, `Reducer.groupByValueOfKey`, `Reducer.toMap`, `Reducer.toMapAndValue` as a second parameter after callback. As this map has methods `entries`, `keys`, `values` [(docs)](#methodmap) it is simple to chain functions without calling `Object.keys` instead, if object is returned.
 
 ```javascript
@@ -323,6 +337,36 @@ import Map = Reducers.Map
     .reduce(toMapAndValue(va => va.name), Map()) 
     //returns instance of {@link MethodMap}
     .entries()
+    ...
+```
+
+#### Reducer.ImmutableMap
+Returns [immutable map](#immutablemap) that is used `Reducer.groupBy`, `Reducer.groupByValueOfKey`, `Reducer.toMap`, `Reducer.toMapAndValue` as a second parameter after callback. As this map has methods `entries`, `keys`, `values` [(docs)](#methodmap) it is simple to chain functions without calling `Object.keys` instead, if object is returned.
+
+```javascript
+
+import { Reducers } from 'declarative-js'
+import toMapAndValue = Reducers.toMapAndValue
+import ImmutableMap = Reducers.ImmutableMap
+
+[{name: 'john'}, {name: 'mike'}]
+    .reduce(toMapAndValue(va => va.name), ImmutableMap()) 
+    //returns instance of {@link MethodMap}
+    .entries()
+    ...
+```
+
+#### Reducer.ImmutableObject
+Returns immutable `object` that is used `Reducer.toObject`, `Reducer.toObjectAndValue` as a second parameter after callback. 
+
+```javascript
+
+import { Reducers } from 'declarative-js'
+import toObjectAndValue = Reducers.toObjectAndValue
+import ImmutableObject = Reducers.ImmutableObject
+
+[{name: 'john'}, {name: 'mike'}]
+    .reduce(toObjectAndValue(va => va.name), ImmutableObject()) 
     ...
 ```
 
@@ -687,6 +731,9 @@ or with no message
 ## MethodMap
 
 Interface for DTO to that is used in [reducers](#reducers).
+Provided two implementations:
+[JMap](#jmap)
+[ImmutableMap](#immutablemap)
 ```typescript
 interface MethodMap<T> {
     put(key: string, value: T): T | undefined
@@ -699,6 +746,30 @@ interface MethodMap<T> {
     size(): number
     toObject(): {[keyof: string]: T}
 }
+```
+
+## ImmutableMap
+Map that has disabled `put` method. If this method is called, `TypeError` exception will be thrown. 
+Method `toObject` will return immutable object constructed with `Object.freeze`. 
+Implements typescript `interface` [MethodMap](#methodmap) 
+```javascript
+const b = ImmutableMap.builder()
+b.put('mike', 1)
+b.put('john', 2)
+const sample = b.buildMap()
+
+sample.keys() // ['mike', 'john']
+sample.values() // [1, 2]
+sample.size() // 2
+sample.get('mike') // 1
+sample.containsValue(1) // true
+sample.containsKey('mike') //false
+sample.entries() // [ {key: 'mike', value: 1}, {key: 'john', value: 2} ]
+```
+This map can be created from `object` as well.
+```javascript
+const map = new ImmutableMap({a: 1, b: 2})
+
 ```
 
 ## JMap

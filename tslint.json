@@ -15,13 +15,22 @@
         "curly": true,
         "eofline": false,
         "forin": true,
-        "indent": [ true, "spaces" ],
-        "interface-name": [true, "never-prefix"],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "interface-name": [
+            true,
+            "never-prefix"
+        ],
         "jsdoc-format": true,
         "jsx-no-lambda": false,
         "jsx-no-multiline-js": false,
         "label-position": true,
-        "max-line-length": [ true, 120 ],
+        "max-line-length": [
+            true,
+            120
+        ],
         "member-ordering": [
             true,
             "public-before-private",
@@ -60,14 +69,23 @@
             "check-open-brace",
             "check-whitespace"
         ],
-        "quotemark": [true, "single"],
+        "quotemark": [
+            true,
+            "single"
+        ],
         "radix": true,
-        "semicolon": [false, "always"],
+        "semicolon": [
+            true,
+            "never"
+        ],
         "switch-default": true,
-
-        "trailing-comma": [false],
-
-        "triple-equals": [ true, "allow-null-check" ],
+        "trailing-comma": [
+            false
+        ],
+        "triple-equals": [
+            true,
+            "allow-null-check"
+        ],
         "typedef": [
             true,
             "parameter",
@@ -83,7 +101,13 @@
                 "variable-declaration": "nospace"
             }
         ],
-        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore",
+            "allow-pascal-case"
+        ],
         "whitespace": [
             true,
             "check-branch",

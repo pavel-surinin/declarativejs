@@ -9,6 +9,20 @@
     "type": "git",
     "url": "https://github.com/pavel-surinin/declarative-js.git"
   },
+  "keywords": [
+    "optional",
+    "array",
+    "reduce",
+    "map",
+    "sort",
+    "javascript",
+    "typescript",
+    "groupby",
+    "filter",
+    "tomap",
+    "toobject",
+    "collect"
+  ],
   "dependencies": {
     "fast-deep-equal": "2.0.1"
   },

@@ -1,6 +1,6 @@
 import { Assert } from '../assert/Assert'
-import { toArray } from '../ToArray';
-import { Optional } from '../optional/Optional';
+import { toArray } from '../ToArray'
+import { Optional } from '../optional/Optional'
 
 export type Predicate<T> = (val: T) => boolean
 

@@ -1,5 +1,5 @@
 import { Assert } from '../assert/Assert'
-import { toArray, AlwaysArray } from '../ToArray';
+import { toArray, AlwaysArray } from '../ToArray'
 
 export type Fuction<T, R> = (from: T) => R
 export type NonNull<R> = R extends undefined | null ? R : R

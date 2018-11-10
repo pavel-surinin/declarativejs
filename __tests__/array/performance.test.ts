@@ -1,5 +1,6 @@
 import { Reducer } from '../../src/array/reduce'
-import { JMap } from '../../src/map/map'
+import { JMap } from '../../src/map/JMap'
+import { toBe } from '../../src/array/filters'
 import groupBy = Reducer.groupBy
 import flat = Reducer.flat
 import toMap = Reducer.toMap
@@ -9,7 +10,6 @@ import groupByValueOfKey = Reducer.groupByValueOfKey
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
-import { toBe } from '../../src';
 
 interface TestInterface {
     name: string,
@@ -49,8 +49,7 @@ const testData = testArray(50000)
 const test2dData = test2dArray(1000, 1000)
 const testNumData = testNumberArray(50000)
 
-describe.skip
-('performance', () => {
+describe.skip('performance', () => {
     it('of toMapAndValue', () => {
         testData.reduce(Reducer.toMapAndValue(x => x.name, x => x.age), new JMap())
     })
@@ -66,8 +65,14 @@ describe.skip
     it('of groupBy', () => {
         testData.reduce(Reducer.groupBy(x => x.name), new JMap())
     })
+    it('of groupBy to immutable map', () => {
+        testData.reduce(Reducer.groupBy(x => x.name), Reducer.ImmutableMap())
+    })
     it('of groupByValueOfKey', () => {
         testData.reduce(Reducer.groupByValueOfKey('name'), new JMap())
+    })
+    it('of groupByValueOfKey to immutable map', () => {
+        testData.reduce(Reducer.groupByValueOfKey('name'), Reducer.ImmutableMap())
     })
     it('of flat', () => {
         test2dData.reduce(flat)

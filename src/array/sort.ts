@@ -12,16 +12,16 @@ export namespace Sort {
         <T>(...mappersArr: ((val: T) => string | number)[]) =>
             (a: T, b: T): number => {
                 for (let index = 0; index < mappersArr.length; index++) {
-                    const mapper = mappersArr[index];
-                    const aa = mapper(a);
-                    const bb = mapper(b);
+                    const mapper = mappersArr[index]
+                    const aa = mapper(a)
+                    const bb = mapper(b)
                     if (aa !== bb) {
                         return aa > bb
                             ? 1
                             : -1
                     }
                 }
-                return 0;
+                return 0
             }
     /**
      * Sorts array in descending order by values provided from callbacks. 
@@ -33,16 +33,16 @@ export namespace Sort {
         <T>(...mappersArr: ((val: T) => string | number)[]) =>
             (a: T, b: T): number => {
                 for (let index = 0; index < mappersArr.length; index++) {
-                    const mapper = mappersArr[index];
-                    const aa = mapper(a);
-                    const bb = mapper(b);
+                    const mapper = mappersArr[index]
+                    const aa = mapper(a)
+                    const bb = mapper(b)
                     if (aa !== bb) {
                         return aa < bb
                             ? 1
                             : -1
                     }
                 }
-                return 0;
+                return 0
             }
     export interface SortingCondition<T, R> {
         toValue: (val: T) => R,
@@ -71,15 +71,15 @@ export namespace Sort {
         <T, R>(...conditions: SortingCondition<T, R>[]) =>
             (a: T, b: T): number => {
                 for (let index = 0; index < conditions.length; index++) {
-                    const mapper = conditions[index].toValue;
-                    const aa = conditions[index].order.indexOf(mapper(a));
-                    const bb = conditions[index].order.indexOf(mapper(b));
+                    const mapper = conditions[index].toValue
+                    const aa = conditions[index].order.indexOf(mapper(a))
+                    const bb = conditions[index].order.indexOf(mapper(b))
                     if (aa !== bb) {
                         return aa > bb
                             ? 1
                             : -1
                     }
                 }
-                return 0;
+                return 0
             }
 }

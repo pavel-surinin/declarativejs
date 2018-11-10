@@ -14,15 +14,15 @@ export namespace Assert {
      */
     export const isEmpty = <T>(value: T) => {
         if (value instanceof Array) {
-            return (value as T[]).length === 0;
+            return (value as T[]).length === 0
         }
         if (typeof value === 'string') {
-            return '' === value;
+            return '' === value
         }
         if (typeof value === 'object' && value !== null && value !== undefined) {
-            return !(value instanceof Date) && Object.keys(value).length === 0;
+            return !(value instanceof Date) && Object.keys(value).length === 0
         }
-        return false;
+        return false
     }
     
     export const isUndefined = <T>(value: T) => value === void 0
