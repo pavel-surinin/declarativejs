@@ -1,5 +1,4 @@
 import eq from 'fast-deep-equal'
-import { inCase } from '../if/InCase'
 import { MethodMap } from '../map/MethodMap'
 import { JMap } from '../map/JMap'
 import { ImmutableBuilder } from '../map/ImmutableBuilder'
@@ -10,9 +9,9 @@ function use(...args: any[]) {
 }
 
 function valid(key: string) {
-    inCase(key)
-        .notTypeof('string')
-        .throw(`Resolved key must be a string, actual: value - ${key} type - ${typeof key}`)
+    if (typeof key === 'string') {
+        throw new Error(`Resolved key must be a string, actual: value - ${key} type - ${typeof key}`)
+    }
     return key
 }
 
