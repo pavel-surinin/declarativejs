@@ -9,7 +9,7 @@ function use(...args: any[]) {
 }
 
 function valid(key: string) {
-    if (typeof key === 'string') {
+    if (typeof key !== 'string') {
         throw new Error(`Resolved key must be a string, actual: value - ${key} type - ${typeof key}`)
     }
     return key
