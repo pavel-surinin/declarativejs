@@ -27,6 +27,7 @@
     "fast-deep-equal": "2.0.1"
   },
   "devDependencies": {
+    "docsify": "4.8.6",
     "@types/jest": "22.2.3",
     "coveralls": "3.0.2",
     "jest": "22.4.3",

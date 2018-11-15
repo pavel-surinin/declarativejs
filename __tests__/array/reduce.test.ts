@@ -4,10 +4,7 @@ import { Reducer } from '../../src/array/reduce'
 import groupBy = Reducer.groupBy
 import flat = Reducer.flat
 import toMap = Reducer.toMap
-import toMapAndValue = Reducer.toMapAndValue
 import toObject = Reducer.toObject
-import toObjectAndValue = Reducer.toObjectAndValue
-import groupByValueOfKey = Reducer.groupByValueOfKey
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
@@ -18,13 +15,13 @@ describe('Reducer', () => {
     describe('Throw on invalid key', () => {
         it('should throw when toObjectAndValue key is not defined', () => {
             expect(
-                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toObjectAndValue(x => x.a, x => x), {})
+                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toObject(x => x.a, x => x), {})
             ).toThrow('Resolved key must be a string, actual: value - undefined type - undefined')
         })
         it('should throw when toObjectAndValue key is not a string', () => {
             expect(
                 // tslint:disable-next-line:no-any
-                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toObjectAndValue(x => (x as any).a, x => x), {})
+                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toObject(x => (x as any).a, x => x), {})
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })
         it('should throw when toObject key is not defined', () => {
@@ -40,13 +37,13 @@ describe('Reducer', () => {
         })
         it('should throw when toMapAndValue key is not defined', () => {
             expect(
-                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toMapAndValue(x => x.a, x => x), new JMap())
+                () => [{ a: undefined }, { a: '3' }, { a: '1' }].reduce(toMap(x => x.a, x => x), new JMap())
             ).toThrow('Resolved key must be a string, actual: value - undefined type - undefined')
         })
         it('should throw when toMapAndValue key is not a string', () => {
             expect(
                 // tslint:disable-next-line:no-any
-                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toMapAndValue(x => (x as any).a, x => x), new JMap())
+                () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toMap(x => (x as any).a, x => x), new JMap())
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })
         it('should throw when toMap key is not defined', () => {
@@ -71,10 +68,10 @@ describe('Reducer', () => {
                 () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(groupBy(x => (x as any).a), new JMap())
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })
-        it('should throw when groupByValueOfKey value is not string to JMap', () => {
+        it('should throw when groupBy string value is not string to JMap', () => {
             expect(
-                () => [{ a: {} }, { a: 3 }, { a: 1 }].reduce(groupByValueOfKey('a'), new JMap())
-            ).toThrow('Value of "a" in groupByValueOfKey(key)  must be string, instead get: object')
+                () => [{ a: {} }, { a: 3 }, { a: 1 }].reduce(groupBy('a'), new JMap())
+            ).toThrow(`Value of "a" in groupBy  must be string, instead get: object`)
         })
     })
     describe('to collect to Immutable', () => {
@@ -86,9 +83,9 @@ describe('Reducer', () => {
             expect(() => reduced.put('qwerty', [])).toThrow()
             expect(() => reduced.toObject().qwerty = []).toThrow()
         })
-        it('should groupByValueOfKey to ImmutableMap', () => {
+        it('should groupBy string to ImmutableMap', () => {
             const reduced = [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }]
-                .reduce(groupByValueOfKey('name'), ImmutableMapFactory())
+                .reduce(groupBy('name'), ImmutableMapFactory())
             expect(reduced.keys()).toMatchObject(['Mike', 'John'])
             expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
             expect(reduced).toBeInstanceOf(ImmutableMap)
@@ -103,13 +100,13 @@ describe('Reducer', () => {
         })
         it('should reduce to map with other value', () => {
             const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }]
-                .reduce(Reducer.toMapAndValue(x => x.a, x => x.b), ImmutableMapFactory())
+                .reduce(Reducer.toMap(x => x.a, x => x.b), ImmutableMapFactory())
             expect(res.toObject()).toMatchObject({ a: 1, b: 2 })
             expect(res).toBeInstanceOf(ImmutableMap)
         })
         it('should reduce to object and second callback to map value', () => {
             const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }]
-                .reduce(Reducer.toObjectAndValue(x => x.a, x => x.b), ImmutableObject())
+                .reduce(Reducer.toObject(x => x.a, x => x.b), ImmutableObject())
             expect(res).toBeInstanceOf(Object)
             expect(() => res.qwerty = 22).toThrow()
             expect(res).toMatchObject({ a: 1, b: 2 })
@@ -134,9 +131,9 @@ describe('Reducer', () => {
         expect(reduced.keys()).toMatchObject(['a', 'b'])
         expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
     })
-    it('should groupByValueOfKey to JMap', () => {
+    it('should groupBy string to JMap', () => {
         const reduced =
-            [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }].reduce(groupByValueOfKey('name'), new JMap())
+            [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }].reduce(Reducer.groupBy('name'), new JMap())
         expect(reduced.keys()).toMatchObject(['Mike', 'John'])
         expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
     })
@@ -148,7 +145,7 @@ describe('Reducer', () => {
     it('should collect to map', () => {
         const arr: { name: string }[] = [{ name: 'john' }, { name: 'mike' }]
         const reduced = arr
-            .reduce(toMap(va => va.name), new JMap())
+            .reduce(Reducer.toMap(va => va.name), new JMap())
         expect(reduced.keys()).toMatchObject(['john', 'mike'])
         expect(reduced.values()).toMatchObject([{ name: 'john' }, { name: 'mike' }])
     })
@@ -168,7 +165,7 @@ describe('Reducer', () => {
         )
     })
     it('should throw if key already exists collecting to object', () => {
-        const arr: { name: string }[] = [{ name: 'john' }, { name: 'john' }]
+        const arr = [{ name: 'john' }, { name: 'john' }]
         expect(() => arr.reduce(toObject(va => va.name), {})).toThrow('Key: "john" has duplicates')
     })
     it('should reduce min value', () => {
@@ -182,22 +179,22 @@ describe('Reducer', () => {
     })
     it('should reduce to map with other value', () => {
         const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }]
-            .reduce(Reducer.toMapAndValue(x => x.a, x => x.b), Reducer.Map())
+            .reduce(Reducer.toMap(x => x.a, x => x.b), Reducer.Map())
             .toObject()
         expect(res).toMatchObject({ a: 1, b: 2 })
     })
     it('should reduce to object and second callback to map value', () => {
-        const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }].reduce(Reducer.toObjectAndValue(x => x.a, x => x.b), {})
+        const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }].reduce(toObject(x => x.a, x => x.b), {})
         expect(res).toMatchObject({ a: 1, b: 2 })
     })
     it('should throw on duplicates toMapAndValue', () => {
         expect(() => {
-            [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(Reducer.toMapAndValue(x => x.a, x => x.b), Reducer.Map())
+            [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(Reducer.toMap(x => x.a, x => x.b), Reducer.Map())
         }).toThrow('"a" has duplicates')
     })
     it('should throw on duplicates tObjectAndValue', () => {
         expect(() => {
-            [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(Reducer.toObjectAndValue(x => x.a, x => x.b), {})
+            [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(toObject(x => x.a, x => x.b), {})
         }).toThrow('"a" has duplicates')
     })
     it('should merge array of objects to one object', () => {

@@ -1,5 +1,4 @@
 import { toBe } from '../../src/array/filters'
-
 interface User {
     name?: string
     age?: number
@@ -61,7 +60,7 @@ describe('Filters', () => {
     it('should filter to be uniqueByProp some property', () => {
         const fa = sampleArray
             .filter(toBe.present)
-            .filter(toBe.uniqueByProp('name'))
+            .filter(toBe.uniqueBy('name'))
         expect(fa).toHaveLength(2)
     })
 })

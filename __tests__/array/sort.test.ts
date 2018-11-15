@@ -1,6 +1,6 @@
 import { Sort } from '../../src/array/sort'
-import ascending = Sort.ascending
-import descending = Sort.descending
+import ascendingBy = Sort.ascendingBy
+import descendingBy = Sort.descendingBy
 import by = Sort.by
 
 const testData = [
@@ -34,11 +34,24 @@ const testTodoData = [
 
 describe('Sort', () => {
     it('should sort ascending names', () => {
-        const result = names.sort(ascending(
+        const result = names.sort(ascendingBy(
             x => x.name,
             x => x.lastName,
             x => x.age
-        ));
+        ))
+        expect(result)
+            .toMatchObject(
+                [
+                    { name: 'andrew', lastName: 'Aa', age: 1 },
+                    { name: 'andrew', lastName: 'Bb', age: 1 },
+                    { name: 'andrew', lastName: 'Bb', age: 2 },
+                    { name: 'billy', lastName: 'Cc', age: 1 },
+                    { name: 'billy', lastName: 'Cc', age: 5 },
+                ]
+            )
+    })
+    it('should sort ascending names - string key', () => {
+        const result = names.sort(ascendingBy('name', 'lastName', 'age'))
         expect(result)
             .toMatchObject(
                 [
@@ -51,7 +64,7 @@ describe('Sort', () => {
             )
     })
     it('should sort ascending ', () => {
-        expect(testData.sort(ascending(x => x.a)))
+        expect(testData.sort(ascendingBy(x => x.a)))
             .toMatchObject(
                 [
                     { a: -101 },
@@ -62,7 +75,7 @@ describe('Sort', () => {
             )
     })
     it('should sort ascending strings ', () => {
-        expect(testDataLiterals.sort(ascending(x => x.a)))
+        expect(testDataLiterals.sort(ascendingBy(x => x.a)))
             .toMatchObject(
                 [
                     { a: 'a' },
@@ -73,7 +86,7 @@ describe('Sort', () => {
             )
     })
     it('should sort descending ', () => {
-        expect(testData.sort(descending(x => x.a)))
+        expect(testData.sort(descendingBy(x => x.a)))
             .toMatchObject(
                 [
                     { a: 100 },
@@ -84,11 +97,11 @@ describe('Sort', () => {
             )
     })
     it('should sort descending names', () => {
-        const result = names.sort(descending(
+        const result = names.sort(descendingBy(
             x => x.lastName,
             x => x.age,
             x => x.name
-        ));
+        ))
         expect(result)
             .toMatchObject(
                 [
@@ -100,9 +113,9 @@ describe('Sort', () => {
                 ]
             )
     })
-    it('should sort by custom priority', () => {
+    it('should sort by custom priority (condition[])', () => {
         const result =
-        [
+            [
                 { task: 'Sleep', severity: 'low' },
                 ...testTodoData
             ].sort(by(
@@ -121,6 +134,15 @@ describe('Sort', () => {
             { task: 'Drink', severity: 'low' },
             { task: 'Eat', severity: 'medium' },
             { task: 'Code', severity: 'high' },
+        ])
+    })
+    it('should sort by custom priority ', () => {
+        const result = [...testTodoData].sort(by('severity', ['low', 'medium', 'high']))
+        expect(result).toMatchObject([
+            { task: 'Drink', severity: 'low' },
+            { task: 'Sleep', severity: 'low' },
+            { task: 'Eat', severity: 'medium' },
+            { task: 'Code', severity: 'high' }
         ])
     })
 })
