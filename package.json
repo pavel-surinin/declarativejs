@@ -44,6 +44,7 @@
     "build": "npm run lint && npm run compile && npm run test:coverage",
     "pre-publish": "npm run build && cp package.json target/out/package.json && cp README.md target/out/README.md",
     "publish:patch": "npm run pre-publish && npm version patch && npm publish target/out",
+    "publish:minor": "npm run pre-publish && npm version minor && npm publish target/out",
     "publish:major": "npm run pre-publish && npm version major && npm publish target/out",
     "coveralls": "cat target/coverage/lcov.info | coveralls"
   }
