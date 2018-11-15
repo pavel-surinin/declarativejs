@@ -5,6 +5,7 @@
   "types": "index.d.ts",
   "author": "Pavel Surinin <pavel.surinin@gmail.com>",
   "license": "MIT",
+  "homepage": "https://pavel-surinin.github.io/declarativejs/",
   "repository": {
     "type": "git",
     "url": "https://github.com/pavel-surinin/declarative-js.git"
