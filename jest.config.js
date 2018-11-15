@@ -6,5 +6,6 @@ module.exports = {
     "testMatch": ["**/?(*.)test.ts"],
     "verbose": true,
     "cacheDirectory": "./target/tmp/",
-    "coverageDirectory": "./target/coverage/"
+    "coverageDirectory": "./target/coverage/",
+    "testURL": "http://localhost/"
 }   

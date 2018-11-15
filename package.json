@@ -40,6 +40,7 @@
     "lint": "tslint -c tslint.json -p tsconfig.json -t stylish",
     "test": "jest -c jest.config.js",
     "test:coverage": "npm test -- --coverage",
+    "docs": "docsify init ./docs",
     "build": "npm run lint && npm run compile && npm run test:coverage",
     "pre-publish": "npm run build && cp package.json target/out/package.json && cp README.md target/out/README.md",
     "publish:patch": "npm run pre-publish && npm version patch && npm publish target/out",
