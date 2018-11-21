@@ -66,6 +66,7 @@
 				<a href="https://coveralls.io/github/pavel-surinin/declarative-js?branch=master"><img src="https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master" alt="Coverage Status"></a></p>
 				<h1 id="array-functions">Array Functions</h1>
 				<h2 id="filters">Filters</h2>
+				<p>API documentaiton <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html">link</a></p>
 				<h3 id="tobe-present">toBe.present</h3>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
@@ -108,6 +109,7 @@ data.filter(toBe.uniqueBy(<span class="hljs-string">'genre'</span>))
 <span class="hljs-comment">//  { title: 'Tom &amp; Jerry', genre: 'cartoon' }</span>
 <span class="hljs-comment">// ]</span></code></pre>
 				<h2 id="mappers">Mappers</h2>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_mappers_.html">link</a></p>
 				<h3 id="toobjvalues">toObjValues</h3>
 				<p>As javascript <code>Object</code> class has static method <code>keys</code>, there is similar method to get object values</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Mapper } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
@@ -115,6 +117,7 @@ data.filter(toBe.uniqueBy(<span class="hljs-string">'genre'</span>))
 
 [{<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">4</span>}].map(toObjValues) <span class="hljs-comment">// [[1, 2], [3, 4]]</span></code></pre>
 				<h2 id="reducers">Reducers</h2>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_reduce_.reducer.html">link</a></p>
 				<h3 id="groupby">groupBy</h3>
 				<p>Groups by key resolved from callback to map where key is <code>string</code> and value is an <code>array</code> of items.
 					Custom implementation of Map can be passed as a second parameter. It must implement interface <a href="#methodmap">MethodMap</a>.
@@ -260,6 +263,7 @@ data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">perso
     .reduce(toObject(<span class="hljs-function"><span class="hljs-params">va</span> =&gt;</span> va.name), ImmutableObject()) 
     ...</code></pre>
 				<h2 id="sorters">Sorters</h2>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_sort_.sort.html">link</a></p>
 				<h3 id="ascending">ascending</h3>
 				<p>Sorts array in ascending order by values provided from callbacks. First callback has highest priority in sorting and so on. </p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Sort } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
@@ -322,6 +326,7 @@ names.sort(descending(<span class="hljs-string">'name'</span>, <span class="hljs
 <span class="hljs-comment">// { task: 'Eat', severity: 'medium' },</span>
 <span class="hljs-comment">// { task: 'Code', severity: 'high' },</span></code></pre>
 				<h1 id="optional">Optional</h1>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_optional_optional_.html">link</a></p>
 				<p>Idea of this function is from <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Java Optional</a>
 				This function checks value to be non <code>null</code> or <code>undefined</code>. It has two branches of functions, <code>.map(x)</code> when value is present and second when value is absent <code>.or.x</code></p>
 				<h2 id="toarray">toArray</h2>
@@ -371,6 +376,7 @@ optional(myVar).orElseThrow(<span class="hljs-string">'This is bad'</span>)</cod
         .map(toGreeting)
         .get() <span class="hljs-comment">// if filter returned false an error will be thrown</span></code></pre>
 				<h1 id="is">is</h1>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_assert_assert_.assert.html">link</a></p>
 				<p><code>null</code> assertion</p>
 				<pre><code class="language-javascript">    <span class="hljs-keyword">import</span> { is } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
@@ -401,6 +407,7 @@ optional(myVar).orElseThrow(<span class="hljs-string">'This is bad'</span>)</cod
 				<pre><code class="language-javascript">    is({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}).deepEquals({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}) <span class="hljs-comment">// true</span>
     is({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}).not.deepEquals({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}) <span class="hljs-comment">// false</span></code></pre>
 				<h1 id="methodmap">MethodMap</h1>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/interfaces/_map_methodmap_.methodmap.html">link</a></p>
 				<p>Interface for DTO to that is used in <a href="#reducers">reducers</a>.
 					Provided two implementations:
 					<a href="#jmap">JMap</a>
@@ -417,6 +424,7 @@ optional(myVar).orElseThrow(<span class="hljs-string">'This is bad'</span>)</cod
     toObject(): {[keyof: <span class="hljs-built_in">string</span>]: T}
 }</code></pre>
 				<h1 id="immutablemap">ImmutableMap</h1>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/classes/_map_immutablemap_.immutablemap.html">link</a></p>
 				<p>Map that has disabled <code>put</code> method. If this method is called, <code>TypeError</code> exception will be thrown.
 					Method <code>toObject</code> will return immutable object constructed with <code>Object.freeze</code>.
 				Implements typescript <code>interface</code> <a href="#methodmap">MethodMap</a> </p>
@@ -436,6 +444,7 @@ sample.entries() <span class="hljs-comment">// [ {key: 'mike', value: 1}, {key: 
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> ImmutableMap({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>})
 </code></pre>
 				<h1 id="jmap">JMap</h1>
+				<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/classes/_map_jmap_.jmap.html">link</a></p>
 				<p>Map that has all required functions to comfortably work with it. Implements typescript <code>interface</code> <a href="#methodmap">MethodMap</a> </p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> jmap = <span class="hljs-keyword">new</span> JMap()
 jmap.put(<span class="hljs-string">'mike'</span>, <span class="hljs-number">1</span>)

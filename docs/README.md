@@ -8,6 +8,7 @@ Library for declarative coding, that has array functions to filter, group, colle
 # Array Functions
 
 ## Filters
+API documentaiton [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html)
 
 ### toBe.present
 ```javascript
@@ -74,7 +75,7 @@ data.filter(toBe.uniqueBy('genre'))
 ```
 
 ## Mappers
-
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_mappers_.html)
 ### toObjValues
 
 As javascript `Object` class has static method `keys`, there is similar method to get object values
@@ -87,7 +88,8 @@ import toObjValues = Reducers.toObjValues
 ``` 
 
 ## Reducers
-
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_reduce_.reducer.html)
+ 
 ### groupBy
 
 Groups by key resolved from callback to map where key is `string` and value is an `array` of items.
@@ -285,6 +287,7 @@ import ImmutableObject = Reducers.ImmutableObject
 ```
 
 ## Sorters
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_sort_.sort.html)
 
 ### ascending 
 
@@ -365,6 +368,7 @@ const result = testTodoData.sort(by('severity', ['low', 'medium', 'high']))
 ```
 
 # Optional
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_optional_optional_.html)
 
 Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
 This function checks value to be non `null` or `undefined`. It has two branches of functions, `.map(x)` when value is present and second when value is absent `.or.x`
@@ -452,6 +456,7 @@ Method predicate `(value: T) => boolean`. If filters predicate returns `false`, 
 
 
 # is
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_assert_assert_.assert.html)
 
 `null` assertion
 ```javascript
@@ -507,6 +512,7 @@ Under the hood [fast-deep=equal](https://www.npmjs.com/package/fast-deep-equal) 
 ```
 
 # MethodMap
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/interfaces/_map_methodmap_.methodmap.html)
 
 Interface for DTO to that is used in [reducers](#reducers).
 Provided two implementations:
@@ -527,6 +533,8 @@ interface MethodMap<T> {
 ```
 
 # ImmutableMap
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/classes/_map_immutablemap_.immutablemap.html)
+
 Map that has disabled `put` method. If this method is called, `TypeError` exception will be thrown. 
 Method `toObject` will return immutable object constructed with `Object.freeze`. 
 Implements typescript `interface` [MethodMap](#methodmap) 
@@ -551,6 +559,7 @@ const map = new ImmutableMap({a: 1, b: 2})
 ```
 
 # JMap
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/classes/_map_jmap_.jmap.html)
 
 Map that has all required functions to comfortably work with it. Implements typescript `interface` [MethodMap](#methodmap) 
 ```javascript
