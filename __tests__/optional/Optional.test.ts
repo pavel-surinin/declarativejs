@@ -1,7 +1,7 @@
 import { optional } from '../../src/optional/Optional'
 
-let undefinedObject: undefined;
-let definedObject: {p: number, und?: string};
+let undefinedObject: undefined
+let definedObject: { p: number, und?: string }
 // tslint:disable-next-line:no-empty
 const eventTracker = { do: () => { } }
 const spy = { do: jest.spyOn(eventTracker, 'do') }
@@ -9,7 +9,7 @@ const spy = { do: jest.spyOn(eventTracker, 'do') }
 beforeEach(() => {
     spy.do.mockClear()
     undefinedObject = undefined
-    definedObject = {p: 1}
+    definedObject = { p: 1 }
 })
 
 describe('Optional', () => {
@@ -47,13 +47,13 @@ describe('Optional', () => {
             it('should get value if it is present with chained map', () => {
                 const o = optional(definedObject)
                     .map(ob => ob.p)
-                    .map(n => n + 1)                
+                    .map(n => n + 1)
                     .get()
                 expect(o).toBe(2)
             })
             it('should throw on undefined value and get', () => {
                 expect(() => optional(undefinedObject).map(v => v).get())
-                    .toThrow('Value is not defined') 
+                    .toThrow('Value is not defined')
             })
             it('should throw on mapping to undefined', () => {
                 expect(() => {
@@ -61,45 +61,45 @@ describe('Optional', () => {
                         .map(x => x.und)
                         .map(x => x.length)
                         .get()
-                }).toThrow('Value is not defined');
-            });
+                }).toThrow('Value is not defined')
+            })
         })
         describe('or', () => {
             it('should get "or" after optional()', () => {
                 const result = optional(undefinedObject as string | undefined)
                     .orElse('a')
-                expect(result).toBe('a');
+                expect(result).toBe('a')
             })
             it('should get "or" after optional() (elseGet)', () => {
                 const result = optional(undefinedObject as string | undefined)
                     .orElseGet(() => 'a')
-                expect(result).toBe('a');
+                expect(result).toBe('a')
             })
             it('should get "or" after optional() not follow or', () => {
                 const result = optional(definedObject)
-                    .orElseGet(() => ({p: 111}))
-                expect(result).toMatchObject(definedObject);
+                    .orElseGet(() => ({ p: 111 }))
+                expect(result).toMatchObject(definedObject)
             })
             it('should follow on undefined or.else', () => {
                 const result = optional(definedObject)
                     .map(v => v.und)
                     .map(v => v + 'b')
                     .orElse('a')
-                expect(result).toBe('a');    
+                expect(result).toBe('a')
             })
             it('should not follow on defined or.else', () => {
                 const result = optional(definedObject)
                     .map(v => v.p as number)
                     .map(v => v + 1)
                     .orElse(10)
-                expect(result).toBe(2);    
+                expect(result).toBe(2)
             })
             it('should follow or on undefined in start of pipe', () => {
                 const result = optional(definedObject.und)
                     .map(v => v.concat('a'))
                     .map(v => v + 'b')
                     .orElse('a')
-                expect(result).toBe('a');    
+                expect(result).toBe('a')
             })
             it('should follow on defined with false filter or.else', () => {
                 const result = optional(definedObject)
@@ -107,7 +107,7 @@ describe('Optional', () => {
                     .map(v => v + 1)
                     .filter(v => v !== 2)
                     .orElseGet(() => 10)
-                expect(result).toBe(10);    
+                expect(result).toBe(10)
             })
         })
         describe('filter', () => {
@@ -147,7 +147,7 @@ describe('Optional', () => {
                     .filter(p => p !== null)
                     .map(n => n + 1)
                     .get()
-                expect(result).toBe(2)    
+                expect(result).toBe(2)
             })
         })
         describe('toArray', () => {
@@ -156,7 +156,7 @@ describe('Optional', () => {
                 expect(arr).toHaveLength(0)
             })
             it('should return an array of one element on defined value', () => {
-                const arr = optional(definedObject).map(x => x).toArray()                
+                const arr = optional(definedObject).map(x => x).toArray()
                 expect(arr).toHaveLength(1)
             })
             it('should return an array of elements on defined value', () => {
@@ -182,9 +182,9 @@ describe('Optional', () => {
     })
     describe('isAbsent', () => {
         it('should return absent or not', () => {
-            expect(optional(undefined).isAbsent()).toBeTruthy();
-            expect(optional(null).isAbsent()).toBeTruthy();
-            expect(optional(definedObject).isAbsent()).toBeFalsy();
+            expect(optional(undefined).isAbsent()).toBeTruthy()
+            expect(optional(null).isAbsent()).toBeTruthy()
+            expect(optional(definedObject).isAbsent()).toBeFalsy()
         })
     })
     describe('toArray', () => {

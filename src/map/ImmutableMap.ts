@@ -18,4 +18,4 @@ export class ImmutableMap<T> extends JMap<T> implements MethodMap<T> {
     toObject(): Readonly<{ [keyof: string]: T }> {
         return Object.freeze(super.toObject())
     }
-}
+}   

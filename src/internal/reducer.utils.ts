@@ -18,7 +18,7 @@ export const finalizeMap = <T>(map: MethodMap<T>): MethodMap<T> => {
 
 export const finalizeObject = <T>(map: MMap<T>) => {
     if (Object.getOwnPropertyDescriptor(map, 'immutable')) {
-        return Object.freeze(map)
+        return Object.seal(map)
     }
     return map
 }

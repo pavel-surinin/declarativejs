@@ -6,11 +6,11 @@ describe('Assert', () => {
         expect(is(undefined).undefined).toBeTruthy()
     })
     it('should check to be deep equal', () => {
-        expect(is({a: {b: 1}}).deepEquals({a: {b: 1}})).toBeTruthy()
-        expect(is({a: {b: 1}}).deepEquals({a: {b: 2}})).toBeFalsy()
-        
-        expect(is({a: {b: 1}}).not.deepEquals({a: {b: 1}})).toBeFalsy()
-        expect(is({a: {b: 1}}).not.deepEquals({a: {b: 2}})).toBeTruthy()
+        expect(is({ a: { b: 1 } }).deepEquals({ a: { b: 1 } })).toBeTruthy()
+        expect(is({ a: { b: 1 } }).deepEquals({ a: { b: 2 } })).toBeFalsy()
+
+        expect(is({ a: { b: 1 } }).not.deepEquals({ a: { b: 1 } })).toBeFalsy()
+        expect(is({ a: { b: 1 } }).not.deepEquals({ a: { b: 2 } })).toBeTruthy()
     })
     it('should check to be null', () => {
         expect(is(null).null).toBeTruthy()
@@ -30,7 +30,7 @@ describe('Assert', () => {
     })
     it('should check to be not empty', () => {
         expect(is('a').empty).toBeFalsy()
-        expect(is({a: 'a'}).empty).toBeFalsy()
+        expect(is({ a: 'a' }).empty).toBeFalsy()
         expect(is(['a']).empty).toBeFalsy()
         expect(is([new Date()]).empty).toBeFalsy()
     })
@@ -41,27 +41,9 @@ describe('Assert', () => {
     const isA = (s: string) => s === 'a'
     const isC = (s: string) => s === 'c'
     const isNotB = (s: string) => s !== 'b'
-    it('should check to meet all predicates', () => {
-        expect(is('a').meets.all(isA, isNotB))
-            .toBeTruthy()
-    })
-    it('should check to meet some predicates', () => {
-        expect(is('a').meets.some(isA, isC))
-            .toBeTruthy()
-    })
-    it('should check to meet none predicates', () => {
-        expect(is('d').meets.none(isA, isC))
-            .toBeTruthy()
-    })
-    it('should check to meet some predicates to false', () => {
-        expect(is('d').meets.some(isA, isC)).toBeFalsy()
-    })
-    it('should check to meet only one predicates to false', () => {
-        expect(is('d').meets.only(isC)).toBeFalsy()
-    })
     it('should check is value equal (===) true', () => {
         const isEqual = is('').equals('')
-        expect(isEqual).toBeTruthy();
+        expect(isEqual).toBeTruthy()
     })
     it('should check is value equal (===) false', () => {
         const isEqual = is('a').equals('b')
@@ -95,7 +77,7 @@ describe('Assert', () => {
         })
         it('should check to be not empty', () => {
             expect(is('a').not.empty).toBeTruthy()
-            expect(is({a: 'a'}).not.empty).toBeTruthy()
+            expect(is({ a: 'a' }).not.empty).toBeTruthy()
             expect(is(['a']).not.empty).toBeTruthy()
         })
         it('should check to be typeof string', () => {
@@ -104,7 +86,7 @@ describe('Assert', () => {
         })
         it('should check is value not equal (===) false', () => {
             const isEqual = is('').not.equals('')
-            expect(isEqual).toBeFalsy();
+            expect(isEqual).toBeFalsy()
         })
         it('should check is value equal (===) true', () => {
             const isEqual = is('a').equals('b')
@@ -123,7 +105,7 @@ describe('Assert', () => {
     describe('isNot...', () => {
         it('empty', () => {
             expect(Assert.isNotEmpty('a')).toBeTruthy()
-            expect(Assert.isNotEmpty({a: 'a'})).toBeTruthy()
+            expect(Assert.isNotEmpty({ a: 'a' })).toBeTruthy()
             expect(Assert.isNotEmpty(['a'])).toBeTruthy()
         })
         it('equal', () => {

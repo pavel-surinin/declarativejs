@@ -5,8 +5,8 @@ import groupBy = Reducer.groupBy
 import flat = Reducer.flat
 import toMap = Reducer.toMap
 import toObject = Reducer.toObject
-import toObjectAndValue = Reducer.toObjectAndValue
-import groupByValueOfKey = Reducer.groupByValueOfKey
+import toObjectAndValue = Reducer.toObject
+import groupByValueOfKey = Reducer.groupBy
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
@@ -51,7 +51,7 @@ const testNumData = testNumberArray(50000)
 
 describe.skip('performance', () => {
     it('of toMapAndValue', () => {
-        testData.reduce(Reducer.toMapAndValue(x => x.name, x => x.age), new JMap())
+        testData.reduce(Reducer.toMap(x => x.name, x => x.age), new JMap())
     })
     it('of toMap', () => {
         testData.reduce(toMap(x => x.name), new JMap())
@@ -69,10 +69,10 @@ describe.skip('performance', () => {
         testData.reduce(Reducer.groupBy(x => x.name), Reducer.ImmutableMap())
     })
     it('of groupByValueOfKey', () => {
-        testData.reduce(Reducer.groupByValueOfKey('name'), new JMap())
+        testData.reduce(Reducer.groupBy('name'), new JMap())
     })
     it('of groupByValueOfKey to immutable map', () => {
-        testData.reduce(Reducer.groupByValueOfKey('name'), Reducer.ImmutableMap())
+        testData.reduce(Reducer.groupBy('name'), Reducer.ImmutableMap())
     })
     it('of flat', () => {
         test2dData.reduce(flat)
@@ -87,6 +87,6 @@ describe.skip('performance', () => {
         testData.filter(toBe.uniqueBy(x => x.luckyNumber))
     })
     it('of uniqueByPropName', () => {
-        testData.filter(toBe.uniqueByProp('luckyNumber'))
+        testData.filter(toBe.uniqueBy('luckyNumber'))
     })
 })

@@ -1,6 +1,9 @@
 import { Sort } from '../array/sort'
 import { Getter, AutoComparable } from '../types'
 
+/**
+ * @ignore
+ */
 export function sortByConditions<T, R>(...conditions: Sort.SortingCondition<T, R>[]) {
     return function (a: T, b: T) {
         for (let index = 0; index < conditions.length; index++) {
@@ -17,6 +20,9 @@ export function sortByConditions<T, R>(...conditions: Sort.SortingCondition<T, R
     }
 }
 
+/**
+ * @ignore
+ */
 export function sortByPropertyAndPriority<T, K extends keyof T>(key: K, values: T[K][]) {
     return function (a: T, b: T) {
         const aa = values.indexOf(a[key])
@@ -30,6 +36,9 @@ export function sortByPropertyAndPriority<T, K extends keyof T>(key: K, values: 
     }
 }
 
+/**
+ * @ignore
+ */
 export function sortByGetters(numbers: Sort.IfAHigherB) {
     return function <T>(...mappersArr: Getter<T, AutoComparable>[]) {
         return function (a: T, b: T): number {
@@ -47,6 +56,10 @@ export function sortByGetters(numbers: Sort.IfAHigherB) {
         }
     }
 }
+
+/**
+ * @ignore
+ */
 export function sortByKeyValues(numbers: Sort.IfAHigherB) {
     return function <T, K extends keyof T>(...keys: K[]) {
         return function (a: T, b: T): number {

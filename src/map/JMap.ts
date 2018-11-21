@@ -11,9 +11,12 @@ export class JMap<T> implements MethodMap<T> {
     }
 
     put(key: string, value: T) {
-        const prevValue = this.storage[key]
-        this.storage[key] = value
-        return prevValue
+        Object.defineProperty(this.storage, key, {
+            value: value,
+            enumerable: true,
+            writable: true,
+            configurable: false
+        })
     }
 
     get(key: string): T | undefined {
@@ -29,7 +32,7 @@ export class JMap<T> implements MethodMap<T> {
     }
 
     containsKey(key: string): boolean {
-        return Object.keys(this.storage).some(k => k === key)
+        return Object.prototype.hasOwnProperty.call(this.storage, key)
     }
 
     containsValue(value: T): boolean {

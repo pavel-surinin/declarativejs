@@ -1,5 +1,5 @@
 import { Assert } from '../assert/Assert'
-import { uniqueByMappedValue, uniqueByProp } from '../.internal/unique'
+import { uniqueByMappedValue, uniqueByProp } from '../internal/unique'
 import { Getter } from '../types'
 import deepEqual from 'fast-deep-equal'
 

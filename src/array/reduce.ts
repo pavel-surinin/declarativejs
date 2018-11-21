@@ -2,11 +2,11 @@ import eq from 'fast-deep-equal'
 import { MethodMap } from '../map/MethodMap'
 import { ImmutableBuilder } from '../map/ImmutableBuilder'
 import { MMap, KeyGetter, Getter } from '../types'
-import { groupByCallBack, groupByValueOfKey } from '../.internal/groupBy'
-import { toObjectAndValue, toObjectValueObject } from '../.internal/toObject'
-import { toMapAndValue, toMapKeyMap } from '../.internal/toMap'
+import { groupByCallBack, groupByValueOfKey } from '../internal/groupBy'
+import { toObjectAndValue, toObjectValueObject } from '../internal/toObject'
+import { toMapAndValue, toMapKeyMap } from '../internal/toMap'
 import { JMap } from '../map/JMap'
-import { lastElement } from '../.internal/reducer.utils'
+import { lastElement } from '../internal/reducer.utils'
 
 // tslint:disable-next-line:no-any
 function use(...args: any[]) {

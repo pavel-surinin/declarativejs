@@ -2,7 +2,7 @@
 Library for declarative coding, that has array functions to filter, group, collect to map and object, and sort in javascript. Contains javascript optional for handling `null` and `undefined` in javascript. It is also fully typed for `typescript`. 
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
-[![Build Status](https://travis-ci.org/pavel-surinin/declarative-js.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
+[![Build Status](https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
 [![Coverage Status](https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master)](https://coveralls.io/github/pavel-surinin/declarative-js?branch=master)
 
 # Array Functions
@@ -506,19 +506,6 @@ Under the hood [fast-deep=equal](https://www.npmjs.com/package/fast-deep-equal) 
     is({a: {b: 1}}).not.deepEquals({a: {b: 1}}) // false
 ```
 
-`meets` assertion. Assert to meet predicates `(value: T) => boolean`
-```javascript
-    //predicates
-    const isA = s => s === 'a'
-    const isC = s => s === 'c'
-    const isNotB = s => s !== 'b'
-    //assertion
-    is('a').meets.all(isA, isNotB)  //true
-    is('a').meets.some(isA, isC)    //true
-    is('d').meets.none(isA, isC)    //true
-    is('c').meets.only(isC)         //true
-```
-
 # MethodMap
 
 Interface for DTO to that is used in [reducers](#reducers).
@@ -527,7 +514,7 @@ Provided two implementations:
 [ImmutableMap](#immutablemap)
 ```typescript
 interface MethodMap<T> {
-    put(key: string, value: T): T | undefined
+    put(key: string, value: T): void
     get(key: string): T | undefined
     keys(): string[]
     values(): T[]

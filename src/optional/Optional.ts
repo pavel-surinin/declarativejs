@@ -1,8 +1,6 @@
 import { Assert } from '../assert/Assert'
-import { toArray, AlwaysArray } from '../ToArray'
-
-export type Fuction<T, R> = (from: T) => R
-export type NonNull<R> = R extends undefined | null ? R : R
+import { AlwaysArray, Getter } from '../types'
+import { toArray } from '../internal/ToArray'
 
 export class Optional<T> {
 
@@ -52,7 +50,7 @@ export class Optional<T> {
         return this.value!
     }
 
-    map<R>(mapper: Fuction<T, R>): Optional<NonNullable<R>> {
+    map<R>(mapper: Getter<T, R>): Optional<NonNullable<R>> {
         return this.isPresent() ? new Optional(mapper(this.value!)!)! : new Optional()
     }
 

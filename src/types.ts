@@ -12,3 +12,8 @@ export type Getter<C, R> = (cbv: C) => R
 export type KeyGetter<C> = Getter<C, string>
 
 export const Map = <T>(obj?: MMap<T>): MethodMap<T> => new JMap<T>(obj)
+
+// tslint:disable-next-line:no-any
+export type AlwaysArray<T> = T extends any[] ? T : T[]
+
+export type NonNull<R> = R extends undefined | null ? R : R

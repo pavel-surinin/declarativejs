@@ -28,12 +28,14 @@
     "fast-deep-equal": "2.0.1"
   },
   "devDependencies": {
-    "docsify": "4.8.6",
     "@types/jest": "22.2.3",
     "coveralls": "3.0.2",
+    "docsify": "4.8.6",
     "jest": "22.4.3",
     "ts-jest": "22.4.5",
     "tslint": "5.10.0",
+    "typedoc": "^0.13.0",
+    "typedoc-plugin-markdown": "^1.1.18",
     "typescript": "2.8.3"
   },
   "scripts": {
@@ -41,7 +43,10 @@
     "lint": "tslint -c tslint.json -p tsconfig.json -t stylish",
     "test": "jest -c jest.config.js",
     "test:coverage": "npm test -- --coverage",
-    "docs": "docsify init ./docs",
+    "docsify": "docsify init ./docs",
+    "typedocs": "typedoc --out ./docs/typedoc src --name declarative-js --readme ./readme.md --exclude **/internal/**.ts --ignoreCompilerErrors --excludeNotExported --excludeExternals --excludePrivate",
+    "docs": "npm run docsify && npm run typedocs",
+    "docs:start": "docsify serve ./docs",
     "build": "npm run lint && npm run compile && npm run test:coverage",
     "copy": "cp package.json target/out/package.json && cp README.md target/out/README.md",
     "publish:patch": "npm run build && npm version patch && npm run copy && npm publish target/out",

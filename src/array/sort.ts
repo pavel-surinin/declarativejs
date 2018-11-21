@@ -3,7 +3,7 @@ import {
     sortByPropertyAndPriority,
     sortByKeyValues,
     sortByGetters
-} from '../.internal/sort'
+} from '../internal/sort'
 import { Getter, AutoComparable } from '../types'
 
 /**

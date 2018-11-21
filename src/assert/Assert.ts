@@ -1,8 +1,7 @@
-import { predict } from '../if/InCase'
 import equal from 'fast-deep-equal'
 
 export namespace Assert {
-    
+
     export type JSType = 'undefined' | 'object' | 'boolean' | 'number' | 'string'
 
     /**
@@ -24,11 +23,11 @@ export namespace Assert {
         }
         return false
     }
-    
+
     export const isUndefined = <T>(value: T) => value === void 0
-    
+
     export const isNull = <T>(value: T) => value === null
-    
+
     /**
      * Checks value to be equal with {@code ===} strict equality
      */
@@ -49,12 +48,12 @@ export namespace Assert {
     export const isPresent = <T>(value: T) => !isUndefined(value) && !isNull(value)
 
     export const isNotEmpty = <T>(value: T) => !isEmpty(value)
-    
+
     export const isNotPresent = <T>(value: T) => !isPresent(value)
-    
+
     // tslint:disable-next-line:no-any
-    export const isNotEqual = <T>(value1: T) => (value2: any) => value1 !== value2    
- 
+    export const isNotEqual = <T>(value1: T) => (value2: any) => value1 !== value2
+
     /**
      * Function for declarative value checking.
      * @param value 
@@ -76,10 +75,6 @@ export namespace Assert {
         empty: isEmpty(value),
         null: isNull(value),
         typeof: (type: JSType) => typeof value === type,
-        /**
-         * Value to meet some condition(s) to be true
-         */
-        meets: predict(value),
         // tslint:disable-next-line:no-any
         equals: (valueToCompare: any) => isEqual(value)(valueToCompare),
         // tslint:disable-next-line:no-any

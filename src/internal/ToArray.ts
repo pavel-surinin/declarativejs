@@ -1,8 +1,9 @@
+import { AlwaysArray } from '../types'
+
 // tslint:disable-next-line
-export type AlwaysArray<T> = T extends any[] ? T : T[];
 
 export const toArray = <T>(value?: T): AlwaysArray<T> => {
-    if ( value !== null && value !== void 0) {
+    if (value !== null && value !== void 0) {
         if (Array.isArray(value)) {
             return value as AlwaysArray<T>
         }

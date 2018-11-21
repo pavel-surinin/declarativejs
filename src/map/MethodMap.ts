@@ -3,13 +3,7 @@ export interface Entry<T> {
     value: T
 }
 export interface MethodMap<T> {
-    /**
-     * 
-     * @param key   
-     * @param value 
-     * @returns     value that was by this key before 
-     */
-    put(key: string, value: T): T | undefined
+    put(key: string, value: T): void
     get(key: string): T | undefined
     keys(): string[]
     values(): T[]
