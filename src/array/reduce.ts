@@ -17,7 +17,7 @@ export namespace Reducer {
 
     export const Map =
         // tslint:disable-next-line:no-any
-        <T>(data?: MMap<any>): MethodMap<T> => new JMap(data) as MethodMap<T>
+        <T>(data?: MMap<T>): MethodMap<T> => new JMap(data) as MethodMap<T>
 
     export const ImmutableMap =
         // tslint:disable-next-line:no-any
