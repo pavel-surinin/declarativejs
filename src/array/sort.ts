@@ -135,7 +135,7 @@ export namespace Sort {
      * @type T type of array item
      * @type R type of item that will be mapped from callback and will be compared
      * @param {toValue: function(T): R, R[]} ...conditions 
-     * @returns function to be used in array.sort() function
+     * @returns comparator for Array.prototype.sort function.
      * @example
      * const result =
      *       testTodoData.sort(by(
@@ -147,7 +147,8 @@ export namespace Sort {
      *      // { task: 'Eat', severity: 'medium' },
      *      // { task: 'Code', severity: 'high' },
      */
-    export function by<T, R>(...conditions: SortingCondition<T, R>[]): (a: T, b: T) => number
+    // tslint:disable-next-line:no-any
+    export function by<T>(...conditions: SortingCondition<T, any>[]): (a: T, b: T) => number
 
     /**
      * Function that will sort items in array with custom values, by provided order.
@@ -155,7 +156,7 @@ export namespace Sort {
      *                                  be compared to another
      * @param {string | number} values  values that will be define order of 
      *                                  extracted value by key
-     * @returns function to be used in array.sort() function
+     * @returns comparator for Array.prototype.sort function.
      * @example
      * const result =
      *       testTodoData.sort(by('severity', ['low', 'medium', 'high']))
@@ -176,4 +177,28 @@ export namespace Sort {
             }
         }
     }
+    /**
+     * Function that will sort items in array, by provided order.
+     * It accepts as a parameter array of custom order rule. 
+     * Element, that are not present in order array will be at he the end of the sorted list.
+     * @param order     array of custom order of items that are being sorted.
+     * @returns comparator for Array.prototype.sort function.
+     * @example
+     * const testData = 
+     *   ['bar', 'medium', 'foo', 'low'] 
+     * const result =
+     *   testData.sort(orderedBy(['low', 'medium', 'high']))
+     * // result => ['low', 'medium', 'bar', 'foo', ]
+     */
+    export function orderedBy<T>(order: T[]) {
+        return function (a: T, b: T) {
+            const condition = {
+                toValue: x => x,
+                order: order
+                // tslint:disable-next-line:no-any
+            } as SortingCondition<any, T>
+            return sortByConditions(...[condition])(a, b)
+        }
+    }
+
 }

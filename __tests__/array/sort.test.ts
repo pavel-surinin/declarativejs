@@ -2,6 +2,7 @@ import { Sort } from '../../src/array/sort'
 import ascendingBy = Sort.ascendingBy
 import descendingBy = Sort.descendingBy
 import by = Sort.by
+import orderedBy = Sort.orderedBy
 
 const testData = [
     { a: 1 },
@@ -143,6 +144,27 @@ describe('Sort', () => {
             { task: 'Sleep', severity: 'low' },
             { task: 'Eat', severity: 'medium' },
             { task: 'Code', severity: 'high' }
+        ])
+    })
+    it('should sort ordered by custom priority ', () => {
+        const result = [...testTodoData]
+            .map(x => x.severity)
+            .sort(orderedBy(['low', 'medium', 'high']))
+        expect(result).toMatchObject([
+            'low',
+            'low',
+            'medium',
+            'high'
+        ])
+    })
+    it('should sort ordered by custom priority and push unspecified items to the end', () => {
+        const result = ['bar', 'medium', 'foo', 'low']
+            .sort(orderedBy(['low', 'medium', 'high']))
+        expect(result).toMatchObject([
+            'low',
+            'medium',
+            'bar',
+            'foo'
         ])
     })
 })

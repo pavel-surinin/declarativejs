@@ -1,15 +1,23 @@
 import { Sort } from '../array/sort'
 import { Getter, AutoComparable } from '../types'
 
+function comparatorValue<T>(order: T[], value: T): number {
+    const index = order.indexOf(value)
+    return index === -1
+        ? order.length
+        : index
+}
+
 /**
  * @ignore
+ * @internal
  */
 export function sortByConditions<T, R>(...conditions: Sort.SortingCondition<T, R>[]) {
     return function (a: T, b: T) {
         for (let index = 0; index < conditions.length; index++) {
-            const mapper = conditions[index].toValue
-            const aa = conditions[index].order.indexOf(mapper(a))
-            const bb = conditions[index].order.indexOf(mapper(b))
+            const { order, toValue } = conditions[index]
+            const aa = comparatorValue(order, toValue(a))
+            const bb = comparatorValue(order, toValue(b))
             if (aa !== bb) {
                 return aa > bb
                     ? 1
@@ -25,8 +33,8 @@ export function sortByConditions<T, R>(...conditions: Sort.SortingCondition<T, R
  */
 export function sortByPropertyAndPriority<T, K extends keyof T>(key: K, values: T[K][]) {
     return function (a: T, b: T) {
-        const aa = values.indexOf(a[key])
-        const bb = values.indexOf(b[key])
+        const aa = comparatorValue(values, a[key])
+        const bb = comparatorValue(values, b[key])
         if (aa !== bb) {
             return aa > bb
                 ? 1
