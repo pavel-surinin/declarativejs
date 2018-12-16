@@ -367,6 +367,23 @@ const result = testTodoData.sort(by('severity', ['low', 'medium', 'high']))
 // { task: 'Code', severity: 'high' },
 ```
 
+### orderedBy
+Function that will sort items in array, by provided order.
+It accepts as a parameter array of custom order rule. 
+Element, that are not present in order array will be at he the end of the sorted list.
+
+
+```javascript
+import { Sort } from 'declarative-js'
+import orderedBy = Sort.orderedBy
+
+const testData = 
+    ['bar', 'medium', 'foo', 'low']
+const result = 
+    testData.sort(orderedBy(['low', 'medium', 'high']))
+// result => ['low', 'medium', 'bar', 'foo', ]
+```
+
 # Optional
 API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_optional_optional_.html)
 

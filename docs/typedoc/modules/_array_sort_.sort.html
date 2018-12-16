@@ -922,6 +922,9 @@ img { max-width: 100%; }
 		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 			<a href="_array_sort_.sort.html#descendingby" class="tsd-kind-icon">descending<wbr>By</a>
 		</li>
+		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+			<a href="_array_sort_.sort.html#orderedby" class="tsd-kind-icon">ordered<wbr>By</a>
+		</li>
 	</ul>
 </nav>
 <div class="container container-main">
@@ -950,6 +953,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_sort_.sort.html#ascendingby" class="tsd-kind-icon">ascending<wbr>By</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_sort_.sort.html#by" class="tsd-kind-icon">by</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_sort_.sort.html#descendingby" class="tsd-kind-icon">descending<wbr>By</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_sort_.sort.html#orderedby" class="tsd-kind-icon">ordered<wbr>By</a></li>
 						</ul>
 					</section>
 				</div>
@@ -968,7 +972,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/75ea2c2/src/array/sort.ts#L39">array/sort.ts:39</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/sort.ts#L39">array/sort.ts:39</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1036,7 +1040,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/75ea2c2/src/array/sort.ts#L58">array/sort.ts:58</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/sort.ts#L58">array/sort.ts:58</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1107,14 +1111,14 @@ img { max-width: 100%; }
 				<a name="by" class="tsd-anchor"></a>
 				<h3>by</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">by&lt;T, R&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>conditions<span class="tsd-signature-symbol">: </span><a href="../interfaces/_array_sort_.sort.sortingcondition.html" class="tsd-signature-type">SortingCondition</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
+					<li class="tsd-signature tsd-kind-icon">by&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>conditions<span class="tsd-signature-symbol">: </span><a href="../interfaces/_array_sort_.sort.sortingcondition.html" class="tsd-signature-type">SortingCondition</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
 					<li class="tsd-signature tsd-kind-icon">by&lt;T, K&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T[K]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/75ea2c2/src/array/sort.ts#L150">array/sort.ts:150</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/sort.ts#L151">array/sort.ts:151</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1147,18 +1151,15 @@ img { max-width: 100%; }
 							<li>
 								<h4>T</h4>
 							</li>
-							<li>
-								<h4>R</h4>
-							</li>
 						</ul>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>conditions: <a href="../interfaces/_array_sort_.sort.sortingcondition.html" class="tsd-signature-type">SortingCondition</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+								<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>conditions: <a href="../interfaces/_array_sort_.sort.sortingcondition.html" class="tsd-signature-type">SortingCondition</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
-						<p>function to be used in array.sort() function</p>
+						<p>comparator for Array.prototype.sort function.</p>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -1184,7 +1185,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/75ea2c2/src/array/sort.ts#L166">array/sort.ts:166</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/sort.ts#L167">array/sort.ts:167</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1228,7 +1229,7 @@ img { max-width: 100%; }
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
-						<p>function to be used in array.sort() function</p>
+						<p>comparator for Array.prototype.sort function.</p>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -1264,7 +1265,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/75ea2c2/src/array/sort.ts#L93">array/sort.ts:93</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/sort.ts#L93">array/sort.ts:93</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1332,7 +1333,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/75ea2c2/src/array/sort.ts#L112">array/sort.ts:112</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/sort.ts#L112">array/sort.ts:112</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1396,6 +1397,55 @@ img { max-width: 100%; }
 								</ul>
 							</li>
 						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+				<a name="orderedby" class="tsd-anchor"></a>
+				<h3>ordered<wbr>By</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">ordered<wbr>By&lt;T&gt;<span class="tsd-signature-symbol">(</span>order<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/sort.ts#L193">array/sort.ts:193</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function that will sort items in array, by provided order.
+									It accepts as a parameter array of custom order rule.
+								Element, that are not present in order array will be at he the end of the sorted list.</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>example</dt>
+								<dd><p>const testData =
+										[&#39;bar&#39;, &#39;medium&#39;, &#39;foo&#39;, &#39;low&#39;]
+										const result =
+										testData.sort(orderedBy([&#39;low&#39;, &#39;medium&#39;, &#39;high&#39;]))
+									// result =&gt; [&#39;low&#39;, &#39;medium&#39;, &#39;bar&#39;, &#39;foo&#39;, ]</p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-type-parameters-title">Type parameters</h4>
+						<ul class="tsd-type-parameters">
+							<li>
+								<h4>T</h4>
+							</li>
+						</ul>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>order: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>array of custom order of items that are being sorted.</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						<p>comparator for Array.prototype.sort function.</p>
 					</li>
 				</ul>
 			</section>

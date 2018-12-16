@@ -1177,6 +1177,18 @@ names.sort(descending(<span class="hljs-string">'name'</span>, <span class="hljs
 <span class="hljs-comment">// { task: 'Drink', severity: 'low' },</span>
 <span class="hljs-comment">// { task: 'Eat', severity: 'medium' },</span>
 <span class="hljs-comment">// { task: 'Code', severity: 'high' },</span></code></pre>
+			<h3 id="orderedby">orderedBy</h3>
+			<p>Function that will sort items in array, by provided order.
+				It accepts as a parameter array of custom order rule.
+			Element, that are not present in order array will be at he the end of the sorted list.</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Sort } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> orderedBy = Sort.orderedBy
+
+<span class="hljs-keyword">const</span> testData = 
+    [<span class="hljs-string">'bar'</span>, <span class="hljs-string">'medium'</span>, <span class="hljs-string">'foo'</span>, <span class="hljs-string">'low'</span>]
+<span class="hljs-keyword">const</span> result = 
+    testData.sort(orderedBy([<span class="hljs-string">'low'</span>, <span class="hljs-string">'medium'</span>, <span class="hljs-string">'high'</span>]))
+<span class="hljs-comment">// result =&gt; ['low', 'medium', 'bar', 'foo', ]</span></code></pre>
 			<h1 id="optional">Optional</h1>
 			<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_optional_optional_.html">link</a></p>
 			<p>Idea of this function is from <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Java Optional</a>
