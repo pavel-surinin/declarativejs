@@ -929,6 +929,18 @@ img { max-width: 100%; }
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<section class="tsd-panel tsd-comment">
+			<div class="tsd-comment tsd-typography">
+				<div class="lead">
+					<p>Functions to be used in {@link Array.prototype.filter} as a callback.</p>
+				</div>
+				<dl class="tsd-comment-tags">
+					<dt>example</dt>
+					<dd><p>[1, 2, 2].filter(toBe.unique)</p>
+					</dd>
+				</dl>
+			</div>
+		</section>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
@@ -951,17 +963,24 @@ img { max-width: 100%; }
 			<h2>Functions</h2>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 				<a name="equal" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> equal</h3>
+				<h3>equal</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">equal&lt;T&gt;<span class="tsd-signature-symbol">(</span>valueToMatch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					<li class="tsd-signature tsd-kind-icon">equal&lt;T&gt;<span class="tsd-signature-symbol">(</span>valueToMatch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_equal</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/filters.ts#L9">array/filters.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/6eae4c0/src/array/filters.ts#L37">array/filters.ts:37</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array.prototype.filter} as a callback.
+									Filters out items, that are not equal to provided item in parameters.
+								Objects are compared to be deep equal.</p>
+							</div>
+						</div>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
@@ -974,13 +993,13 @@ img { max-width: 100%; }
 								<h5>valueToMatch: <span class="tsd-signature-type">T</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_equal</span></h4>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 				<a name="notempty" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> not<wbr>Empty</h3>
+				<h3>not<wbr>Empty</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 					<li class="tsd-signature tsd-kind-icon">not<wbr>Empty&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 				</ul>
@@ -988,9 +1007,15 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/filters.ts#L8">array/filters.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/6eae4c0/src/array/filters.ts#L27">array/filters.ts:27</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array.prototype.filter} as a callback.
+								Filters out items that are empty</p>
+							</div>
+						</div>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
@@ -1004,22 +1029,30 @@ img { max-width: 100%; }
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						<p>*</p>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 				<a name="notequal" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> not<wbr>Equal</h3>
+				<h3>not<wbr>Equal</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">not<wbr>Equal&lt;T&gt;<span class="tsd-signature-symbol">(</span>valueToMatch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					<li class="tsd-signature tsd-kind-icon">not<wbr>Equal&lt;T&gt;<span class="tsd-signature-symbol">(</span>valueToMatch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_notEqual</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/filters.ts#L10">array/filters.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/6eae4c0/src/array/filters.ts#L49">array/filters.ts:49</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array.prototype.filter} as a callback.
+									Filters out items, that are equal to provided item in parameters.
+								Objects are compared to be deep equal.</p>
+							</div>
+						</div>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
@@ -1032,13 +1065,13 @@ img { max-width: 100%; }
 								<h5>valueToMatch: <span class="tsd-signature-type">T</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_notEqual</span></h4>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 				<a name="present" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> present</h3>
+				<h3>present</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 					<li class="tsd-signature tsd-kind-icon">present&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 				</ul>
@@ -1046,9 +1079,15 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/filters.ts#L7">array/filters.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/6eae4c0/src/array/filters.ts#L18">array/filters.ts:18</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array.prototype.filter} as a callback.
+								Filters out items that are not present ({@code undefined} and {@code null}) in array</p>
+							</div>
+						</div>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
@@ -1067,7 +1106,7 @@ img { max-width: 100%; }
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 				<a name="unique" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> unique</h3>
+				<h3>unique</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 					<li class="tsd-signature tsd-kind-icon">unique&lt;T&gt;<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 				</ul>
@@ -1075,9 +1114,25 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/filters.ts#L11">array/filters.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/6eae4c0/src/array/filters.ts#L68">array/filters.ts:68</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array.prototype.filter} as a callback.
+									Determines uniqueness of an objects in array. Be aware that if value
+									is not primitive, deep object equality will be checked to determine
+								uniqueness.</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>example</dt>
+								<dd><p>[1, 2, 2].filter(toBe.unique)
+										// [1, 2]
+										[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique)
+									// [{a: 1}, {a: 2}]</p>
+								</dd>
+							</dl>
+						</div>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
 						<ul class="tsd-type-parameters">
 							<li>
@@ -1111,12 +1166,12 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/filters.ts#L44">array/filters.ts:44</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/6eae4c0/src/array/filters.ts#L96">array/filters.ts:96</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Function to be used in {@link Array} filter function as a callback.
+								<p>Function to be used in {@link Array.prototype.filter} as a callback.
 									Determines uniqueness by value from callback. This value must be
 								comparable with strict equals</p>
 							</div>
@@ -1183,7 +1238,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/fe15e36/src/array/filters.ts#L65">array/filters.ts:65</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarative-js/blob/6eae4c0/src/array/filters.ts#L117">array/filters.ts:117</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
