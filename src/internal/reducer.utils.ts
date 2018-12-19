@@ -23,4 +23,4 @@ export const finalizeObject = <T>(map: MMap<T>) => {
     return map
 }
 
-export const lastElement = <T>(array: T[], index: number) => array.length - 1 === index
+export const isLastElement = <T>(array: T[], index: number) => array.length - 1 === index

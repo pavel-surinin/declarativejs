@@ -1,6 +1,6 @@
 import { MethodMap } from '../map/MethodMap'
 import { KeyGetter } from '../types'
-import { valid, finalizeMap, lastElement } from './reducer.utils'
+import { valid, finalizeMap, isLastElement } from './reducer.utils'
 
 export const groupByCallBack =
     <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T[]>, value: T, index: number, array: T[]): MethodMap<T[]> => {
@@ -11,7 +11,7 @@ export const groupByCallBack =
         } else {
             agr.put(key, [value])
         }
-        return lastElement(array, index) ? finalizeMap(agr) : agr
+        return isLastElement(array, index) ? finalizeMap(agr) : agr
     }
 
 export function groupByValueOfKey<T, K extends keyof T>(key: K) {
@@ -24,7 +24,7 @@ export function groupByValueOfKey<T, K extends keyof T>(key: K) {
             } else {
                 agr.put(derivedKey, [value])
             }
-            return lastElement(array, index) ? finalizeMap(agr) : agr
+            return isLastElement(array, index) ? finalizeMap(agr) : agr
         }
         throw new Error('Value of "' + key + '" in groupBy ' + ' must be string, instead get: ' + typeof value[key])
     }

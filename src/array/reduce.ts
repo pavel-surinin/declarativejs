@@ -6,28 +6,45 @@ import { groupByCallBack, groupByValueOfKey } from '../internal/groupBy'
 import { toObjectAndValue, toObjectValueObject } from '../internal/toObject'
 import { toMapAndValue, toMapKeyMap } from '../internal/toMap'
 import { JMap } from '../map/JMap'
-import { lastElement } from '../internal/reducer.utils'
+import { isLastElement } from '../internal/reducer.utils'
 
-// tslint:disable-next-line:no-any
-function use(...args: any[]) {
-    return args && 0
-}
-
+/**
+ * Functions to be used in {@link Array.prototype.reduce} as a callback.
+ * 
+ * @example
+ * [
+ *  { title: 'Predator', genre: 'scy-fy },
+ *  { title: 'Predator 2', genre: 'scy-fy},
+ *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
+ *  { title: 'Tom & Jerry', genre: 'cartoon }, 
+ * ]
+ *  .reduce(Reducer.groupBy('genre'), Reducer.Map())
+ */
 export namespace Reducer {
 
-    export const Map =
-        // tslint:disable-next-line:no-any
-        <T>(data?: MMap<T>): MethodMap<T> => new JMap(data) as MethodMap<T>
+    export function Map<T>(data?: MMap<T>): MethodMap<T> {
+        return new JMap(data) as MethodMap<T>
+    }
 
-    export const ImmutableMap =
+    export function ImmutableMap<T>(): MethodMap<T> {
         // tslint:disable-next-line:no-any
-        <T>(): MethodMap<T> => new ImmutableBuilder<T>() as any as MethodMap<T>
+        return new ImmutableBuilder<T>() as any as MethodMap<T>
+    }
 
-    export const ImmutableObject = <T>(): Readonly<MMap<T>> =>
-        Object.defineProperty({}, 'immutable', { value: true, enumerable: false }) as MMap<T>
+    export function ImmutableObject<T>(): Readonly<MMap<T>> {
+        const object = {}
+        return Object.defineProperty(
+            object,
+            'immutable',
+            {
+                value: true,
+                enumerable: false
+            }
+        ) as MMap<T>
+    }
 
     /**
-     * Function to use in array reduce function as callback to group by provided key.
+     * Function to be used in {@link Array.prototype.reduce} as a callback to group by provided key.
      * As second parameter in reduce function need to pass 
      * Reducer.Map()
      * Reducer.ImmutableMap()
@@ -46,7 +63,7 @@ export namespace Reducer {
     export function groupBy<T, K extends keyof T>(key: K):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
     /**
-     * Function to use in array reduce function as callback to group by provided key.
+     * Function to be used in {@link Array.prototype.reduce} as a callback to group by provided key.
      * As second parameter in reduce function need to pass 
      * Reducer.Map()
      * Reducer.ImmutableMap()
@@ -65,7 +82,7 @@ export namespace Reducer {
     export function groupBy<T>(getKey: KeyGetter<T>):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
     export function groupBy<T, K extends keyof T>(getKey: KeyGetter<T> | K) {
-        return function (agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
+        return function _groupBy(agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
             return typeof getKey !== 'string'
                 ? groupByCallBack(getKey)(agr, value, index, array)
                 : groupByValueOfKey(getKey as never)(agr, value, index, array)
@@ -73,7 +90,8 @@ export namespace Reducer {
     }
 
     /**
-     * Function to use in array reduce function as callback to make from 2d array simple array
+     * Function to be used in {@link Array.prototype.reduce} as a callback 
+     * to make from 2d array simple array
      * As second parameter in reduce function need to pass <code>[]</code>
      * @param {T[]} previousValue   to collect in
      * @param {T[]} currentValue    to concatenate with
@@ -87,7 +105,7 @@ export namespace Reducer {
     }
 
     /**
-     * Function to use in array reduce function as callback to make a Map.
+     * Function to be used in {@link Array.prototype.reduce} as a callback to make a Map.
      * Collects items by key, from callback to {@link MethodMap<T>}. 
      * If function resolves key, that already exists it will throw an Error
      * As second parameter in reduce function need to pass
@@ -111,7 +129,7 @@ export namespace Reducer {
     export function toMap<T>(getKey: KeyGetter<T>):
         (agr: MethodMap<T>, value: T, index: number, array: T[]) => MethodMap<T>
     /**
-     * Function to use in array reduce function as callback to make a Map. 
+     * Function to be used in {@link Array.prototype.reduce} as a callback to make a Map. 
      * Collects items to {@link MethodMap<T>} by key from callback. If function resolves key,
      * that already exists it will throw an Error. Second callback is value mapper.
      * As second parameter in reduce function need to pass
@@ -132,7 +150,7 @@ export namespace Reducer {
     export function toMap<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>):
         (agr: MethodMap<K>, value: T, index: number, array: T[]) => MethodMap<K>
     export function toMap<T, K>(getKey: KeyGetter<T>, valueGetter?: Getter<T, K>) {
-        return function (agr: MethodMap<T>, value: T, index: number, array: T[]) {
+        return function _toMap(agr: MethodMap<T>, value: T, index: number, array: T[]) {
             return valueGetter === undefined
                 ? toMapKeyMap(getKey)(agr, value, index, array)
                 // tslint:disable-next-line:no-any
@@ -141,6 +159,7 @@ export namespace Reducer {
     }
 
     /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
      * Collects items to object by key from callback. If function resolves 
      * key, that already exists it will throw an Error
      * As second parameter in reduce function need to pass {} or Reducer.ImmutableObject() 
@@ -159,6 +178,7 @@ export namespace Reducer {
     export function toObject<T>(getKey: KeyGetter<T>):
         (agr: MMap<T>, value: T, index: number, array: T[]) => MMap<T>
     /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback
      * Collects items to object by key from callback. If function resolves key,
      * that already exists it will throw an Error. Second callback is value mapper.
      * As second parameter in reduce function need to pass {} or Reducer.ImmutableObject() 
@@ -178,7 +198,7 @@ export namespace Reducer {
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>):
         (agr: MMap<K>, value: T, index: number, array: T[]) => MMap<K>
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter?: Getter<T, K>) {
-        return function (agr: MMap<T>, value: T, index: number, array: T[]) {
+        return function _toObject(agr: MMap<T>, value: T, index: number, array: T[]) {
             return valueGetter === undefined
                 ? toObjectValueObject(getKey)(agr, value, index, array)
                 // tslint:disable-next-line:no-any
@@ -186,20 +206,48 @@ export namespace Reducer {
         }
     }
 
-    export const min = (agr: number, value: number, index: number, array: number[]) => {
-        use(agr, value)
-        return lastElement(array, index) ? Math.min(...array) : 0
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * Finds lowest value in array. Array must contain only numbers
+     * @returns {number} lowest value in array.
+     * 
+     * @example
+     * [1, 2, 3].reduce(Reducer.min) // 1 
+     */
+    // @ts-ignore
+    export function min(agr: number, value: number, index: number, array: number[]) {
+        return isLastElement(array, index) ? Math.min(...array) : 0
     }
 
-    export const max = (agr: number, value: number, index: number, array: number[]) => {
-        use(agr, value)
-        return lastElement(array, index) ? Math.max(...array) : 0
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * Finds highest value in array. Array must contain only numbers
+     * @returns {number} highest value in array.
+     * 
+     * @example
+     * [1, 2, 3].reduce(Reducer.max) // 3 
+     */
+    // @ts-ignore
+    export function max(agr: number, value: number, index: number, array: number[]) {
+        return isLastElement(array, index) ? Math.max(...array) : 0
     }
 
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * Finds sum of values in array. Array must contain only numbers
+     * @returns {number} sum of values in array.
+     * 
+     * @example
+     * [1, 2, 3].reduce(Reducer.sum) // 6 
+     */
     export const sum = (agr: number, value: number) => {
         return agr + value
     }
 
+    /**
+     * Object merging strategy used in {@link Reducer#toMergedObject}
+     * @see toMergedObject
+     */
     export enum MergeStrategy {
         /**
          * Overrides value by duplicated key while merging objects
@@ -216,12 +264,13 @@ export namespace Reducer {
     }
 
     /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
      * Reduces array of objects to one object, There is three merge strategies 
      * @see MergeStrategy
      * @param merge {@link MergeStrategy} = default is OVERRIDE
      */
-    export const toMergedObject = (merge: MergeStrategy = MergeStrategy.OVERRIDE) =>
-        <T extends object, R extends object>(agr: R, value: T): T & R => {
+    export function toMergedObject(merge: MergeStrategy = MergeStrategy.OVERRIDE) {
+        return function _toMergedObject<T extends object, R extends object>(agr: R, value: T): T & R {
             Object.keys(value).forEach(k => {
                 // tslint:disable-next-line:no-any
                 const valueFromAggr = (agr as any)[k]
@@ -243,4 +292,5 @@ export namespace Reducer {
             })
             return agr as T & R
         }
+    }
 }

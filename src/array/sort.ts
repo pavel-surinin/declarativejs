@@ -7,7 +7,7 @@ import {
 import { Getter, AutoComparable } from '../types'
 
 /**
- * Namespace containing functions to use in array.sort() function.
+ * Functions to be used in {@link Array.prototype.sort} as a callback.
  */
 export namespace Sort {
 
@@ -17,6 +17,7 @@ export namespace Sort {
     }
 
     /**
+     * Functions to be used in {@link Array.prototype.sort} as a callback.
      * Sorts array in ascending order by values provided from callbacks. 
      * First callback has highest priority in sorting and so on.
      * It accepts as many callbacks as You need. 
@@ -39,6 +40,7 @@ export namespace Sort {
     export function ascendingBy<T>(...getters: ((val: T) => string | number)[]):
         (a: T, b: T) => number
     /**
+     * Functions to be used in {@link Array.prototype.sort} as a callback.
      * Sorts array in ascending order by values resolved from object keys passed 
      * as parameter. 
      * First key has highest priority in sorting and so on.
@@ -60,7 +62,7 @@ export namespace Sort {
 
     export function ascendingBy<T, K extends keyof T>
         (...getters: (Getter<T, AutoComparable> | K)[]) {
-        return function (a: T, b: T): number {
+        return function _ascendingBy(a: T, b: T): number {
             const ascending = { true: 1, false: -1 }
             if (typeof getters[0] === 'string') {
                 return sortByKeyValues(ascending)(...getters as never[])(a, b)
@@ -71,6 +73,7 @@ export namespace Sort {
         }
     }
     /**
+     * Functions to be used in {@link Array.prototype.sort} as a callback.     * 
      * Sorts array in descending order by values provided from callbacks. 
      * First callback has highest priority in sorting and so on.
      * It accepts as many callbacks as You need. 
@@ -93,6 +96,7 @@ export namespace Sort {
     export function descendingBy<T>(...getters: ((val: T) => string | number)[]):
         (a: T, b: T) => number
     /**
+     * Functions to be used in {@link Array.prototype.sort} as a callback. 
      * Sorts array in descending order by values resolved from object keys passed 
      * as parameter. 
      * First key has highest priority in sorting and so on.
@@ -114,7 +118,7 @@ export namespace Sort {
 
     export function descendingBy<T, K extends keyof T>
         (...getters: (Getter<T, AutoComparable> | K)[]) {
-        return function (a: T, b: T): number {
+        return function _descendingBy(a: T, b: T): number {
             const ascending = { true: -1, false: 1 }
             if (typeof getters[0] === 'string') {
                 return sortByKeyValues(ascending)(...getters as never[])(a, b)
@@ -130,6 +134,7 @@ export namespace Sort {
         order: R[]
     }
     /**
+     * Functions to be used in {@link Array.prototype.sort} as a callback. 
      * Function that will sort items in array with custom values, by provided order.
      * It accepts as a parameter object with valueToOrderElement mapper and array of custom order rule
      * @type T type of array item
@@ -151,6 +156,7 @@ export namespace Sort {
     export function by<T>(...conditions: SortingCondition<T, any>[]): (a: T, b: T) => number
 
     /**
+     * Functions to be used in {@link Array.prototype.sort} as a callback. 
      * Function that will sort items in array with custom values, by provided order.
      * @param {string} key              object key to extract value. This value will 
      *                                  be compared to another
@@ -169,7 +175,7 @@ export namespace Sort {
     export function by<T>
         // tslint:disable-next-line:no-any
         (...args: any[]) {
-        return function (a: T, b: T) {
+        return function _by(a: T, b: T) {
             if (typeof args[0] === 'string') {
                 return sortByPropertyAndPriority(args[0] as never, args[1])(a, b)
             } else {
@@ -178,6 +184,7 @@ export namespace Sort {
         }
     }
     /**
+     * Functions to be used in {@link Array.prototype.sort} as a callback. 
      * Function that will sort items in array, by provided order.
      * It accepts as a parameter array of custom order rule. 
      * Element, that are not present in order array will be at he the end of the sorted list.
@@ -191,7 +198,7 @@ export namespace Sort {
      * // result => ['low', 'medium', 'bar', 'foo', ]
      */
     export function orderedBy<T>(order: T[]) {
-        return function (a: T, b: T) {
+        return function _orderedBy(a: T, b: T) {
             const condition = {
                 toValue: x => x,
                 order: order

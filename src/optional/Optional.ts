@@ -54,8 +54,11 @@ export class Optional<T> {
         return this.isPresent() ? new Optional(mapper(this.value!)!)! : new Optional()
     }
 
-    filter(predicate: (value?: T) => boolean): Optional<T> {
-        return predicate(this.value) ? this : new Optional()
+    filter(predicate: (value: T) => boolean): Optional<T> {
+        if (this.isPresent()) {
+            return predicate(this.value!) ? this : new Optional()
+        }
+        return new Optional()
     }
 
     toArray(): AlwaysArray<T> {

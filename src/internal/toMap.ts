@@ -1,6 +1,6 @@
 import { KeyGetter, Getter } from '../types'
 import { MethodMap } from '../map/MethodMap'
-import { valid, lastElement, finalizeMap } from './reducer.utils'
+import { valid, isLastElement, finalizeMap } from './reducer.utils'
 
 export const toMapKeyMap = <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T>, value: T, index: number, array: T[]) => {
     const key = valid(getKey(value))
@@ -8,7 +8,7 @@ export const toMapKeyMap = <T>(getKey: KeyGetter<T>) => (agr: MethodMap<T>, valu
         throw new Error(`Key: "${key}" has duplicates`)
     }
     agr.put(key, value)
-    return lastElement(array, index) ? finalizeMap(agr) : agr
+    return isLastElement(array, index) ? finalizeMap(agr) : agr
 }
 
 export const toMapAndValue = <T, R>(
@@ -20,5 +20,5 @@ export const toMapAndValue = <T, R>(
         throw new Error(`Key: "${key}" has duplicates`)
     }
     agr.put(key, getValue(value))
-    return lastElement(array, index) ? finalizeMap(agr) : agr
+    return isLastElement(array, index) ? finalizeMap(agr) : agr
 }

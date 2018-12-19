@@ -1,5 +1,5 @@
 import { KeyGetter, MMap, Getter } from '../types'
-import { finalizeObject, lastElement, valid } from './reducer.utils'
+import { finalizeObject, isLastElement, valid } from './reducer.utils'
 
 export const toObjectValueObject = <T>(getKey: KeyGetter<T>) => (agr: MMap<T>, value: T, index: number, array: T[]) => {
     const key = valid(getKey(value))
@@ -13,7 +13,7 @@ export const toObjectValueObject = <T>(getKey: KeyGetter<T>) => (agr: MMap<T>, v
         enumerable: true,
         writable: false
     })
-    return lastElement(array, index) ? finalizeObject(agr) : agr
+    return isLastElement(array, index) ? finalizeObject(agr) : agr
 }
 
 export const toObjectAndValue = <T, R>(
@@ -29,5 +29,5 @@ export const toObjectAndValue = <T, R>(
         enumerable: true,
         writable: false
     })
-    return lastElement(array, index) ? finalizeObject(agr) : agr
+    return isLastElement(array, index) ? finalizeObject(agr) : agr
 }
