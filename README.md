@@ -61,15 +61,15 @@ Less expensive function `toBe.uniqueBy`,  when some unique identifier is set by 
 import { toBe } from 'declarative-js'
 
 const data = [
- { title: 'Predator', genre: 'scy-fy' },
- { title: 'Predator 2', genre: 'scy-fy'},
- { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+ { title: 'Predator', genre: 'sci-fi' },
+ { title: 'Predator 2', genre: 'sci-fi'},
+ { title: 'Alien vs Predator', genre: 'sci-fi' }, 
  { title: 'Tom & Jerry', genre: 'cartoon' } 
 ]
 data.filter(toBe.uniqueBy(movie => movie.genre))
 data.filter(toBe.uniqueBy('genre'))
 // [
-//  { title: 'Predator', genre: 'scy-fy' },
+//  { title: 'Predator', genre: 'sci-fi' },
 //  { title: 'Tom & Jerry', genre: 'cartoon' }
 // ]
 ```
@@ -85,21 +85,21 @@ import {toBe} from 'declarative-js'
 import takeWhile = toBe.takeWhile
 
 function isScienceFiction(film) {
-    return film.genre === 'scy-fy'
+    return film.genre === 'sci-fi'
 }
 
 const films = [
- { title: 'Predator', genre: 'scy-fy' },
- { title: 'Predator 2', genre: 'scy-fy'},
+ { title: 'Predator', genre: 'sci-fi' },
+ { title: 'Predator 2', genre: 'sci-fi'},
  { title: 'Tom & Jerry', genre: 'cartoon' }, 
- { title: 'Alien vs Predator', genre: 'scy-fy' }
+ { title: 'Alien vs Predator', genre: 'sci-fi' }
 ]
 
 films.filter(takeWhile(isScienceFiction))
 // =>
 // [
-//  { title: 'Predator', genre: 'scy-fy' },
-//  { title: 'Predator 2', genre: 'scy-fy' }
+//  { title: 'Predator', genre: 'sci-fi' },
+//  { title: 'Predator 2', genre: 'sci-fi' }
 // ]
 
 ```
@@ -132,9 +132,9 @@ import groupBy = Reducers.groupBy
 import Map = Reducers.Map
 
 const data = [
- { title: 'Predator', genre: 'scy-fy' },
- { title: 'Predator 2', genre: 'scy-fy'},
- { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+ { title: 'Predator', genre: 'sci-fi' },
+ { title: 'Predator 2', genre: 'sci-fi'},
+ { title: 'Alien vs Predator', genre: 'sci-fi' }, 
  { title: 'Tom & Jerry', genre: 'cartoon' } 
 ]
 

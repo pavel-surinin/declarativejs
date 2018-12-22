@@ -950,15 +950,15 @@ img { max-width: 100%; }
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
 <span class="hljs-keyword">const</span> data = [
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> },
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>},
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> }, 
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> },
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span>},
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> }, 
  { <span class="hljs-attr">title</span>: <span class="hljs-string">'Tom &amp; Jerry'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'cartoon'</span> } 
 ]
 data.filter(toBe.uniqueBy(<span class="hljs-function"><span class="hljs-params">movie</span> =&gt;</span> movie.genre))
 data.filter(toBe.uniqueBy(<span class="hljs-string">'genre'</span>))
 <span class="hljs-comment">// [</span>
-<span class="hljs-comment">//  { title: 'Predator', genre: 'scy-fy' },</span>
+<span class="hljs-comment">//  { title: 'Predator', genre: 'sci-fi' },</span>
 <span class="hljs-comment">//  { title: 'Tom &amp; Jerry', genre: 'cartoon' }</span>
 <span class="hljs-comment">// ]</span></code></pre>
 			<h3 id="tobe-takewhile">toBe.takeWhile</h3>
@@ -969,21 +969,21 @@ data.filter(toBe.uniqueBy(<span class="hljs-string">'genre'</span>))
 <span class="hljs-keyword">import</span> takeWhile = toBe.takeWhile
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isScienceFiction</span>(<span class="hljs-params">film</span>) </span>{
-    <span class="hljs-keyword">return</span> film.genre === <span class="hljs-string">'scy-fy'</span>
+    <span class="hljs-keyword">return</span> film.genre === <span class="hljs-string">'sci-fi'</span>
 }
 
 <span class="hljs-keyword">const</span> films = [
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> },
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>},
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> },
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span>},
  { <span class="hljs-attr">title</span>: <span class="hljs-string">'Tom &amp; Jerry'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'cartoon'</span> }, 
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> }
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> }
 ]
 
 films.filter(takeWhile(isScienceFiction))
 <span class="hljs-comment">// =&gt;</span>
 <span class="hljs-comment">// [</span>
-<span class="hljs-comment">//  { title: 'Predator', genre: 'scy-fy' },</span>
-<span class="hljs-comment">//  { title: 'Predator 2', genre: 'scy-fy' }</span>
+<span class="hljs-comment">//  { title: 'Predator', genre: 'sci-fi' },</span>
+<span class="hljs-comment">//  { title: 'Predator 2', genre: 'sci-fi' }</span>
 <span class="hljs-comment">// ]</span>
 </code></pre>
 			<h2 id="mappers">Mappers</h2>
@@ -1005,9 +1005,9 @@ films.filter(takeWhile(isScienceFiction))
 <span class="hljs-keyword">import</span> <span class="hljs-built_in">Map</span> = Reducers.Map
 
 <span class="hljs-keyword">const</span> data = [
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> },
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>},
- { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> }, 
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> },
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span>},
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> }, 
  { <span class="hljs-attr">title</span>: <span class="hljs-string">'Tom &amp; Jerry'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'cartoon'</span> } 
 ]
 

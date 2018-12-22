@@ -82,14 +82,14 @@ export namespace toBe {
      * @param { Function } getValue     callback to resolve comparable value        
      * @example
      * [
-     *  { title: 'Predator', genre: 'scy-fy' },
-     *  { title: 'Predator 2', genre: 'scy-fy' },
-     *  { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+     *  { title: 'Predator', genre: 'sci-fi' },
+     *  { title: 'Predator 2', genre: 'sci-fi' },
+     *  { title: 'Alien vs Predator', genre: 'sci-fi' }, 
      *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
      * ]
      *   .filter(toBe.uniqueBy(movie => movie.genre))
      * // [
-     * //  { title: 'Predator', genre: 'scy-fy' },
+     * //  { title: 'Predator', genre: 'sci-fi' },
      * //  { title: 'Tom & Jerry', genre: 'cartoon' }
      * // ]
      */
@@ -103,14 +103,14 @@ export namespace toBe {
      * @param { string } key    objects key to resolve comparable value        
      * @example
      * [
-     *  { title: 'Predator', genre: 'scy-fy' },
-     *  { title: 'Predator 2', genre: 'scy-fy'},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+     *  { title: 'Predator', genre: 'sci-fi' },
+     *  { title: 'Predator 2', genre: 'sci-fi'},
+     *  { title: 'Alien vs Predator', genre: 'sci-fi' }, 
      *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
      * ]
      *   .filter(toBe.uniqueBy('genre'))
      * // [
-     * //  { title: 'Predator', genre: 'scy-fy' },
+     * //  { title: 'Predator', genre: 'sci-fi' },
      * //  { title: 'Tom & Jerry', genre: 'cartoon' }
      * // ]
      */
@@ -135,16 +135,16 @@ export namespace toBe {
      * import takeWhile = toBe.takeWhile
      * 
      * [
-     *  { title: 'Predator', genre: 'scy-fy' },
-     *  { title: 'Predator 2', genre: 'scy-fy'},
+     *  { title: 'Predator', genre: 'sci-fi' },
+     *  { title: 'Predator 2', genre: 'sci-fi'},
      *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
-     *  { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+     *  { title: 'Alien vs Predator', genre: 'sci-fi' }, 
      * ]
-     *   .filter(takeWhile(film => film.genre === 'scy-fy'))
+     *   .filter(takeWhile(film => film.genre === 'sci-fi'))
      * // =>
      * // [
-     * //  { title: 'Predator', genre: 'scy-fy' },
-     * //  { title: 'Predator 2', genre: 'scy-fy' }
+     * //  { title: 'Predator', genre: 'sci-fi' },
+     * //  { title: 'Predator 2', genre: 'sci-fi' }
      * // ] 
      */
     export function takeWhile<T>(predicate: Predicate<T>) {
