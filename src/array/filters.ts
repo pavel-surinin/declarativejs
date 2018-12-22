@@ -1,6 +1,6 @@
 import { Assert } from '../assert/Assert'
 import { uniqueByMappedValue, uniqueByProp } from '../internal/unique'
-import { Getter } from '../types'
+import { Getter, Predicate } from '../types'
 import deepEqual from 'fast-deep-equal'
 /**
  * Functions to be used in {@link Array.prototype.filter} as a callback.
@@ -121,6 +121,40 @@ export namespace toBe {
             return typeof toComparableProp === 'string'
                 ? uniqueByProp(toComparableProp as never)(value, index, array)
                 : uniqueByMappedValue(toComparableProp)(value, index, array)
+        }
+    }
+
+    /**
+     * Function to be used in {@link Array} filter function as a callback.
+     * It will pass items from array, while predicate matches. When predicate
+     * returns {@code false} none of the items will pass.
+     * 
+     * @param {function} predicate callback function that returns boolean
+     * @example
+     * import {toBe} from 'declarative-js'
+     * import takeWhile = toBe.takeWhile
+     * 
+     * [
+     *  { title: 'Predator', genre: 'scy-fy' },
+     *  { title: 'Predator 2', genre: 'scy-fy'},
+     *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
+     *  { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+     * ]
+     *   .filter(takeWhile(film => film.genre === 'scy-fy'))
+     * // =>
+     * // [
+     * //  { title: 'Predator', genre: 'scy-fy' },
+     * //  { title: 'Predator 2', genre: 'scy-fy' }
+     * // ] 
+     */
+    export function takeWhile<T>(predicate: Predicate<T>) {
+        let is = false
+        return function _takeWhile(value: T, index: number): boolean {
+            if (index === 0 || is) {
+                is = predicate(value)
+                return is
+            }
+            return is
         }
     }
 }

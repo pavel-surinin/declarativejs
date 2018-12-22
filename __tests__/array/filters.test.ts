@@ -63,4 +63,24 @@ describe('Filters', () => {
             .filter(toBe.uniqueBy('name'))
         expect(fa).toHaveLength(2)
     })
+    it('should filter to be while predicate matches undefined', () => {
+        const fa = sampleArray
+            .filter(toBe.takeWhile(x => x !== undefined))
+        expect(fa).toHaveLength(3)
+    })
+    it('should filter to be while predicate matches', () => {
+        const fa = sampleArray
+            .filter(toBe.takeWhile(x => !!x.name))
+        expect(fa).toHaveLength(2)
+    })
+    it('should filter to be while predicate matches all', () => {
+        const fa = sampleArray
+            .filter(toBe.takeWhile(x => x !== null))
+        expect(fa).toHaveLength(5)
+    })
+    it('should filter to be while predicate matches none', () => {
+        const fa = sampleArray
+            .filter(toBe.takeWhile(x => x === 0))
+        expect(fa).toHaveLength(0)
+    })
 })

@@ -4,7 +4,7 @@ Library for declarative coding, that has array functions to filter, group, colle
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
 [![Build Status](https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
 [![Coverage Status](https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master)](https://coveralls.io/github/pavel-surinin/declarative-js?branch=master)
-
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/pavel-surinin/declarativejs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pavel-surinin/declarativejs/context:javascript)
 # Array Functions
 
 ## Filters
@@ -72,6 +72,36 @@ data.filter(toBe.uniqueBy('genre'))
 //  { title: 'Predator', genre: 'scy-fy' },
 //  { title: 'Tom & Jerry', genre: 'cartoon' }
 // ]
+```
+
+### toBe.takeWhile
+
+Function to be used in {@link Array} filter function as a callback.
+It will pass items from array, while predicate matches. When predicate
+returns {@code false} none of the items will pass.
+
+```javascript
+import {toBe} from 'declarative-js'
+import takeWhile = toBe.takeWhile
+
+function isScienceFiction(film) {
+    return film.genre === 'scy-fy'
+}
+
+const films = [
+ { title: 'Predator', genre: 'scy-fy' },
+ { title: 'Predator 2', genre: 'scy-fy'},
+ { title: 'Tom & Jerry', genre: 'cartoon' }, 
+ { title: 'Alien vs Predator', genre: 'scy-fy' }
+]
+
+films.filter(takeWhile(isScienceFiction))
+// =>
+// [
+//  { title: 'Predator', genre: 'scy-fy' },
+//  { title: 'Predator 2', genre: 'scy-fy' }
+// ]
+
 ```
 
 ## Mappers
