@@ -5,10 +5,18 @@ Library for declarative coding, that has array functions to filter, group, colle
 [![Build Status](https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
 [![Coverage Status](https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master)](https://coveralls.io/github/pavel-surinin/declarative-js?branch=master)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/pavel-surinin/declarativejs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pavel-surinin/declarativejs/context:javascript)
+![](https://shields-staging.herokuapp.com/npm/dm/declarative-js.svg)
+![](https://shields-staging.herokuapp.com/npm/types/declarative-js.svg)
+
+# Install
+```
+npm i declarative-js --save
+```
+
 # Array Functions
 
 ## Filters
-API documentaiton [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html)
 
 ### toBe.present
 ```javascript
@@ -76,9 +84,9 @@ data.filter(toBe.uniqueBy('genre'))
 
 ### toBe.takeWhile
 
-Function to be used in {@link Array} filter function as a callback.
+Function to be used in `Array#filter` function as a callback.
 It will pass items from array, while predicate matches. When predicate
-returns {@code false} none of the items will pass.
+returns `false` none of the items will pass.
 
 ```javascript
 import {toBe} from 'declarative-js'
@@ -150,7 +158,7 @@ Flats 2d `array` to `array`
 import { Reducers } from 'declarative-js'
 import flat = Reducers.flat
 
-[[1, 2], [2, 3], [3, 4]].reduce(flat, []) // [1, 2, 3, 4, 5, 6]
+[[1, 2], [2, 3], [3, 4]].reduce(flat, []) // [1, 2, 2, 3, 3, 4]
 ```        
 
 ### toMap

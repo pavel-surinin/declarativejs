@@ -916,10 +916,13 @@ img { max-width: 100%; }
 			<p><a href="https://www.npmjs.com/package/declarative-js"><img src="https://badge.fury.io/js/declarative-js.svg" alt="npm version"></a>
 				<a href="https://travis-ci.org/pavel-surinin/declarative-js"><img src="https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master" alt="Build Status"></a>
 				<a href="https://coveralls.io/github/pavel-surinin/declarative-js?branch=master"><img src="https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master" alt="Coverage Status"></a>
-			<a href="https://lgtm.com/projects/g/pavel-surinin/declarativejs/context:javascript"><img src="https://img.shields.io/lgtm/grade/javascript/g/pavel-surinin/declarativejs.svg?logo=lgtm&logoWidth=18" alt="Language grade: JavaScript"></a></p>
-			<h1 id="array-functions">Array Functions</h1>
+				<a href="https://lgtm.com/projects/g/pavel-surinin/declarativejs/context:javascript"><img src="https://img.shields.io/lgtm/grade/javascript/g/pavel-surinin/declarativejs.svg?logo=lgtm&logoWidth=18" alt="Language grade: JavaScript"></a>
+				<img src="https://shields-staging.herokuapp.com/npm/dm/declarative-js.svg" alt="">
+			<img src="https://shields-staging.herokuapp.com/npm/types/declarative-js.svg" alt=""></p>
+			<h1 id="install">Install</h1>
+			<pre><code>npm <span class="hljs-selector-tag">i</span> declarative-js --save</code></pre><h1 id="array-functions">Array Functions</h1>
 			<h2 id="filters">Filters</h2>
-			<p>API documentaiton <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html">link</a></p>
+			<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html">link</a></p>
 			<h3 id="tobe-present">toBe.present</h3>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
@@ -962,9 +965,9 @@ data.filter(toBe.uniqueBy(<span class="hljs-string">'genre'</span>))
 <span class="hljs-comment">//  { title: 'Tom &amp; Jerry', genre: 'cartoon' }</span>
 <span class="hljs-comment">// ]</span></code></pre>
 			<h3 id="tobe-takewhile">toBe.takeWhile</h3>
-			<p>Function to be used in {@link Array} filter function as a callback.
+			<p>Function to be used in <code>Array#filter</code> function as a callback.
 				It will pass items from array, while predicate matches. When predicate
-			returns {@code false} none of the items will pass.</p>
+			returns <code>false</code> none of the items will pass.</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> takeWhile = toBe.takeWhile
 
@@ -1019,7 +1022,7 @@ data.reduce(groupBy(<span class="hljs-string">'genre'</span>), <span class="hljs
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> flat = Reducers.flat
 
-[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]].reduce(flat, []) <span class="hljs-comment">// [1, 2, 3, 4, 5, 6]</span></code></pre>
+[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]].reduce(flat, []) <span class="hljs-comment">// [1, 2, 2, 3, 3, 4]</span></code></pre>
 			<h3 id="tomap">toMap</h3>
 			<p>Collects items by key, to map. Second parameter in function <code>toMap</code> can be used to resolve value to put in map. If it is omitted, whole object will be put as a value to map.
 				Custom implementation of Map can be passed as a second parameter. It must implement interface <a href="#methodmap">MethodMap</a>.
@@ -1363,7 +1366,6 @@ sample.entries() <span class="hljs-comment">// [ {key: 'mike', value: 1}, {key: 
 							<li class="tsd-kind-external-module"><a href="modules/_array_reduce_.html" class="tsd-kind-icon">"array/reduce"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_array_sort_.html" class="tsd-kind-icon">"array/sort"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_assert_assert_.html" class="tsd-kind-icon">"assert/<wbr>Assert"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_index_.html" class="tsd-kind-icon">"index"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_immutablebuilder_.html" class="tsd-kind-icon">"map/<wbr>Immutable<wbr>Builder"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_immutablemap_.html" class="tsd-kind-icon">"map/<wbr>Immutable<wbr>Map"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_jmap_.html" class="tsd-kind-icon">"map/JMap"</a></li>

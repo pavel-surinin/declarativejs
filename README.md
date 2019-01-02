@@ -7,6 +7,12 @@ Library for declarative coding, that has array functions to filter, group, colle
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/pavel-surinin/declarativejs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pavel-surinin/declarativejs/context:javascript)
 ![](https://shields-staging.herokuapp.com/npm/dm/declarative-js.svg)
 ![](https://shields-staging.herokuapp.com/npm/types/declarative-js.svg)
+
+# Install
+```
+npm i declarative-js --save
+```
+
 # Array Functions
 
 ## Filters
