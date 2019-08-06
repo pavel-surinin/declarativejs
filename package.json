@@ -28,14 +28,14 @@
     "fast-deep-equal": "2.0.1"
   },
   "devDependencies": {
-    "@types/jest": "22.2.3",
-    "coveralls": "3.0.2",
-    "docsify": "4.8.6",
-    "jest": "22.4.3",
-    "ts-jest": "22.4.5",
-    "tslint": "5.10.0",
-    "typedoc": "^0.13.0",
-    "typedoc-plugin-markdown": "^1.1.18",
+    "@types/jest": "^22.2.3",
+    "coveralls": "^3.0.5",
+    "docsify": "^4.9.4",
+    "jest": "^22.4.3",
+    "ts-jest": "^22.4.5",
+    "tslint": "^5.18.0",
+    "typedoc": "^0.15.0",
+    "typedoc-plugin-markdown": "^2.1.1",
     "typescript": "2.8.3"
   },
   "scripts": {

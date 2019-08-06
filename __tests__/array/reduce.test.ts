@@ -108,7 +108,7 @@ describe('Reducer', () => {
             const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }]
                 .reduce(Reducer.toObject(x => x.a, x => x.b), ImmutableObject())
             expect(res).toBeInstanceOf(Object)
-            expect(() => res.qwerty = 22).toThrow()
+            expect(() => (res.qwerty as any) = 22).toThrow()
             expect(res).toMatchObject({ a: 1, b: 2 })
         })
         it('should collect to object', () => {
@@ -116,7 +116,7 @@ describe('Reducer', () => {
             const reduced = arr
                 .reduce(toObject(va => va.name), ImmutableObject())
             expect(reduced).toBeInstanceOf(Object)
-            expect(() => reduced.qwerty = '').toThrow()
+            expect(() => (reduced.qwerty as any) = '').toThrow()
             expect(Object.keys(reduced)).toHaveLength(2)
             expect(reduced).toMatchObject(
                 {
