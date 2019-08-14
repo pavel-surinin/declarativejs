@@ -16,7 +16,7 @@ export namespace toBe {
      * @returns {boolean}
      */
     export function present<T>(value: T) {
-        return Assert.is(value).present
+        return Assert.is(value).present()
     }
     /**
      * Function to be used in {@link Array.prototype.filter} as a callback.
@@ -25,7 +25,7 @@ export namespace toBe {
      * @returns {boolean}     * 
      */
     export function notEmpty<T>(value: T) {
-        return Assert.is(value).not.empty
+        return Assert.is(value).not.empty()
     }
     /**
      * Function to be used in {@link Array.prototype.filter} as a callback.

@@ -18,18 +18,21 @@ export namespace Assert {
         if (typeof value === 'string') {
             return '' === value
         }
-        if (typeof value === 'object' && value !== null && value !== undefined) {
+        // tslint:disable-next-line
+        if (typeof value === 'object' && value != null) {
             return !(value instanceof Date) && Object.keys(value).length === 0
         }
         return false
     }
 
     export function isUndefined<T>(value: T) {
-        return value === void 0
+        // tslint:disable-next-line
+        return value == void 0
     }
 
     export function isNull<T>(value: T) {
-        return value === null
+        // tslint:disable-next-line
+        return value == null
     }
 
     /**
@@ -83,9 +86,9 @@ export namespace Assert {
     export function is<T>(value: T) {
         return {
             not: {
-                undefined: !isUndefined(value),
-                empty: !isEmpty(value),
-                null: !isNull(value),
+                undefined: () => !isUndefined(value),
+                empty: () => !isEmpty(value),
+                null: () => !isNull(value),
                 typeof: function _typeof(type: JSType) {
                     return typeof value !== type
                 },
@@ -97,12 +100,12 @@ export namespace Assert {
                 deepEquals: function _deepEquals(valueToCompare: any) {
                     return !isDeepEqual(value)(valueToCompare)
                 },
-                present: !isPresent(value),
+                present: () => !isPresent(value),
 
             },
-            undefined: isUndefined(value),
-            empty: isEmpty(value),
-            null: isNull(value),
+            undefined: () => isUndefined(value),
+            empty: () => isEmpty(value),
+            null: () => isNull(value),
             typeof: function _typeof(type: JSType) {
                 return typeof value === type
             },
@@ -114,7 +117,7 @@ export namespace Assert {
             deepEquals: function _deepEquals(valueToCompare: any) {
                 return isDeepEqual(value)(valueToCompare)
             },
-            present: isPresent(value)
+            present: () => isPresent(value)
         }
     }
 }

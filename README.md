@@ -15,116 +15,6 @@ npm i declarative-js --save
 
 # Array Functions
 
-## Filters
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html)
-
-### toBe.present
-```javascript
-import { toBe } from 'declarative-js'
-
-[undefined, 'a', 'b', null].filter(toBe.present) // ['a', 'b']
-```
-
-### toBe.notEmpty
-```javascript
-import { toBe } from 'declarative-js'
-
-['', 'a', 'b'].filter(toBe.notEmpty) // ['a', 'b']
-[[], ['a'], ['b']].filter(toBe.notEmpty) // [['a'], ['b']]
-```
-
-### toBe.equal
-```javascript
-import { toBe } from 'declarative-js'
-
-['', 'a', 'b', 'a', 'c'].filter(toBe.equal('a')) // ['a', 'a']
-```
-
-### toBe.notEqual
-```javascript
-import { toBe } from 'declarative-js'
-
-['a', 'b', 'a', 'c'].filter(toBe.notEqual('a')) // ['b', 'c']
-```
-
-### toBe.unique
-it works on primitives and objects as well. This function comparing references and content. So if some heavy objects must be compared, this function can be expensive. 
-
-```javascript
-import { toBe } from 'declarative-js'
-
-['a', 'b', 'a', 'a', 'c'].filter(toBe.unique) // ['a', 'b', 'c']
-```
-
-```javascript
-import { toBe } from 'declarative-js'
-
-[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
-```
-
-### toBe.uniqueBy 
-Less expensive function `toBe.uniqueBy`,  when some unique identifier is set by user.  
-
-```javascript
-import { toBe } from 'declarative-js'
-
-const data = [
- { title: 'Predator', genre: 'sci-fi' },
- { title: 'Predator 2', genre: 'sci-fi'},
- { title: 'Alien vs Predator', genre: 'sci-fi' }, 
- { title: 'Tom & Jerry', genre: 'cartoon' } 
-]
-data.filter(toBe.uniqueBy(movie => movie.genre))
-data.filter(toBe.uniqueBy('genre'))
-// [
-//  { title: 'Predator', genre: 'sci-fi' },
-//  { title: 'Tom & Jerry', genre: 'cartoon' }
-// ]
-```
-
-### toBe.takeWhile
-
-Function to be used in `Array#filter` function as a callback.
-It will pass items from array, while predicate matches. When predicate
-returns `false` none of the items will pass.
-
-```javascript
-import {toBe} from 'declarative-js'
-import takeWhile = toBe.takeWhile
-
-function isScienceFiction(film) {
-    return film.genre === 'sci-fi'
-}
-
-const films = [
- { title: 'Predator', genre: 'sci-fi' },
- { title: 'Predator 2', genre: 'sci-fi'},
- { title: 'Tom & Jerry', genre: 'cartoon' }, 
- { title: 'Alien vs Predator', genre: 'sci-fi' }
-]
-
-films.filter(takeWhile(isScienceFiction))
-// =>
-// [
-//  { title: 'Predator', genre: 'sci-fi' },
-//  { title: 'Predator 2', genre: 'sci-fi' }
-// ]
-
-```
-
-## Mappers
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_mappers_.html)
-### toObjValues
-
-As javascript `Object` class has static method `keys`, there is similar method to get object values
-
-```javascript
-import { Mapper } from 'declarative-js'
-import toObjValues = Reducers.toObjValues
-
-[{a: 1, b: 2}, {a: 3, b: 4}].map(toObjValues) // [[1, 2], [3, 4]]
-``` 
-
 ## Reducers
 API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_reduce_.reducer.html)
  
@@ -324,6 +214,118 @@ import ImmutableObject = Reducers.ImmutableObject
     ...
 ```
 
+
+
+## Filters
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html)
+
+### toBe.present
+```javascript
+import { toBe } from 'declarative-js'
+
+[undefined, 'a', 'b', null].filter(toBe.present) // ['a', 'b']
+```
+
+### toBe.notEmpty
+```javascript
+import { toBe } from 'declarative-js'
+
+['', 'a', 'b'].filter(toBe.notEmpty) // ['a', 'b']
+[[], ['a'], ['b']].filter(toBe.notEmpty) // [['a'], ['b']]
+```
+
+### toBe.equal
+```javascript
+import { toBe } from 'declarative-js'
+
+['', 'a', 'b', 'a', 'c'].filter(toBe.equal('a')) // ['a', 'a']
+```
+
+### toBe.notEqual
+```javascript
+import { toBe } from 'declarative-js'
+
+['a', 'b', 'a', 'c'].filter(toBe.notEqual('a')) // ['b', 'c']
+```
+
+### toBe.unique
+it works on primitives and objects as well. This function comparing references and content. So if some heavy objects must be compared, this function can be expensive. 
+
+```javascript
+import { toBe } from 'declarative-js'
+
+['a', 'b', 'a', 'a', 'c'].filter(toBe.unique) // ['a', 'b', 'c']
+```
+
+```javascript
+import { toBe } from 'declarative-js'
+
+[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
+```
+
+### toBe.uniqueBy 
+Less expensive function `toBe.uniqueBy`,  when some unique identifier is set by user.  
+
+```javascript
+import { toBe } from 'declarative-js'
+
+const data = [
+ { title: 'Predator', genre: 'sci-fi' },
+ { title: 'Predator 2', genre: 'sci-fi'},
+ { title: 'Alien vs Predator', genre: 'sci-fi' }, 
+ { title: 'Tom & Jerry', genre: 'cartoon' } 
+]
+data.filter(toBe.uniqueBy(movie => movie.genre))
+data.filter(toBe.uniqueBy('genre'))
+// [
+//  { title: 'Predator', genre: 'sci-fi' },
+//  { title: 'Tom & Jerry', genre: 'cartoon' }
+// ]
+```
+
+### toBe.takeWhile
+
+Function to be used in `Array#filter` function as a callback.
+It will pass items from array, while predicate matches. When predicate
+returns `false` none of the items will pass.
+
+```javascript
+import {toBe} from 'declarative-js'
+import takeWhile = toBe.takeWhile
+
+function isScienceFiction(film) {
+    return film.genre === 'sci-fi'
+}
+
+const films = [
+ { title: 'Predator', genre: 'sci-fi' },
+ { title: 'Predator 2', genre: 'sci-fi'},
+ { title: 'Tom & Jerry', genre: 'cartoon' }, 
+ { title: 'Alien vs Predator', genre: 'sci-fi' }
+]
+
+films.filter(takeWhile(isScienceFiction))
+// =>
+// [
+//  { title: 'Predator', genre: 'sci-fi' },
+//  { title: 'Predator 2', genre: 'sci-fi' }
+// ]
+
+```
+
+## Mappers
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_mappers_.html)
+### toObjValues
+
+As javascript `Object` class has static method `keys`, there is similar method to get object values
+
+```javascript
+import { Mapper } from 'declarative-js'
+import toObjValues = Reducers.toObjValues
+
+[{a: 1, b: 2}, {a: 3, b: 4}].map(toObjValues) // [[1, 2], [3, 4]]
+``` 
+
 ## Sorters
 API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_sort_.sort.html)
 
@@ -517,28 +519,28 @@ API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/m
 ```javascript
     import { is } from 'declarative-js'
 
-    is(myVar).null
-    is(myVar).not.null
+    is(myVar).null()
+    is(myVar).not.null()
 ```
 
 `undefined` assertion
 ```javascript
-    is(myVar).undefined
-    is(myVar).not.undefined
+    is(myVar).undefined()
+    is(myVar).not.undefined()
 ```
 
 `present` assertion
 ```javascript
-    is(myVar).present
-    is(myVar).not.present
+    is(myVar).present()
+    is(myVar).not.present()
 ```
 
 `empty` assertion. Assert is `string` is empty or `array` is empty or `object` is empty, otherwise returns true
 ```javascript
-    is({}).empty //true
-    is([]).empty //true
-    is('').empty //true
-    is(myVar).not.empty
+    is({}).empty() //true
+    is([]).empty() //true
+    is('').empty() //true
+    is(myVar).not.empty()
 ```
 
 `typeof` assertion. Type can be asserted with these values: `'undefined' | 'object' | 'boolean' | 'number' | 'string'`

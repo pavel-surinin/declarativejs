@@ -6,13 +6,7 @@ export const toObjectValueObject = <T>(getKey: KeyGetter<T>) => (agr: MMap<T>, v
     if (Object.prototype.hasOwnProperty.call(agr, key)) {
         throw new Error(`Key: "${key}" has duplicates`)
     }
-    // tslint:disable-next-line:no-any
-    Object.defineProperty(agr, key, {
-        value: value,
-        configurable: false,
-        enumerable: true,
-        writable: false
-    })
+    agr[key] = value
     return isLastElement(array, index) ? finalizeObject(agr) : agr
 }
 
@@ -23,11 +17,6 @@ export const toObjectAndValue = <T, R>(
     if (Object.prototype.hasOwnProperty.call(agr, key)) {
         throw new Error(`Key: "${key}" has duplicates`)
     }
-    Object.defineProperty(agr, key, {
-        value: getValue(value),
-        configurable: false,
-        enumerable: true,
-        writable: false
-    })
+    agr[key] = getValue(value)
     return isLastElement(array, index) ? finalizeObject(agr) : agr
 }
