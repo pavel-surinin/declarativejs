@@ -44,11 +44,11 @@ describe('Filters', () => {
         expect(fa).toHaveLength(3)
     })
     it('should filter to be unique string', () => {
-        const fa = ['', 'a', 'b', 'a', 'a', 'c'].filter(toBe.unique)
+        const fa = ['', 'a', 'b', 'a', 'a', 'c'].filter(toBe.unique())
         expect(fa).toHaveLength(4)
     })
     it('should filter to be unique object', () => {
-        const fa = sampleArray.filter(toBe.unique)
+        const fa = sampleArray.filter(toBe.unique())
         expect(fa).toHaveLength(4)
     })
     it('should filter to be uniqueBy some property', () => {

@@ -1,24 +1,21 @@
 import { Getter } from '../types'
 
-export function uniqueByMappedValue<T, R>(toComparableProp: Getter<T, R>) {
-    return function (value: T, index: number, arr: T[]): boolean {
-        for (let idxx = 0; idxx < arr.length; idxx++) {
-            if (toComparableProp(arr[idxx]) === toComparableProp(value)) {
-                return idxx === index
-            }
-        }
+export function uniqueByMappedValue<T, R>(toComparableProp: Getter<T, R>, value: T, set: Set<R>) {
+    let check = toComparableProp(value)
+    if (set.has(check)) {
         return false
+    } else {
+        set.add(check)
+        return true
     }
 }
 
-export function uniqueByProp<T, K extends keyof T>(key: K) {
-    return function (value: T, index: number, arr: T[]): boolean {
-        for (let i = 0; i < arr.length; i++) {
-            // tslint:disable-next-line:no-any
-            if ((arr[i] as any)[key] === (value as any)[key]) {
-                return i === index
-            }
-        }
+export function uniqueByProp<T, K extends keyof T>(key: K, value: T, set: Set<T[K]>) {
+    let check = value[key]
+    if (set.has(check)) {
         return false
+    } else {
+        set.add(check)
+        return true
     }
 }

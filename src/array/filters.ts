@@ -57,7 +57,7 @@ export namespace toBe {
      * is not primitive, deep object equality will be checked to determine 
      * uniqueness. 
      * 
-     * @returns {boolean} 
+     * @returns () => {boolean} 
      * 
      * @example 
      * [1, 2, 2].filter(toBe.unique)
@@ -65,15 +65,24 @@ export namespace toBe {
      * [{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique)
      * // [{a: 1}, {a: 2}]
      */
-    export function unique<T>(value: T, index: number, arr: T[]) {
-        if (typeof value === 'object') {
-            for (let idx = 0; idx < arr.length; idx++) {
-                if (deepEqual(arr[idx], value)) {
-                    return idx === index
+    export function unique() {
+        let set = new Set()
+        return function _unique<T>(value: T, index: number, arr: T[]) {
+            if (typeof value === 'object') {
+                for (var idx = 0; idx < arr.length; idx++) {
+                    if (deepEqual(arr[idx], value)) {
+                        return idx === index;
+                    }
                 }
+                return true
+            } else {
+                if (!set.has(value)) {
+                    set.add(value)
+                    return true
+                }
+                return false
             }
         }
-        return arr.indexOf(value) === index
     }
     /**
      * Function to be used in {@link Array.prototype.filter} as a callback.
@@ -117,10 +126,11 @@ export namespace toBe {
     export function uniqueBy<T, K extends keyof T>(key: K): (value: T, index: number, arr: T[]) => boolean
 
     export function uniqueBy<T, R, K extends keyof T>(toComparableProp: Getter<T, R> | K) {
-        return function _uniqueBy(value: T, index: number, array: T[]): boolean {
+        let set = new Set()
+        return function _uniqueBy(value: T): boolean {
             return typeof toComparableProp === 'string'
-                ? uniqueByProp(toComparableProp as never)(value, index, array)
-                : uniqueByMappedValue(toComparableProp)(value, index, array)
+                ? uniqueByProp(toComparableProp as never, value, set)
+                : uniqueByMappedValue(toComparableProp, value, set)
         }
     }
 
