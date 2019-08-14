@@ -254,13 +254,13 @@ it works on primitives and objects as well. This function comparing references a
 ```javascript
 import { toBe } from 'declarative-js'
 
-['a', 'b', 'a', 'a', 'c'].filter(toBe.unique) // ['a', 'b', 'c']
+['a', 'b', 'a', 'a', 'c'].filter(toBe.unique()) // ['a', 'b', 'c']
 ```
 
 ```javascript
 import { toBe } from 'declarative-js'
 
-[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique) // [{a: 1}, {a: 2}]
+[{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique()) // [{a: 1}, {a: 2}]
 ```
 
 ### toBe.uniqueBy 

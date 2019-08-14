@@ -60,9 +60,9 @@ export namespace toBe {
      * @returns () => {boolean} 
      * 
      * @example 
-     * [1, 2, 2].filter(toBe.unique)
+     * [1, 2, 2].filter(toBe.unique())
      * // [1, 2]
-     * [{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique)
+     * [{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique())
      * // [{a: 1}, {a: 2}]
      */
     export function unique() {

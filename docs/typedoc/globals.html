@@ -2599,10 +2599,10 @@ data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">perso
 			<p>it works on primitives and objects as well. This function comparing references and content. So if some heavy objects must be compared, this function can be expensive. </p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
-[<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'c'</span>].filter(toBe.unique) <span class="hljs-comment">// ['a', 'b', 'c']</span></code></pre>
+[<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'c'</span>].filter(toBe.unique()) <span class="hljs-comment">// ['a', 'b', 'c']</span></code></pre>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
-[{<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">2</span>}].filter(toBe.unique) <span class="hljs-comment">// [{a: 1}, {a: 2}]</span></code></pre>
+[{<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">2</span>}].filter(toBe.unique()) <span class="hljs-comment">// [{a: 1}, {a: 2}]</span></code></pre>
 			<a href="#tobeuniqueby" id="tobeuniqueby" style="color: inherit; text-decoration: none;">
 				<h3>toBe.uniqueBy</h3>
 			</a>
