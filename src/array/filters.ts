@@ -71,7 +71,7 @@ export namespace toBe {
             if (typeof value === 'object') {
                 for (var idx = 0; idx < arr.length; idx++) {
                     if (deepEqual(arr[idx], value)) {
-                        return idx === index;
+                        return idx === index
                     }
                 }
                 return true
