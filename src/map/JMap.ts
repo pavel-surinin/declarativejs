@@ -11,12 +11,7 @@ export class JMap<T> implements MethodMap<T> {
     }
 
     put(key: string, value: T) {
-        Object.defineProperty(this.storage, key, {
-            value: value,
-            enumerable: true,
-            writable: true,
-            configurable: false
-        })
+        this.storage[key] = value
     }
 
     get(key: string): T | undefined {
