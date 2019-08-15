@@ -68,7 +68,7 @@ export namespace toBe {
     export function unique() {
         let set = new Set()
         return function _unique<T>(value: T) {
-            let check: any = value
+            let check: string | T = value
             if (typeof value === 'object') {
                 check = JSON.stringify(value)
             }
