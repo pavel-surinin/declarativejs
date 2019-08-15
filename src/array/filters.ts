@@ -67,21 +67,16 @@ export namespace toBe {
      */
     export function unique() {
         let set = new Set()
-        return function _unique<T>(value: T, index: number, arr: T[]) {
+        return function _unique<T>(value: T) {
+            let check: any = value
             if (typeof value === 'object') {
-                for (var idx = 0; idx < arr.length; idx++) {
-                    if (deepEqual(arr[idx], value)) {
-                        return idx === index
-                    }
-                }
-                return true
-            } else {
-                if (!set.has(value)) {
-                    set.add(value)
-                    return true
-                }
-                return false
+                check = JSON.stringify(value)
             }
+            if (!set.has(check)) {
+                set.add(check)
+                return true
+            }
+            return false
         }
     }
     /**
