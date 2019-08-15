@@ -2404,6 +2404,7 @@ img {
 			<p>Groups by key resolved from callback to map where key is <code>string</code> and value is an <code>array</code> of items.
 				Custom implementation of Map can be passed as a second parameter. It must implement interface <a href="#methodmap">MethodMap</a>.
 			Provided implementations can be imported from same namespace <code>Reducer.ImmutableMap</code> or <code>Reducer.Map</code> </p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reduergroupby">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> groupBy = Reducers.groupBy
 <span class="hljs-keyword">import</span> <span class="hljs-built_in">Map</span> = Reducers.Map
@@ -2433,6 +2434,7 @@ data.reduce(groupBy(<span class="hljs-string">'genre'</span>), <span class="hljs
 				Custom implementation of Map can be passed as a second parameter. It must implement interface <a href="#methodmap">MethodMap</a>.
 				Provided implementations can be imported from same namespace <code>Reducer.ImmutableMap</code> or <code>Reducer.Map</code>
 			If function resolves key, that already exists it will throw an <code>Error</code></p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> toMap = Reducers.toMap
 <span class="hljs-keyword">import</span> <span class="hljs-built_in">Map</span> = Reducers.Map
@@ -2452,6 +2454,7 @@ reduced2.values() <span class="hljs-comment">// [11, 12]</span></code></pre>
 			<p>Collects items by key, to <code>object</code>. Second parameter in function <code>toObject</code> can be used to resolve value to put in it. If it is omitted, whole object will be put as a value.
 				As a second parameter <code>Reducers.ImmutableObject()</code> can be passed instead of just <code>{}</code>.
 			If function resolves key, that already exists it will throw an <code>Error</code></p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> toObject = Reducers.toObject
 <span class="hljs-keyword">import</span> ImmutableObject = Reducers.ImmutableObject
@@ -2597,9 +2600,11 @@ data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">perso
 				<h3>toBe.unique</h3>
 			</a>
 			<p>it works on primitives and objects as well. This function comparing references and content. So if some heavy objects must be compared, this function can be expensive. </p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#tobeunique">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
 [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'c'</span>].filter(toBe.unique()) <span class="hljs-comment">// ['a', 'b', 'c']</span></code></pre>
+			<p><em>performance benchmark for uniqueness by object content</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#tobeunique-object-content">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
 [{<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">2</span>}].filter(toBe.unique()) <span class="hljs-comment">// [{a: 1}, {a: 2}]</span></code></pre>
@@ -2607,6 +2612,7 @@ data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">perso
 				<h3>toBe.uniqueBy</h3>
 			</a>
 			<p>Less expensive function <code>toBe.uniqueBy</code>,  when some unique identifier is set by user.  </p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#tobeuniqueby">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { toBe } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 
 <span class="hljs-keyword">const</span> data = [

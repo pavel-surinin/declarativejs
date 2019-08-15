@@ -23,7 +23,9 @@ API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/m
 Groups by key resolved from callback to map where key is `string` and value is an `array` of items.
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
 Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
-        
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reduergroupby)
+
 ```javascript
 import { Reducers } from 'declarative-js'
 import groupBy = Reducers.groupBy
@@ -58,6 +60,7 @@ Custom implementation of Map can be passed as a second parameter. It must implem
 Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
 If function resolves key, that already exists it will throw an `Error`
   
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject)
 ```javascript
 import { Reducers } from 'declarative-js'
 import toMap = Reducers.toMap
@@ -80,6 +83,7 @@ Collects items by key, to `object`. Second parameter in function `toObject` can 
 As a second parameter `Reducers.ImmutableObject()` can be passed instead of just `{}`.
 If function resolves key, that already exists it will throw an `Error`
   
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject)
 ```javascript
 import { Reducers } from 'declarative-js'
 import toObject = Reducers.toObject
@@ -251,11 +255,15 @@ import { toBe } from 'declarative-js'
 ### toBe.unique
 it works on primitives and objects as well. This function comparing references and content. So if some heavy objects must be compared, this function can be expensive. 
 
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#tobeunique)
+
 ```javascript
 import { toBe } from 'declarative-js'
 
 ['a', 'b', 'a', 'a', 'c'].filter(toBe.unique()) // ['a', 'b', 'c']
 ```
+_performance benchmark for uniqueness by object content_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#tobeunique-object-content)
 
 ```javascript
 import { toBe } from 'declarative-js'
@@ -265,6 +273,8 @@ import { toBe } from 'declarative-js'
 
 ### toBe.uniqueBy 
 Less expensive function `toBe.uniqueBy`,  when some unique identifier is set by user.  
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#tobeuniqueby)
 
 ```javascript
 import { toBe } from 'declarative-js'
