@@ -1,5 +1,15 @@
+# What is _declarative-js_
+_declarative-js_ is modern JavaScript library, that helps to:
+-  tackle array transformation with built in JavaScript array api (e.g. `array.filter(toBe.unique())`), 
+- provide a type-level solution for representing optional values instead of null references. 
 
-Library for declarative coding, that has array functions to filter, group, collect to map and object, and sort in javascript. Contains javascript optional for handling `null` and `undefined` in javascript. It is also fully typed for `typescript`. 
+# Why _declarative-js_?
+ - performance [(link to benchmarks)](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md)
+ - ability to use with built in api (js array)
+ - it is writen in `typescript`. All functions provides great type inferance
+ - declarative code instead of imperative
+ - reduces boilerplate code providing performant and tested solutions
+ - comprehensive documentation [(link)](https://pavel-surinin.github.io/declarativejs/#/) 
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
 [![Build Status](https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
@@ -20,7 +30,7 @@ API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/m
  
 ### groupBy
 
-Groups by key resolved from callback to map where key is `string` and value is an `array` of items.
+Groups by key resolved from callback to map where key is `string` and value is an `array` of items. (groupby for javascript)
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
 Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
 
