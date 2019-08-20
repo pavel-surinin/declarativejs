@@ -100,13 +100,13 @@ export namespace Reducer {
      * [[1,2],[3,4]].reduce(flat, []) // [1,2,3,4]
      */
     export const flat = <T>(agr: T[], value: T[]) => {
-        if(Array.isArray(value)) {
+        if (Array.isArray(value)) {
             for (let index = 0; index < value.length; index++) {
-                const element = value[index];
-                agr[agr.length] = element;
+                const element = value[index]
+                agr[agr.length] = element
             }
         } else {
-            agr[agr.length] = value;
+            agr[agr.length] = value
         }
         return agr
     }
