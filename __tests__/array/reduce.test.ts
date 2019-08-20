@@ -142,6 +142,11 @@ describe('Reducer', () => {
             .reduce(flat)
         expect(reduced).toHaveLength(6)
     })
+    it('should flat from 2d array with not only arrays to simple array', () => {
+        const reduced = [[1, 2], [2, 3], [3, 4], 7]
+            .reduce(flat)
+        expect(reduced).toHaveLength(7)
+    })
     it('should collect to map', () => {
         const arr: { name: string }[] = [{ name: 'john' }, { name: 'mike' }]
         const reduced = arr

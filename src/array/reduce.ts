@@ -93,14 +93,21 @@ export namespace Reducer {
      * Function to be used in {@link Array.prototype.reduce} as a callback 
      * to make from 2d array simple array
      * As second parameter in reduce function need to pass <code>[]</code>
-     * @param {T[]} previousValue   to collect in
-     * @param {T[]} currentValue    to concatenate with
-     * @returns {T[]}               concatenated array
+     * @param {T[]} agr              to collect in
+     * @param {T[]} value            to concatenate with
+     * @returns {T[]}                concatenated array
      * @example
      * [[1,2],[3,4]].reduce(flat, []) // [1,2,3,4]
      */
     export const flat = <T>(agr: T[], value: T[]) => {
-        value.forEach(v => agr.push(v))
+        if(Array.isArray(value)) {
+            for (let index = 0; index < value.length; index++) {
+                const element = value[index];
+                agr[agr.length] = element;
+            }
+        } else {
+            agr[agr.length] = value;
+        }
         return agr
     }
 
