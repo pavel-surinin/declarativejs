@@ -5,6 +5,7 @@ import groupBy = Reducer.groupBy
 import flat = Reducer.flat
 import toMap = Reducer.toMap
 import toObject = Reducer.toObject
+import Map = Reducer.Map
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
@@ -163,6 +164,18 @@ describe('Reducer', () => {
                 mike: { name: 'mike' }
             }
         )
+    })
+    it('should collect to object with duplicate merging function', () => {
+        const array = [
+            { name: 'john', groups: ['sport', 'music'] },
+            { name: 'mike', groups: ['sauna', 'music'] },
+            { name: 'john', groups: ['books'] },
+        ]
+        const result = array.reduce(toObject(x => x.name, x => x.groups, (x1, x2) => x1.concat(x2)), {})
+        expect(result).toHaveProperty('john')
+        expect(result).toHaveProperty('mike')
+        expect(Object.keys(result)).toHaveLength(2)
+        expect(result['john']).toHaveLength(3)
     })
     it('should throw if key already exists collecting to object', () => {
         const arr = [{ name: 'john' }, { name: 'john' }]

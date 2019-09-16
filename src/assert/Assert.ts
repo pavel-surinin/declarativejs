@@ -22,6 +22,10 @@ export namespace Assert {
         if (typeof value === 'object' && value != null) {
             return !(value instanceof Date) && Object.keys(value).length === 0
         }
+        // tslint:disable-next-line
+        if (value == null) {
+            return true
+        }
         return false
     }
 
@@ -70,13 +74,6 @@ export namespace Assert {
 
     export function isNotPresent<T>(value: T) {
         return !isPresent(value)
-    }
-
-    export function isNotEqual<T>(value1: T) {
-        // tslint:disable-next-line:no-any
-        return function _isNotEqual(value2: any) {
-            return value1 !== value2
-        }
     }
 
     /**

@@ -27,7 +27,64 @@ npm i declarative-js --save
 
 ## Reducers
 API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_reduce_.reducer.html)
- 
+
+### toObject
+
+Collects items by key, to `object`. Second parameter in function `toObject` can be used to resolve value to put in it. If it is omitted, whole object will be put as a value.
+As a second parameter `Reducers.ImmutableObject()` can be passed instead of just `{}`.
+If function resolves key, that already exists it will throw an `Error`
+  
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject)
+
+Reduce to object by key callback
+```javascript
+import { Reducers } from 'declarative-js'
+import toObject = Reducers.toObject
+
+const data = [{name: 'john', age: 11}, {name: 'mike',  age: 12}]
+
+data.reduce(toObject(person => person.name), {})
+// {
+//   john: {name: 'john', age: 11},
+//   mike: {name: 'mike',  age: 12}
+// }
+```
+
+Reduce to object by key callback, resolves value by second parameter as a a callback function 
+```javascript
+import ImmutableObject = Reducers.ImmutableObject
+
+const data = [{name: 'john', age: 11}, {name: 'mike',  age: 12}]
+
+data.reduce(toObject(person => person.name, person => person.age), ImmutableObject())
+// {
+//   john: 11,
+//   mike: 12
+// }
+```
+
+Reduce to object, keys are resolve by first callback, value is resolve by second callback. In case the resolved key already exists in object third callback as will merge values.
+
+```javascript
+const data = [
+    { title: 'Predator', genre: 'scy-fy' },
+    { title: 'Predator 2', genre: 'scy-fy'},
+    { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+    { title: 'Tom & Jerry', genre: 'cartoon' }, 
+]
+data.reduce(toObject(
+        movie => movie.genre, 
+        movie => [movie.title], 
+        (movie1, moveie2) => movie1.concat(movie2)), 
+        {}
+    )
+// {    
+// 'scy-fy': ['Predator', 'Predator 2', 'Alien vs Predator'],
+//  'cartoon': ['Tom & Jerry']
+// }    
+```
+
+
 ### groupBy
 
 Groups by key resolved from callback to map where key is `string` and value is an `array` of items. (groupby for javascript)
@@ -86,33 +143,6 @@ const reduced2 = data.reduce(toMap(va => va.name, va => va.age), Map())
 reduced2.keys() // ['john', 'mike']
 reduced2.values() // [11, 12]
 ```   
-
-### toObject
-
-Collects items by key, to `object`. Second parameter in function `toObject` can be used to resolve value to put in it. If it is omitted, whole object will be put as a value.
-As a second parameter `Reducers.ImmutableObject()` can be passed instead of just `{}`.
-If function resolves key, that already exists it will throw an `Error`
-  
-_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject)
-```javascript
-import { Reducers } from 'declarative-js'
-import toObject = Reducers.toObject
-import ImmutableObject = Reducers.ImmutableObject
-
-const data = [{name: 'john', age: 11}, {name: 'mike',  age: 12}]
-
-data.reduce(toObject(person => person.name), {})
-// {
-//   john: {name: 'john', age: 11},
-//   mike: {name: 'mike',  age: 12}
-// }
-
-data.reduce(toObject(person => person.name, person => person.age), ImmutableObject())
-// {
-//   john: 11,
-//   mike: 12
-// }
-```
 
 ### toMergedObject
 Reduces array of objects to one object

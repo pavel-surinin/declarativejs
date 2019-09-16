@@ -2416,6 +2416,51 @@ img {
 				<h2>Reducers</h2>
 			</a>
 			<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_reduce_.reducer.html">link</a></p>
+			<a href="#toobject" id="toobject" style="color: inherit; text-decoration: none;">
+				<h3>toObject</h3>
+			</a>
+			<p>Collects items by key, to <code>object</code>. Second parameter in function <code>toObject</code> can be used to resolve value to put in it. If it is omitted, whole object will be put as a value.
+				As a second parameter <code>Reducers.ImmutableObject()</code> can be passed instead of just <code>{}</code>.
+			If function resolves key, that already exists it will throw an <code>Error</code></p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject">link</a></p>
+			<p>Reduce to object by key callback</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> toObject = Reducers.toObject
+
+<span class="hljs-keyword">const</span> data = [{<span class="hljs-attr">name</span>: <span class="hljs-string">'john'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">11</span>}, {<span class="hljs-attr">name</span>: <span class="hljs-string">'mike'</span>,  <span class="hljs-attr">age</span>: <span class="hljs-number">12</span>}]
+
+data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">person</span> =&gt;</span> person.name), {})
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   john: {name: 'john', age: 11},</span>
+<span class="hljs-comment">//   mike: {name: 'mike',  age: 12}</span>
+<span class="hljs-comment">// }</span></code></pre>
+			<p>Reduce to object by key callback, resolves value by second parameter as a a callback function </p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> ImmutableObject = Reducers.ImmutableObject
+
+<span class="hljs-keyword">const</span> data = [{<span class="hljs-attr">name</span>: <span class="hljs-string">'john'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">11</span>}, {<span class="hljs-attr">name</span>: <span class="hljs-string">'mike'</span>,  <span class="hljs-attr">age</span>: <span class="hljs-number">12</span>}]
+
+data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">person</span> =&gt;</span> person.name, person =&gt; person.age), ImmutableObject())
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   john: 11,</span>
+<span class="hljs-comment">//   mike: 12</span>
+<span class="hljs-comment">// }</span></code></pre>
+			<p>Reduce to object, keys are resolve by first callback, value is resolve by second callback. In case the resolved key already exists in object third callback as will merge values.</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">const</span> data = [
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> },
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>},
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span> }, 
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">'Tom &amp; Jerry'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'cartoon'</span> }, 
+]
+data.reduce(toObject(
+        <span class="hljs-function"><span class="hljs-params">movie</span> =&gt;</span> movie.genre, 
+        movie =&gt; [movie.title], 
+        (movie1, moveie2) =&gt; movie1.concat(movie2)), 
+        {}
+    )
+<span class="hljs-comment">// {    </span>
+<span class="hljs-comment">// 'scy-fy': ['Predator', 'Predator 2', 'Alien vs Predator'],</span>
+<span class="hljs-comment">//  'cartoon': ['Tom &amp; Jerry']</span>
+<span class="hljs-comment">// }    </span></code></pre>
 			<a href="#groupby" id="groupby" style="color: inherit; text-decoration: none;">
 				<h3>groupBy</h3>
 			</a>
@@ -2466,30 +2511,6 @@ reduced1.values() <span class="hljs-comment">// [{name: 'john', age: 11}, {name:
 <span class="hljs-keyword">const</span> reduced2 = data.reduce(toMap(<span class="hljs-function"><span class="hljs-params">va</span> =&gt;</span> va.name, va =&gt; va.age), <span class="hljs-built_in">Map</span>())
 reduced2.keys() <span class="hljs-comment">// ['john', 'mike']</span>
 reduced2.values() <span class="hljs-comment">// [11, 12]</span></code></pre>
-			<a href="#toobject" id="toobject" style="color: inherit; text-decoration: none;">
-				<h3>toObject</h3>
-			</a>
-			<p>Collects items by key, to <code>object</code>. Second parameter in function <code>toObject</code> can be used to resolve value to put in it. If it is omitted, whole object will be put as a value.
-				As a second parameter <code>Reducers.ImmutableObject()</code> can be passed instead of just <code>{}</code>.
-			If function resolves key, that already exists it will throw an <code>Error</code></p>
-			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducertoobject">link</a></p>
-			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
-<span class="hljs-keyword">import</span> toObject = Reducers.toObject
-<span class="hljs-keyword">import</span> ImmutableObject = Reducers.ImmutableObject
-
-<span class="hljs-keyword">const</span> data = [{<span class="hljs-attr">name</span>: <span class="hljs-string">'john'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">11</span>}, {<span class="hljs-attr">name</span>: <span class="hljs-string">'mike'</span>,  <span class="hljs-attr">age</span>: <span class="hljs-number">12</span>}]
-
-data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">person</span> =&gt;</span> person.name), {})
-<span class="hljs-comment">// {</span>
-<span class="hljs-comment">//   john: {name: 'john', age: 11},</span>
-<span class="hljs-comment">//   mike: {name: 'mike',  age: 12}</span>
-<span class="hljs-comment">// }</span>
-
-data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">person</span> =&gt;</span> person.name, person =&gt; person.age), ImmutableObject())
-<span class="hljs-comment">// {</span>
-<span class="hljs-comment">//   john: 11,</span>
-<span class="hljs-comment">//   mike: 12</span>
-<span class="hljs-comment">// }</span></code></pre>
 			<a href="#tomergedobject" id="tomergedobject" style="color: inherit; text-decoration: none;">
 				<h3>toMergedObject</h3>
 			</a>

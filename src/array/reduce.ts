@@ -1,12 +1,12 @@
 import eq from 'fast-deep-equal'
 import { MethodMap } from '../map/MethodMap'
 import { ImmutableBuilder } from '../map/ImmutableBuilder'
-import { MMap, KeyGetter, Getter } from '../types'
+import { StringMap, KeyGetter, Getter } from '../types'
 import { groupByCallBack, groupByValueOfKey } from '../internal/groupBy'
 import { toObjectAndValue, toObjectValueObject } from '../internal/toObject'
 import { toMapAndValue, toMapKeyMap } from '../internal/toMap'
 import { JMap } from '../map/JMap'
-import { isLastElement } from '../internal/reducer.utils'
+import { isLastElement, onDuplacateDefaultFunction } from '../internal/reducer.utils'
 
 /**
  * Functions to be used in {@link Array.prototype.reduce} as a callback.
@@ -22,7 +22,9 @@ import { isLastElement } from '../internal/reducer.utils'
  */
 export namespace Reducer {
 
-    export function Map<T>(data?: MMap<T>): MethodMap<T> {
+    export type OnDuplacateFunction<K> = (v1: K, v2: K, key: string) => K | never
+
+    export function Map<T>(data?: StringMap<T>): MethodMap<T> {
         return new JMap(data) as MethodMap<T>
     }
 
@@ -31,7 +33,7 @@ export namespace Reducer {
         return new ImmutableBuilder<T>() as any as MethodMap<T>
     }
 
-    export function ImmutableObject<T>(): Readonly<MMap<T>> {
+    export function ImmutableObject<T>(): Readonly<StringMap<T>> {
         const object = {}
         return Object.defineProperty(
             object,
@@ -40,7 +42,7 @@ export namespace Reducer {
                 value: true,
                 enumerable: false
             }
-        ) as MMap<T>
+        ) as StringMap<T>
     }
 
     /**
@@ -176,7 +178,7 @@ export namespace Reducer {
      *   .reduce(toObject(movie => movie.title), {})
      */
     export function toObject<T>(getKey: KeyGetter<T>):
-        (agr: MMap<T>, value: T, index: number, array: T[]) => MMap<T>
+        (agr: StringMap<T>, value: T, index: number, array: T[]) => StringMap<T>
     /**
      * Function to be used in {@link Array.prototype.reduce} as a callback
      * Collects items to object by key from callback. If function resolves key,
@@ -196,13 +198,48 @@ export namespace Reducer {
      *   .reduce(toObject(movie => movie.title, movie => movie.genre), {})
      */
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>):
-        (agr: MMap<K>, value: T, index: number, array: T[]) => MMap<K>
-    export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter?: Getter<T, K>) {
-        return function _toObject(agr: MMap<T>, value: T, index: number, array: T[]) {
+        (agr: StringMap<K>, value: T, index: number, array: T[]) => StringMap<K>
+
+    export function toObject<T>(getKey: KeyGetter<T>):
+        (agr: StringMap<T>, value: T, index: number, array: T[]) => StringMap<T>
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback
+     * Collects items to object by key from callback. If function resolves key,
+     * that already exists it will throw an Error. Second callback is value mapper.
+     * As second parameter in reduce function need to pass {} or Reducer.ImmutableObject() 
+     * @param {Function} getKey             callback to get key from value
+     * @param {Function} getValue           callback to get value to put in object
+     * @param {Function} merge              callback to merge values with duplicate key
+     * @throws {Error}                      if resolved key from callback is not a string      * 
+     * @example
+     * [
+     *  { title: 'Predator', genre: 'scy-fy },
+     *  { title: 'Predator 2', genre: 'scy-fy},
+     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
+     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
+     * ]
+     *   .reduce(toObject(
+     *  movie => movie.genre, 
+     *  movie => [movie.title], 
+     *  (movie1, moveie2) => movie1.concat(movie2)), 
+     *  {}
+     * )
+     */
+    export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>, merge: (v1: K, v2: K) => K):
+        (agr: StringMap<K>, value: T, index: number, array: T[]) => StringMap<K>
+
+    export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter?: Getter<T, K>, merge?: (v1: K, v2: K) => K) {
+        const onDuplicate: OnDuplacateFunction<K> = merge || onDuplacateDefaultFunction
+        // tslint:disable-next-line:no-any
+        const reducer: any = valueGetter === undefined
+            ? toObjectValueObject(getKey)
+            : toObjectAndValue(getKey, valueGetter, onDuplicate)
+        return function _toObject(agr: StringMap<T>, value: T, index: number, array: T[]) {
             return valueGetter === undefined
-                ? toObjectValueObject(getKey)(agr, value, index, array)
+                ? reducer(agr, value, index, array)
                 // tslint:disable-next-line:no-any
-                : toObjectAndValue(getKey, valueGetter)(agr as any as MMap<K>, value, index, array)
+                : reducer(agr as any as StringMap<K>, value, index, array)
         }
     }
 

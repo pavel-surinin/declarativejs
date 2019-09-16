@@ -23,12 +23,19 @@ describe('Assert', () => {
         expect(is({}).undefined()).toBeFalsy()
         expect(is(null).undefined()).toBeTruthy()
     })
+    it('should check to be null', () => {
+        expect(is(null).null()).toBeTruthy()
+        expect(is(1).null()).toBeFalsy()
+    })
     it('should check to be empty', () => {
+        expect(is(null).empty()).toBeTruthy()
+        expect(is(undefined).empty()).toBeTruthy()
         expect(is('').empty()).toBeTruthy()
         expect(is({}).empty()).toBeTruthy()
         expect(is([]).empty()).toBeTruthy()
     })
     it('should check to be not empty', () => {
+        expect((is(() => void 0)).empty()).toBeFalsy()
         expect(is('a').empty()).toBeFalsy()
         expect(is({ a: 'a' }).empty()).toBeFalsy()
         expect(is(['a']).empty()).toBeFalsy()
