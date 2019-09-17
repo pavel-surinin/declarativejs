@@ -302,11 +302,11 @@ export namespace Reducer {
         /**
          * Keys in objects must be unique
          */
-        UNIQUE: (currentValue: any) => currentValue == null,
+        UNIQUE: (aggregatorValue: any) => aggregatorValue == null,
         /**
          * Keys in objects may have duplicates, but values in these key must be equal
          */
-        CHECKED: (currentValue: any, aggregatorValue: any) => aggregatorValue == null
+        CHECKED: (aggregatorValue: any, currentValue: any) => aggregatorValue == null
             || eq(aggregatorValue, currentValue)
     }
 
@@ -323,7 +323,7 @@ export namespace Reducer {
             for (const k of Object.keys(value)) {
                 const valueFromAggr = (agr as any)[k]
                 const valueFromObject = (value as any)[k]
-                if (!isMergable(valueFromObject, valueFromAggr, k)) {
+                if (!isMergable(valueFromAggr, valueFromObject, k)) {
                     // tslint:disable-next-line:max-line-length
                     throw new Error(`Failed to merge objects. Check the merging predicate ("strategy") and objects in an array with key: ${k}`)
                 }

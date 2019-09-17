@@ -2541,7 +2541,7 @@ Reducer.MergeStrategy.CHECKED</code></pre>
 
 [ {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">c</span>: <span class="hljs-number">3</span>} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) <span class="hljs-comment">// ERROR</span>
 [ {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">e</span>: <span class="hljs-number">2</span>}, {<span class="hljs-attr">c</span>: <span class="hljs-number">3</span>} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) <span class="hljs-comment">// ERROR</span></code></pre>
-			<p>Since MergeStrategy is just a predicate function with delaration: <code>(currentValue: T, aggregatorValue: T, key: string) =&gt; boolean</code>
+			<p>Since MergeStrategy is just a predicate function with delaration: <code>(aggregatorValue: T, currentValue: T, key: string) =&gt; boolean</code>
 			Developer can define its own predicate to avoid object raversing and check, are all properties equal.</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> toMergedObject = Reducers.toMergedObject

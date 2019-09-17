@@ -181,7 +181,7 @@ import MergeStrategy = Reducers.MergeStrategy
 [ {e: 1}, {e: 2}, {c: 3} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) // ERROR
 ```
 
-Since MergeStrategy is just a predicate function with delaration: `(currentValue: T, aggregatorValue: T, key: string) => boolean`
+Since MergeStrategy is just a predicate function with delaration: `(aggregatorValue: T, currentValue: T, key: string) => boolean`
 Developer can define its own predicate to avoid object raversing and check, are all properties equal.
 
 ```javascript
