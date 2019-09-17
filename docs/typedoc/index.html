@@ -2515,21 +2515,20 @@ reduced2.values() <span class="hljs-comment">// [11, 12]</span></code></pre>
 				<h3>toMergedObject</h3>
 			</a>
 			<p>Reduces array of objects to one object
-			There is three merge strategies</p>
-			<pre><code class="language-javascript">enum MergeStrategy {
-    <span class="hljs-comment">/**
-     * Overrides value by duplicated key while merging objects
-     */</span>
-    OVERRIDE = <span class="hljs-string">'override'</span>,
-    <span class="hljs-comment">/**
-     * Keys in objects must be unique
-     */</span>
-    UNIQUE = <span class="hljs-string">'unique'</span>,
-    <span class="hljs-comment">/**
-     * Keys in objects may have duplicates, but values in these key must be equal
-     */</span>
-    CHECKED = <span class="hljs-string">'checked'</span>
-} </code></pre>
+			There is three predifined merge strategies</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducer } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-comment">/**
+ * Overrides value by duplicated key while merging objects
+ */</span>
+Reducer.MergeStrategy.OVERRIDE
+<span class="hljs-comment">/**
+ * Keys in objects must be unique
+ */</span>
+Reducer.MergeStrategy.UNIQUE
+<span class="hljs-comment">/**
+ * Keys in objects may have duplicates, but values in these key must be equal
+ */</span>
+Reducer.MergeStrategy.CHECKED</code></pre>
 			<p>Default strategy is <code>OVERRIDE</code>. </p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> toMergedObject = Reducers.toMergedObject
@@ -2542,6 +2541,36 @@ reduced2.values() <span class="hljs-comment">// [11, 12]</span></code></pre>
 
 [ {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">c</span>: <span class="hljs-number">3</span>} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) <span class="hljs-comment">// ERROR</span>
 [ {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">e</span>: <span class="hljs-number">2</span>}, {<span class="hljs-attr">c</span>: <span class="hljs-number">3</span>} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) <span class="hljs-comment">// ERROR</span></code></pre>
+			<p>Since MergeStrategy is just a predicate function with delaration: <code>(currentValue: T, aggregatorValue: T, key: string) =&gt; boolean</code>
+			Developer can define its own predicate to avoid object raversing and check, are all properties equal.</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> toMergedObject = Reducers.toMergedObject
+
+[ 
+    { 
+        <span class="hljs-attr">predator</span>: {
+            <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, 
+            <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>
+        }
+    }, 
+    {
+        <span class="hljs-attr">predator</span>: {
+            <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, 
+            <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>
+        }
+    },
+    {
+        <span class="hljs-attr">alienVspredator</span>: {
+            <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, 
+            <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>
+        }
+    }
+]
+<span class="hljs-comment">// merge objects if properties 'title' are not equal, otherwise throw error</span>
+<span class="hljs-comment">// if there is not need to throw an error, default merge strategy will </span>
+<span class="hljs-comment">// return always true and will override a property.</span>
+.reduce(toMergedObject(<span class="hljs-function">(<span class="hljs-params">o1, o2</span>) =&gt;</span> o1.title !== o2.title), {}) <span class="hljs-comment">// ERROR</span>
+</code></pre>
 			<a href="#min" id="min" style="color: inherit; text-decoration: none;">
 				<h3>min</h3>
 			</a>

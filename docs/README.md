@@ -146,23 +146,22 @@ reduced2.values() // [11, 12]
 
 ### toMergedObject
 Reduces array of objects to one object
-There is three merge strategies
+There is three predifined merge strategies
 
 ```javascript
-enum MergeStrategy {
-    /**
-     * Overrides value by duplicated key while merging objects
-     */
-    OVERRIDE = 'override',
-    /**
-     * Keys in objects must be unique
-     */
-    UNIQUE = 'unique',
-    /**
-     * Keys in objects may have duplicates, but values in these key must be equal
-     */
-    CHECKED = 'checked'
-} 
+import { Reducer } from 'declarative-js'
+/**
+ * Overrides value by duplicated key while merging objects
+ */
+Reducer.MergeStrategy.OVERRIDE
+/**
+ * Keys in objects must be unique
+ */
+Reducer.MergeStrategy.UNIQUE
+/**
+ * Keys in objects may have duplicates, but values in these key must be equal
+ */
+Reducer.MergeStrategy.CHECKED
 ```
 
 Default strategy is `OVERRIDE`. 
@@ -180,6 +179,40 @@ import MergeStrategy = Reducers.MergeStrategy
 
 [ {e: 1}, {e: 1}, {c: 3} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) // ERROR
 [ {e: 1}, {e: 2}, {c: 3} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) // ERROR
+```
+
+Since MergeStrategy is just a predicate function with delaration: `(currentValue: T, aggregatorValue: T, key: string) => boolean`
+Developer can define its own predicate to avoid object raversing and check, are all properties equal.
+
+```javascript
+import { Reducers } from 'declarative-js'
+import toMergedObject = Reducers.toMergedObject
+
+[ 
+    { 
+        predator: {
+            title: 'Predator', 
+            genre: 'scy-fy'
+        }
+    }, 
+    {
+        predator: {
+            title: 'Predator', 
+            genre: 'scy-fy'
+        }
+    },
+    {
+        alienVspredator: {
+            title: 'Alien vs Predator', 
+            genre: 'scy-fy'
+        }
+    }
+]
+// merge objects if properties 'title' are not equal, otherwise throw error
+// if there is not need to throw an error, default merge strategy will 
+// return always true and will override a property.
+.reduce(toMergedObject((o1, o2) => o1.title !== o2.title), {}) // ERROR
+
 ```
 
 ### min

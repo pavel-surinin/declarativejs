@@ -2375,8 +2375,8 @@ img {
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
-		<li class=" tsd-kind-enum tsd-parent-kind-module">
-			<a href="../enums/_array_reduce_.reducer.mergestrategy.html" class="tsd-kind-icon">Merge<wbr>Strategy</a>
+		<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+			<a href="_array_reduce_.reducer.html#ismergable" class="tsd-kind-icon">Is<wbr>Mergable</a>
 		</li>
 		<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 			<a href="_array_reduce_.reducer.html#onduplacatefunction" class="tsd-kind-icon">On<wbr>Duplacate<wbr>Function</a>
@@ -2414,6 +2414,9 @@ img {
 		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 			<a href="_array_reduce_.reducer.html#toobject" class="tsd-kind-icon">to<wbr>Object</a>
 		</li>
+		<li class=" tsd-kind-object-literal tsd-parent-kind-module">
+			<a href="_array_reduce_.reducer.html#mergestrategy" class="tsd-kind-icon">Merge<wbr>Strategy</a>
+		</li>
 	</ul>
 </nav>
 <div class="container container-main">
@@ -2441,14 +2444,9 @@ img {
 			<section class="tsd-panel tsd-index-panel">
 				<div class="tsd-index-content">
 					<section class="tsd-index-section ">
-						<h3>Enumerations</h3>
-						<ul class="tsd-index-list">
-							<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/_array_reduce_.reducer.mergestrategy.html" class="tsd-kind-icon">Merge<wbr>Strategy</a></li>
-						</ul>
-					</section>
-					<section class="tsd-index-section ">
 						<h3>Type aliases</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_reduce_.reducer.html#ismergable" class="tsd-kind-icon">Is<wbr>Mergable</a></li>
 							<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_reduce_.reducer.html#onduplacatefunction" class="tsd-kind-icon">On<wbr>Duplacate<wbr>Function</a></li>
 						</ul>
 					</section>
@@ -2468,18 +2466,67 @@ img {
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_reduce_.reducer.html#toobject" class="tsd-kind-icon">to<wbr>Object</a></li>
 						</ul>
 					</section>
+					<section class="tsd-index-section ">
+						<h3>Object literals</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-object-literal tsd-parent-kind-module"><a href="_array_reduce_.reducer.html#mergestrategy" class="tsd-kind-icon">Merge<wbr>Strategy</a></li>
+						</ul>
+					</section>
 				</div>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Type aliases</h2>
 			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+				<a name="ismergable" class="tsd-anchor"></a>
+				<h3>Is<wbr>Mergable</h3>
+				<div class="tsd-signature tsd-kind-icon">Is<wbr>Mergable&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L312">array/reduce.ts:312</a></li>
+					</ul>
+				</aside>
+				<h4 class="tsd-type-parameters-title">Type parameters</h4>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-siganture">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>currentValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, aggregatorValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>currentValue: <span class="tsd-signature-type">T</span></h5>
+										</li>
+										<li>
+											<h5>aggregatorValue: <span class="tsd-signature-type">T</span></h5>
+										</li>
+										<li>
+											<h5>key: <span class="tsd-signature-type">string</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 				<a name="onduplacatefunction" class="tsd-anchor"></a>
 				<h3>On<wbr>Duplacate<wbr>Function</h3>
 				<div class="tsd-signature tsd-kind-icon">On<wbr>Duplacate<wbr>Function&lt;K&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L25">array/reduce.ts:25</a></li>
+						<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L25">array/reduce.ts:25</a></li>
 					</ul>
 				</aside>
 				<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2532,7 +2579,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L31">array/reduce.ts:31</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L31">array/reduce.ts:31</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2549,13 +2596,13 @@ img {
 				<a name="immutableobject" class="tsd-anchor"></a>
 				<h3>Immutable<wbr>Object</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">Immutable<wbr>Object&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li class="tsd-signature tsd-kind-icon">Immutable<wbr>Object&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L36">array/reduce.ts:36</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L36">array/reduce.ts:36</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2564,7 +2611,7 @@ img {
 								<h4>T</h4>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -2572,13 +2619,13 @@ img {
 				<a name="map" class="tsd-anchor"></a>
 				<h3>Map</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">Map&lt;T&gt;<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_map_methodmap_.methodmap.html" class="tsd-signature-type">MethodMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li class="tsd-signature tsd-kind-icon">Map&lt;T&gt;<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_map_methodmap_.methodmap.html" class="tsd-signature-type">MethodMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L27">array/reduce.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L27">array/reduce.ts:27</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2590,7 +2637,7 @@ img {
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <a href="../interfaces/_map_methodmap_.methodmap.html" class="tsd-signature-type">MethodMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2607,7 +2654,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L104">array/reduce.ts:104</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L104">array/reduce.ts:104</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2627,9 +2674,19 @@ img {
 						<ul class="tsd-parameters">
 							<li>
 								<h5>agr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>to collect in</p>
+									</div>
+								</div>
 							</li>
 							<li>
 								<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>to concatenate with</p>
+									</div>
+								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -2648,7 +2705,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L65">array/reduce.ts:65</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L65">array/reduce.ts:65</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2724,7 +2781,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L84">array/reduce.ts:84</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L84">array/reduce.ts:84</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2806,7 +2863,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L268">array/reduce.ts:268</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L275">array/reduce.ts:275</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2850,7 +2907,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L255">array/reduce.ts:255</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L262">array/reduce.ts:262</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2894,7 +2951,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L280">array/reduce.ts:280</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L287">array/reduce.ts:287</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2928,7 +2985,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L131">array/reduce.ts:131</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L138">array/reduce.ts:138</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3016,7 +3073,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L152">array/reduce.ts:152</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L159">array/reduce.ts:159</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3101,13 +3158,13 @@ img {
 				<a name="tomergedobject" class="tsd-anchor"></a>
 				<h3>to<wbr>Merged<wbr>Object</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-					<li class="tsd-signature tsd-kind-icon">to<wbr>Merged<wbr>Object<span class="tsd-signature-symbol">(</span>merge<span class="tsd-signature-symbol">?: </span><a href="../enums/_array_reduce_.reducer.mergestrategy.html" class="tsd-signature-type">MergeStrategy</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_toMergedObject</span></li>
+					<li class="tsd-signature tsd-kind-icon">to<wbr>Merged<wbr>Object<span class="tsd-signature-symbol">(</span>isMergable<span class="tsd-signature-symbol">?: </span><a href="_array_reduce_.reducer.html#ismergable" class="tsd-signature-type">IsMergable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_toMergedObject</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L309">array/reduce.ts:309</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L320">array/reduce.ts:320</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3124,10 +3181,7 @@ img {
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5><span class="tsd-flag ts-flagDefault value">Default value</span> merge: <a href="../enums/_array_reduce_.reducer.mergestrategy.html" class="tsd-signature-type">MergeStrategy</a><span class="tsd-signature-symbol"> =&nbsp;MergeStrategy.OVERRIDE</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<p>= default is OVERRIDE</p>
-								</div>
+								<h5><span class="tsd-flag ts-flagDefault value">Default value</span> isMergable: <a href="_array_reduce_.reducer.html#ismergable" class="tsd-signature-type">IsMergable</a><span class="tsd-signature-symbol"> =&nbsp;MergeStrategy.OVERRIDE</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_toMergedObject</span></h4>
@@ -3147,7 +3201,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L180">array/reduce.ts:180</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L187">array/reduce.ts:187</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3194,14 +3248,14 @@ img {
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>agr: <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												<h5>agr: <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 											<li>
 												<h5>value: <span class="tsd-signature-type">T</span></h5>
@@ -3213,7 +3267,7 @@ img {
 												<h5>array: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -3222,7 +3276,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L200">array/reduce.ts:200</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L207">array/reduce.ts:207</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3275,14 +3329,14 @@ img {
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>agr: <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												<h5>agr: <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 											<li>
 												<h5>value: <span class="tsd-signature-type">T</span></h5>
@@ -3294,7 +3348,7 @@ img {
 												<h5>array: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -3303,7 +3357,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L203">array/reduce.ts:203</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L210">array/reduce.ts:210</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3322,14 +3376,14 @@ img {
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>agr: <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												<h5>agr: <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 											<li>
 												<h5>value: <span class="tsd-signature-type">T</span></h5>
@@ -3341,7 +3395,7 @@ img {
 												<h5>array: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -3350,7 +3404,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/2f953fc/src/array/reduce.ts#L229">array/reduce.ts:229</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L236">array/reduce.ts:236</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3432,14 +3486,14 @@ img {
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>agr<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, array<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>agr: <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												<h5>agr: <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 											<li>
 												<h5>value: <span class="tsd-signature-type">T</span></h5>
@@ -3451,13 +3505,117 @@ img {
 												<h5>array: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.mmap.html" class="tsd-signature-type">MMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										<h4 class="tsd-returns-title">Returns <a href="../interfaces/_types_.stringmap.html" class="tsd-signature-type">StringMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
 						</ul>
 					</li>
 				</ul>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group ">
+			<h2>Object literals</h2>
+			<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module">
+				<a name="mergestrategy" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> Merge<wbr>Strategy</h3>
+				<div class="tsd-signature tsd-kind-icon">Merge<wbr>Strategy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L295">array/reduce.ts:295</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Object merging strategy used in {@link Reducer#toMergedObject}</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p>toMergedObject</p>
+						</dd>
+					</dl>
+				</div>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="mergestrategy.checked" class="tsd-anchor"></a>
+					<h3>CHECKED</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">CHECKED<span class="tsd-signature-symbol">(</span>currentValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, aggregatorValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L307">array/reduce.ts:307</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Keys in objects may have duplicates, but values in these key must be equal</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>currentValue: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>aggregatorValue: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="mergestrategy.override" class="tsd-anchor"></a>
+					<h3>OVERRIDE</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">OVERRIDE<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">true</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L299">array/reduce.ts:299</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Overrides value by duplicated key while merging objects</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">true</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
+					<a name="mergestrategy.unique" class="tsd-anchor"></a>
+					<h3>UNIQUE</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-object-literal">
+						<li class="tsd-signature tsd-kind-icon">UNIQUE<span class="tsd-signature-symbol">(</span>currentValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/fe7340b/src/array/reduce.ts#L303">array/reduce.ts:303</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Keys in objects must be unique</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>currentValue: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</section>
 		<footer class="with-border-bottom">

@@ -205,30 +205,42 @@ describe('Reducer', () => {
         const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }].reduce(toObject(x => x.a, x => x.b), {})
         expect(res).toMatchObject({ a: 1, b: 2 })
     })
-    it('should throw on duplicates toMapAndValue', () => {
+    it('should throw on duplicates toMap', () => {
         expect(() => {
             [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(Reducer.toMap(x => x.a, x => x.b), Reducer.Map())
         }).toThrow('"a" has duplicates')
     })
-    it('should throw on duplicates tObjectAndValue', () => {
+    it('should throw on duplicates tObject', () => {
         expect(() => {
             [{ a: 'a', b: 1 }, { a: 'a', b: 2 }].reduce(toObject(x => x.a, x => x.b), {})
         }).toThrow('"a" has duplicates')
     })
-    it('should merge array of objects to one object', () => {
-        const objects = [{ e: 1 }, { d: 2 }, { c: 3 }]
-        expect(objects.reduce(Reducer.toMergedObject(), {})).toMatchObject({ e: 1, d: 2, c: 3 })
-    })
-    it('should not throw on merge array of objects to one object with duplicate keys equal value - Checked', () => {
-        const objects = [{ e: 1 }, { d: 2 }, { e: 1 }]
-        expect(() => objects.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).not.toThrow()
-    })
-    it('should throw on merge array of objects to one object with duplicate keys', () => {
-        const objects = [{ e: 1 }, { d: 2 }, { e: 1 }]
-        expect(() => objects.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.UNIQUE), {})).toThrow()
-    })
-    it('should throw on merge array of objects to one object with duplicate keys and diff value', () => {
-        const objects = [{ e: 1 }, { d: 2 }, { e: 3 }]
-        expect(() => objects.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).toThrow()
-    })
+    describe('toMergedObject', () => {
+        it('should merge array of objects to one object', () => {
+            const objects = [{ e: 1 }, { d: 2 }, { c: 3 }]
+            expect(objects.reduce(Reducer.toMergedObject(), {})).toMatchObject({ e: 1, d: 2, c: 3 })
+        })
+        it('should not throw on merge array of objects to one object with duplicate keys equal value - Checked', () => {
+            const objects = [{ e: 1 }, { d: 2 }, { e: 1 }]
+            expect(() => objects.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).not.toThrow()
+        })
+        it('should throw on merge array of objects to one object with duplicate keys', () => {
+            const objects = [{ e: 1 }, { d: 2 }, { e: 1 }]
+            expect(() => objects.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.UNIQUE), {})).toThrow()
+        })
+        it('should throw on merge array of objects to one object with duplicate keys and diff value', () => {
+            const objects = [{ e: 1 }, { d: 2 }, { e: 3 }]
+            expect(() => objects.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.CHECKED), {})).toThrow()
+        })
+        it('should call isMergable function ', () => {
+            const spy = jest.spyOn(Reducer.MergeStrategy, 'OVERRIDE')
+            const objects = [{ a: 1 }, { b: 2 }, { c: 3 }]
+            objects.reduce(Reducer.toMergedObject(Reducer.MergeStrategy.OVERRIDE), {})
+            expect(spy).toHaveBeenCalledTimes(3)
+        });
+        it('should call isMergable and throw an error ', () => {
+            const objects = [{ a: 1 }, { b: 2 }, { c: 3 }]
+            expect(() => objects.reduce(Reducer.toMergedObject(() => false), {})).toThrowError()
+        });
+    });
 })

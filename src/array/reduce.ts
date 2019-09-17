@@ -288,24 +288,29 @@ export namespace Reducer {
         return agr + value
     }
 
+    // tslint:disable:no-any
+
     /**
      * Object merging strategy used in {@link Reducer#toMergedObject}
      * @see toMergedObject
      */
-    export enum MergeStrategy {
+    export const MergeStrategy: Record<'OVERRIDE' | 'UNIQUE' | 'CHECKED', IsMergable> = {
         /**
          * Overrides value by duplicated key while merging objects
          */
-        OVERRIDE = 'override',
+        OVERRIDE: () => true,
         /**
          * Keys in objects must be unique
          */
-        UNIQUE = 'unique',
+        UNIQUE: (currentValue: any) => currentValue == null,
         /**
          * Keys in objects may have duplicates, but values in these key must be equal
          */
-        CHECKED = 'checked'
+        CHECKED: (currentValue: any, aggregatorValue: any) => aggregatorValue == null
+            || eq(aggregatorValue, currentValue)
     }
+
+    export type IsMergable<T = any> = (currentValue: T, aggregatorValue: T, key: string) => boolean
 
     /**
      * Function to be used in {@link Array.prototype.reduce} as a callback.
@@ -313,27 +318,17 @@ export namespace Reducer {
      * @see MergeStrategy
      * @param merge {@link MergeStrategy} = default is OVERRIDE
      */
-    export function toMergedObject(merge: MergeStrategy = MergeStrategy.OVERRIDE) {
+    export function toMergedObject(isMergable: IsMergable = MergeStrategy.OVERRIDE) {
         return function _toMergedObject<T extends object, R extends object>(agr: R, value: T): T & R {
-            Object.keys(value).forEach(k => {
-                // tslint:disable-next-line:no-any
+            for (const k of Object.keys(value)) {
                 const valueFromAggr = (agr as any)[k]
-                // tslint:disable-next-line:no-any
                 const valueFromObject = (value as any)[k]
-                if (merge === MergeStrategy.UNIQUE && valueFromAggr !== null && valueFromAggr !== void 0) {
-                    throw new Error('Object ' + JSON.stringify(agr, null, 2) + ' already has key ' + k)
-                }
-                if (merge === MergeStrategy.CHECKED
-                    && valueFromAggr !== null
-                    && valueFromAggr !== void 0
-                    && !eq(valueFromAggr, valueFromObject)
-                ) {
+                if (!isMergable(valueFromObject, valueFromAggr, k)) {
                     // tslint:disable-next-line:max-line-length
-                    throw new Error('Object ' + JSON.stringify(agr, null, 2) + ' already has key ' + k + ' and values are different')
+                    throw new Error(`Failed to merge objects. Check the merging predicate ("strategy") and objects in an array with key: ${k}`)
                 }
-                // tslint:disable-next-line:no-any
                 (agr as any)[k] = valueFromObject
-            })
+            }
             return agr as T & R
         }
     }
