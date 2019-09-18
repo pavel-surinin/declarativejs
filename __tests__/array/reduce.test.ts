@@ -21,7 +21,6 @@ describe('Reducer', () => {
         })
         it('should throw when toObjectAndValue key is not a string', () => {
             expect(
-                // tslint:disable-next-line:no-any
                 () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toObject(x => (x as any).a, x => x), {})
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })
@@ -32,7 +31,6 @@ describe('Reducer', () => {
         })
         it('should throw when toObject key is not a string', () => {
             expect(
-                // tslint:disable-next-line:no-any
                 () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toObject(x => (x as any).a), {})
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })
@@ -43,7 +41,6 @@ describe('Reducer', () => {
         })
         it('should throw when toMapAndValue key is not a string', () => {
             expect(
-                // tslint:disable-next-line:no-any
                 () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toMap(x => (x as any).a, x => x), new JMap())
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })
@@ -54,7 +51,6 @@ describe('Reducer', () => {
         })
         it('should throw when toMap key is not a string', () => {
             expect(
-                // tslint:disable-next-line:no-any
                 () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(toMap(x => (x as any).a), new JMap())
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })
@@ -65,7 +61,6 @@ describe('Reducer', () => {
         })
         it('should throw when groupBy key is not a string', () => {
             expect(
-                // tslint:disable-next-line:no-any
                 () => [{ a: 5 }, { a: '3' }, { a: '1' }].reduce(groupBy(x => (x as any).a), new JMap())
             ).toThrow('Resolved key must be a string, actual: value - 5 type - number')
         })

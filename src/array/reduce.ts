@@ -29,7 +29,6 @@ export namespace Reducer {
     }
 
     export function ImmutableMap<T>(): MethodMap<T> {
-        // tslint:disable-next-line:no-any
         return new ImmutableBuilder<T>() as any as MethodMap<T>
     }
 
@@ -162,7 +161,6 @@ export namespace Reducer {
         return function _toMap(agr: MethodMap<T>, value: T, index: number, array: T[]) {
             return valueGetter === undefined
                 ? toMapKeyMap(getKey)(agr, value, index, array)
-                // tslint:disable-next-line:no-any
                 : toMapAndValue(getKey, valueGetter)(agr as any as MethodMap<K>, value, index, array)
         }
     }
@@ -238,14 +236,12 @@ export namespace Reducer {
 
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter?: Getter<T, K>, merge?: (v1: K, v2: K) => K) {
         const onDuplicate: OnDuplacateFunction<K> = merge || onDuplacateDefaultFunction
-        // tslint:disable-next-line:no-any
         const reducer: any = valueGetter === undefined
             ? toObjectValueObject(getKey)
             : toObjectAndValue(getKey, valueGetter, onDuplicate)
         return function _toObject(agr: StringMap<T>, value: T, index: number, array: T[]) {
             return valueGetter === undefined
                 ? reducer(agr, value, index, array)
-                // tslint:disable-next-line:no-any
                 : reducer(agr as any as StringMap<K>, value, index, array)
         }
     }
@@ -287,8 +283,6 @@ export namespace Reducer {
     export const sum = (agr: number, value: number) => {
         return agr + value
     }
-
-    // tslint:disable:no-any
 
     /**
      * Object merging strategy used in {@link Reducer#toMergedObject}

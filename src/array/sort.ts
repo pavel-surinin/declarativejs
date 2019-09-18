@@ -62,14 +62,12 @@ export namespace Sort {
 
     export function ascendingBy<T, K extends keyof T>
         (...getters: (Getter<T, AutoComparable> | K)[]) {
+        const ascending = { true: 1, false: -1 }
+        const sort = typeof getters[0] === 'string'
+            ? sortByKeyValues(ascending)(...getters as never[])
+            : sortByGetters(ascending)(...getters as any)
         return function _ascendingBy(a: T, b: T): number {
-            const ascending = { true: 1, false: -1 }
-            if (typeof getters[0] === 'string') {
-                return sortByKeyValues(ascending)(...getters as never[])(a, b)
-            } else {
-                // tslint:disable-next-line:no-any
-                return sortByGetters(ascending)(...getters as any)(a, b)
-            }
+            return sort(a, b)
         }
     }
     /**
@@ -119,13 +117,11 @@ export namespace Sort {
     export function descendingBy<T, K extends keyof T>
         (...getters: (Getter<T, AutoComparable> | K)[]) {
         return function _descendingBy(a: T, b: T): number {
-            const ascending = { true: -1, false: 1 }
-            if (typeof getters[0] === 'string') {
-                return sortByKeyValues(ascending)(...getters as never[])(a, b)
-            } else {
-                // tslint:disable-next-line:no-any
-                return sortByGetters(ascending)(...getters as any)(a, b)
-            }
+            const descending = { true: -1, false: 1 }
+            const sort = typeof getters[0] === 'string'
+                ? sortByKeyValues(descending)(...getters as never[])
+                : sortByGetters(descending)(...getters as any)
+            return sort(a, b)
         }
     }
 
@@ -152,7 +148,6 @@ export namespace Sort {
      *      // { task: 'Eat', severity: 'medium' },
      *      // { task: 'Code', severity: 'high' },
      */
-    // tslint:disable-next-line:no-any
     export function by<T>(...conditions: SortingCondition<T, any>[]): (a: T, b: T) => number
 
     /**
@@ -173,14 +168,12 @@ export namespace Sort {
     export function by<T, K extends keyof T>(key: K, values: T[K][]): (a: T, b: T) => number
 
     export function by<T>
-        // tslint:disable-next-line:no-any
         (...args: any[]) {
+        const sort = typeof args[0] === 'string'
+            ? sortByPropertyAndPriority(args[0] as never, args[1])
+            : sortByConditions(...args)
         return function _by(a: T, b: T) {
-            if (typeof args[0] === 'string') {
-                return sortByPropertyAndPriority(args[0] as never, args[1])(a, b)
-            } else {
-                return sortByConditions(...args)(a, b)
-            }
+            return sort(a, b)
         }
     }
     /**
@@ -202,7 +195,6 @@ export namespace Sort {
             const condition = {
                 toValue: x => x,
                 order: order
-                // tslint:disable-next-line:no-any
             } as SortingCondition<any, T>
             return sortByConditions(...[condition])(a, b)
         }

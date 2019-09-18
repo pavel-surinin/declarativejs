@@ -43,7 +43,6 @@ export namespace Assert {
      * Checks value to be equal with {@code ===} strict equality
      */
     export function isEqual<T>(value1: T) {
-        // tslint:disable-next-line:no-any
         return function _isEqual(value2: any) {
             return value1 === value2
         }
@@ -54,7 +53,6 @@ export namespace Assert {
      * @see https://www.npmjs.com/package/fast-deep-equal
      */
     export function isDeepEqual<T>(value1: T) {
-        // tslint:disable-next-line:no-any
         return (value2: any) => {
             return equal(value1, value2)
         }
@@ -89,11 +87,9 @@ export namespace Assert {
                 typeof: function _typeof(type: JSType) {
                     return typeof value !== type
                 },
-                // tslint:disable-next-line:no-any
                 equals: function _equals(valueToCompare: any) {
                     return !isEqual(value)(valueToCompare)
                 },
-                // tslint:disable-next-line:no-any
                 deepEquals: function _deepEquals(valueToCompare: any) {
                     return !isDeepEqual(value)(valueToCompare)
                 },
@@ -106,11 +102,9 @@ export namespace Assert {
             typeof: function _typeof(type: JSType) {
                 return typeof value === type
             },
-            // tslint:disable-next-line:no-any
             equals: function _equals(valueToCompare: any) {
                 return isEqual(value)(valueToCompare)
             },
-            // tslint:disable-next-line:no-any
             deepEquals: function _deepEquals(valueToCompare: any) {
                 return isDeepEqual(value)(valueToCompare)
             },

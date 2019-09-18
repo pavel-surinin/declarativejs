@@ -15,7 +15,6 @@ export type Predicate<T> = (value: T) => boolean
 
 export const Map = <T>(obj?: StringMap<T>): MethodMap<T> => new JMap<T>(obj)
 
-// tslint:disable-next-line:no-any
 export type AlwaysArray<T> = T extends any[] ? T : T[]
 
 export type NonNull<R> = R extends undefined | null ? R : R
