@@ -412,21 +412,23 @@ import toObjValues = Reducers.toObjValues
 ## Sorters
 API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_sort_.sort.html)
 
-### ascending 
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#sortascendingby)
+
+### ascendingBy
 
 Sorts array in ascending order by values provided from callbacks. First callback has highest priority in sorting and so on. 
 
 ```javascript
 import { Sort } from 'declarative-js'
-import ascending = Sort.ascending
+import ascendingBy = Sort.ascendingBy
 
-names.sort(ascending(
+names.sort(ascendingBy(
     x => x.name, 
     x => x.lastName, 
     x => x.age
 ));
-names.sort(ascending('name', 'lastName', 'age'));
-// sorted names by name, lastName and age 
+names.sort(ascendingBy('name', 'lastName', 'age'));
+// sorted by name, lastName and age 
 // [
 //    { name: 'andrew', lastName: 'Aa', age: 1 },
 //    { name: 'andrew', lastName: 'Bb', age: 1 },
@@ -436,22 +438,22 @@ names.sort(ascending('name', 'lastName', 'age'));
 // ]                
 ```
 
-### descending 
+### descendingBy 
 
 Sorts array in descending order by values provided from callbacks. First callback has highest priority in sorting and so on.
 
 ```javascript
 import { Sort } from 'declarative-js'
-import descending = Sort.descending
+import descendingBy = Sort.descendingBy
 
-names.sort(descending(
+names.sort(descendingBy(
     x => x.name, 
     x => x.lastName, 
     x => x.age
 ));
-names.sort(descending('name', 'lastName', 'age'));
+names.sort(descendingBy('name', 'lastName', 'age'));
 
-// sorted names by name, lastName and age
+// sorted by name, lastName and age
 // [
 //    { name: 'billy', lastName: 'Cc', age: 5 },
 //    { name: 'billy', lastName: 'Cc', age: 1 },

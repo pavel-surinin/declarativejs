@@ -2738,20 +2738,21 @@ films.filter(takeWhile(isScienceFiction))
 				<h2>Sorters</h2>
 			</a>
 			<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_sort_.sort.html">link</a></p>
-			<a href="#ascending" id="ascending" style="color: inherit; text-decoration: none;">
-				<h3>ascending</h3>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#sortascendingby">link</a></p>
+			<a href="#ascendingby" id="ascendingby" style="color: inherit; text-decoration: none;">
+				<h3>ascendingBy</h3>
 			</a>
 			<p>Sorts array in ascending order by values provided from callbacks. First callback has highest priority in sorting and so on. </p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Sort } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
-<span class="hljs-keyword">import</span> ascending = Sort.ascending
+<span class="hljs-keyword">import</span> ascendingBy = Sort.ascendingBy
 
-names.sort(ascending(
+names.sort(ascendingBy(
     <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x.name, 
     x =&gt; x.lastName, 
     x =&gt; x.age
 ));
-names.sort(ascending(<span class="hljs-string">'name'</span>, <span class="hljs-string">'lastName'</span>, <span class="hljs-string">'age'</span>));
-<span class="hljs-comment">// sorted names by name, lastName and age </span>
+names.sort(ascendingBy(<span class="hljs-string">'name'</span>, <span class="hljs-string">'lastName'</span>, <span class="hljs-string">'age'</span>));
+<span class="hljs-comment">// sorted by name, lastName and age </span>
 <span class="hljs-comment">// [</span>
 <span class="hljs-comment">//    { name: 'andrew', lastName: 'Aa', age: 1 },</span>
 <span class="hljs-comment">//    { name: 'andrew', lastName: 'Bb', age: 1 },</span>
@@ -2759,21 +2760,21 @@ names.sort(ascending(<span class="hljs-string">'name'</span>, <span class="hljs-
 <span class="hljs-comment">//    { name: 'billy', lastName: 'Cc', age: 1 },</span>
 <span class="hljs-comment">//    { name: 'billy', lastName: 'Cc', age: 5 },</span>
 <span class="hljs-comment">// ]                </span></code></pre>
-			<a href="#descending" id="descending" style="color: inherit; text-decoration: none;">
-				<h3>descending</h3>
+			<a href="#descendingby" id="descendingby" style="color: inherit; text-decoration: none;">
+				<h3>descendingBy</h3>
 			</a>
 			<p>Sorts array in descending order by values provided from callbacks. First callback has highest priority in sorting and so on.</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Sort } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
-<span class="hljs-keyword">import</span> descending = Sort.descending
+<span class="hljs-keyword">import</span> descendingBy = Sort.descendingBy
 
-names.sort(descending(
+names.sort(descendingBy(
     <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x.name, 
     x =&gt; x.lastName, 
     x =&gt; x.age
 ));
-names.sort(descending(<span class="hljs-string">'name'</span>, <span class="hljs-string">'lastName'</span>, <span class="hljs-string">'age'</span>));
+names.sort(descendingBy(<span class="hljs-string">'name'</span>, <span class="hljs-string">'lastName'</span>, <span class="hljs-string">'age'</span>));
 
-<span class="hljs-comment">// sorted names by name, lastName and age</span>
+<span class="hljs-comment">// sorted by name, lastName and age</span>
 <span class="hljs-comment">// [</span>
 <span class="hljs-comment">//    { name: 'billy', lastName: 'Cc', age: 5 },</span>
 <span class="hljs-comment">//    { name: 'billy', lastName: 'Cc', age: 1 },</span>
