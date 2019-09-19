@@ -83,10 +83,11 @@ export namespace Reducer {
     export function groupBy<T>(getKey: KeyGetter<T>):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
     export function groupBy<T, K extends keyof T>(getKey: KeyGetter<T> | K) {
+        const grouper: any = typeof getKey !== 'string'
+            ? groupByCallBack(getKey)
+            : groupByValueOfKey(getKey as never)
         return function _groupBy(agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
-            return typeof getKey !== 'string'
-                ? groupByCallBack(getKey)(agr, value, index, array)
-                : groupByValueOfKey(getKey as never)(agr, value, index, array)
+            return grouper(agr, value, index, array)
         }
     }
 
@@ -158,10 +159,11 @@ export namespace Reducer {
     export function toMap<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>):
         (agr: MethodMap<K>, value: T, index: number, array: T[]) => MethodMap<K>
     export function toMap<T, K>(getKey: KeyGetter<T>, valueGetter?: Getter<T, K>) {
+        const mapper: any = valueGetter === undefined
+            ? toMapKeyMap(getKey)
+            : toMapAndValue(getKey, valueGetter)
         return function _toMap(agr: MethodMap<T>, value: T, index: number, array: T[]) {
-            return valueGetter === undefined
-                ? toMapKeyMap(getKey)(agr, value, index, array)
-                : toMapAndValue(getKey, valueGetter)(agr as any as MethodMap<K>, value, index, array)
+            return mapper(agr, value, index, array)
         }
     }
 
@@ -240,9 +242,7 @@ export namespace Reducer {
             ? toObjectValueObject(getKey)
             : toObjectAndValue(getKey, valueGetter, onDuplicate)
         return function _toObject(agr: StringMap<T>, value: T, index: number, array: T[]) {
-            return valueGetter === undefined
-                ? reducer(agr, value, index, array)
-                : reducer(agr as any as StringMap<K>, value, index, array)
+            return reducer(agr as any as StringMap<K>, value, index, array)
         }
     }
 
