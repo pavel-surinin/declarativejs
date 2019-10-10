@@ -596,63 +596,6 @@ Method predicate `(value: T) => boolean`. If filters predicate returns `false`, 
         .get() // if filter returned false an error will be thrown
 ```
 
-
-# is
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_assert_assert_.assert.html)
-
-`null` assertion
-```javascript
-    import { is } from 'declarative-js'
-
-    is(myVar).null()
-    is(myVar).not.null()
-```
-
-`undefined` assertion
-```javascript
-    is(myVar).undefined()
-    is(myVar).not.undefined()
-```
-
-`present` assertion
-```javascript
-    is(myVar).present()
-    is(myVar).not.present()
-```
-
-`empty` assertion. Assert is `string` is empty or `array` is empty or `object` is empty, otherwise returns true
-```javascript
-    is({}).empty() //true
-    is([]).empty() //true
-    is('').empty() //true
-    is(myVar).not.empty()
-```
-
-`typeof` assertion. Type can be asserted with these values: `'undefined' | 'object' | 'boolean' | 'number' | 'string'`
-```javascript
-    is(myVar).typeof('string')
-    is(myVar).not.typeof('string')
-```
-
-`equals` assertion. Assert with `===`
-```javascript
-    is(mayVar).equals('dummy')
-    is(mayVar).not.equals('dummy')
-```
-
-`equals` assertion. Asserts to be equal.
-```javascript
-    is(mayVar).equals('dummy')
-    is(mayVar).not.equals('dummy')
-```
-
-`deepEquals` assertion. Assert objects to be deep equal.
-Under the hood [fast-deep=equal](https://www.npmjs.com/package/fast-deep-equal) is used to compare two objects
-```javascript
-    is({a: {b: 1}}).deepEquals({a: {b: 1}}) // true
-    is({a: {b: 1}}).not.deepEquals({a: {b: 1}}) // false
-```
-
 # MethodMap
 API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/interfaces/_map_methodmap_.methodmap.html)
 

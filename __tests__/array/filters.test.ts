@@ -35,6 +35,10 @@ describe('Filters', () => {
         const fa = ['', 'a', 'b'].filter(toBe.notEmpty)
         expect(fa).toHaveLength(2)
     })
+    it('should filter out empty string', () => {
+        const fa = [[], ['a'], ['b']].filter(toBe.notEmpty)
+        expect(fa).toHaveLength(2)
+    })
     it('should filter to be equal "a"', () => {
         const fa = ['', 'a', 'b', 'a', 'c'].filter(toBe.equal('a'))
         expect(fa).toHaveLength(2)

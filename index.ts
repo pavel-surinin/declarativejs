@@ -1,4 +1,3 @@
-export * from './src/assert/Assert'
 export * from './src/optional/Optional'
 export * from './src/array/filters'
 export * from './src/array/reduce'
