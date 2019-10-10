@@ -1,4 +1,3 @@
-import { Assert } from '../assert/Assert'
 import { uniqueByMappedValue, uniqueByProp } from '../internal/unique'
 import { Getter, Predicate } from '../types'
 import deepEqual from 'fast-deep-equal'
@@ -16,16 +15,18 @@ export namespace toBe {
      * @returns {boolean}
      */
     export function present<T>(value: T) {
-        return Assert.is(value).present()
+        return value != undefined
     }
     /**
      * Function to be used in {@link Array.prototype.filter} as a callback.
      * Filters out items that are empty
      *  
-     * @returns {boolean}     * 
+     * @returns {boolean}
      */
     export function notEmpty<T>(value: T) {
-        return Assert.is(value).not.empty()
+        return value != undefined
+            && (Array.isArray(value) ? value.length !== 0 : true)
+            && (typeof value === 'string' ? value !== '' : true)
     }
     /**
      * Function to be used in {@link Array.prototype.filter} as a callback.

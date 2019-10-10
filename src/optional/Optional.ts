@@ -1,4 +1,3 @@
-import { Assert } from '../assert/Assert'
 import { AlwaysArray, Getter } from '../types'
 import { toArray } from '../internal/ToArray'
 
@@ -24,11 +23,11 @@ export class Optional<T> {
     }
 
     isPresent(): boolean {
-        return Assert.isPresent(this.value)
+        return this.value != undefined
     }
 
     isAbsent(): boolean {
-        return Assert.isNotPresent(this.value)
+        return this.value == undefined
     }
 
     ifPresent(consumer: () => void): void {
@@ -44,7 +43,7 @@ export class Optional<T> {
     }
 
     get(): NonNullable<T> {
-        if (Assert.isNotPresent(this.value)) {
+        if (this.value == undefined) {
             throw new Error('Value is not defined')
         }
         return this.value!

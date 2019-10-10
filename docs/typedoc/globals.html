@@ -2888,39 +2888,6 @@ optional(myVar).orElseThrow(<span class="hljs-string">'This is bad'</span>)</cod
         .filter(<span class="hljs-function"><span class="hljs-params">name</span> =&gt;</span> name === <span class="hljs-string">'John'</span>)
         .map(toGreeting)
         .get() <span class="hljs-comment">// if filter returned false an error will be thrown</span></code></pre>
-			<a href="#is" id="is" style="color: inherit; text-decoration: none;">
-				<h1>is</h1>
-			</a>
-			<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/modules/_assert_assert_.assert.html">link</a></p>
-			<p><code>null</code> assertion</p>
-			<pre><code class="language-javascript">    <span class="hljs-keyword">import</span> { is } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
-
-    is(myVar).null()
-    is(myVar).not.null()</code></pre>
-			<p><code>undefined</code> assertion</p>
-			<pre><code class="language-javascript">    is(myVar).undefined()
-    is(myVar).not.undefined()</code></pre>
-			<p><code>present</code> assertion</p>
-			<pre><code class="language-javascript">    is(myVar).present()
-    is(myVar).not.present()</code></pre>
-			<p><code>empty</code> assertion. Assert is <code>string</code> is empty or <code>array</code> is empty or <code>object</code> is empty, otherwise returns true</p>
-			<pre><code class="language-javascript">    is({}).empty() <span class="hljs-comment">//true</span>
-    is([]).empty() <span class="hljs-comment">//true</span>
-    is(<span class="hljs-string">''</span>).empty() <span class="hljs-comment">//true</span>
-    is(myVar).not.empty()</code></pre>
-			<p><code>typeof</code> assertion. Type can be asserted with these values: <code>&#39;undefined&#39; | &#39;object&#39; | &#39;boolean&#39; | &#39;number&#39; | &#39;string&#39;</code></p>
-			<pre><code class="language-javascript">    is(myVar).typeof(<span class="hljs-string">'string'</span>)
-    is(myVar).not.typeof(<span class="hljs-string">'string'</span>)</code></pre>
-			<p><code>equals</code> assertion. Assert with <code>===</code></p>
-			<pre><code class="language-javascript">    is(mayVar).equals(<span class="hljs-string">'dummy'</span>)
-    is(mayVar).not.equals(<span class="hljs-string">'dummy'</span>)</code></pre>
-			<p><code>equals</code> assertion. Asserts to be equal.</p>
-			<pre><code class="language-javascript">    is(mayVar).equals(<span class="hljs-string">'dummy'</span>)
-    is(mayVar).not.equals(<span class="hljs-string">'dummy'</span>)</code></pre>
-			<p><code>deepEquals</code> assertion. Assert objects to be deep equal.
-			Under the hood <a href="https://www.npmjs.com/package/fast-deep-equal">fast-deep=equal</a> is used to compare two objects</p>
-			<pre><code class="language-javascript">    is({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}).deepEquals({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}) <span class="hljs-comment">// true</span>
-    is({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}).not.deepEquals({<span class="hljs-attr">a</span>: {<span class="hljs-attr">b</span>: <span class="hljs-number">1</span>}}) <span class="hljs-comment">// false</span></code></pre>
 			<a href="#methodmap" id="methodmap" style="color: inherit; text-decoration: none;">
 				<h1>MethodMap</h1>
 			</a>
@@ -2993,7 +2960,6 @@ sample.entries() <span class="hljs-comment">// [ {key: 'mike', value: 1}, {key: 
 							<li class="tsd-kind-external-module"><a href="modules/_array_mappers_.html" class="tsd-kind-icon">"array/mappers"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_array_reduce_.html" class="tsd-kind-icon">"array/reduce"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_array_sort_.html" class="tsd-kind-icon">"array/sort"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_assert_assert_.html" class="tsd-kind-icon">"assert/<wbr>Assert"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_immutablebuilder_.html" class="tsd-kind-icon">"map/<wbr>Immutable<wbr>Builder"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_immutablemap_.html" class="tsd-kind-icon">"map/<wbr>Immutable<wbr>Map"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_jmap_.html" class="tsd-kind-icon">"map/JMap"</a></li>
