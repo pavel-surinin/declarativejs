@@ -1,6 +1,6 @@
 {
   "name": "declarative-js",
-  "version": "3.8.4",
+  "version": "3.8.5",
   "main": "index.js",
   "types": "index.d.ts",
   "author": "Pavel Surinin <pavel.surinin@gmail.com>",
