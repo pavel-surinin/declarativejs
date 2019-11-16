@@ -19,10 +19,15 @@
     "javascript",
     "typescript",
     "groupby",
+    "group by",
     "filter",
     "tomap",
+    "to map",
     "toobject",
-    "collect"
+    "to object",
+    "collect",
+    "zip",
+    "flat"
   ],
   "dependencies": {
     "fast-deep-equal": "2.0.1",

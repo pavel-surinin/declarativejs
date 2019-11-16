@@ -326,4 +326,50 @@ export namespace Reducer {
             return agr as T & R
         }
     }
+
+    export type Tuple<E1, E2> = [E1, E2]
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * Collects two arrays into one array of tuples, two element array([x ,y]).
+     * The length of zipped array will be length of shortest array.
+     * 
+     * @param {Array} array array to zip with
+     * @returns array with elements from two arrays as tuples
+     * @example
+     * 
+     * // array lengths are equal
+     * let a1 = [1, 2, 3]
+     * let a2 = ['x', 'y', 'z']
+     * let zipped = a1.reduce(Reducer.zip(a2), [])
+     * // [[1, 'x'], [2, 'y'], [3, 'z']]
+     * 
+     * // origin array is longer
+     * let b1 = [1, 2, 3, 4]
+     * let b2 = ['x', 'y', 'z']
+     * let zipped = b1.reduce(Reducer.zip(b2), [])
+     * // [[1, 'x'], [2, 'y'], [3, 'z']]
+     * 
+     * // zip array is longer
+     * let c1 = [1, 2, 3]
+     * let c2 = ['x', 'y', 'z', 'extra']
+     * let zipped = c1.reduce(Reducer.zip(c2), [])
+     * // [[1, 'x'], [2, 'y'], [3, 'z']]
+     */
+    export function zip<T_EX, T>(array: T_EX[]) {
+        let isZipped = false
+        let secondArrLength = array.length
+        return function _zip(agr: Array<Tuple<T, T_EX>>, value: T, index: number): Array<Tuple<T, T_EX>> {
+            if (isZipped) {
+                return agr
+            }
+            const arrayValue = array[index]
+            if (secondArrLength == index) {
+                isZipped = true
+                return agr
+            }
+            agr.push([value, arrayValue])
+            return agr
+        }
+    }
 }

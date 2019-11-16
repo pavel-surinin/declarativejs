@@ -84,7 +84,6 @@ data.reduce(toObject(
 // }    
 ```
 
-
 ### groupBy
 
 Groups by key resolved from callback to map where key is `string` and value is an `array` of items. (groupby for javascript)
@@ -119,6 +118,34 @@ import flat = Reducers.flat
 
 [[1, 2], [2, 3], [3, 4]].reduce(flat, []) // [1, 2, 2, 3, 3, 4]
 ```        
+
+### zip
+
+Collects two arrays into one array of tuples, two element array(`[x ,y]`).
+The length of zipped array will be length of shortest array.
+
+```javascript
+import { Reducers } from 'declarative-js'
+import zip = Reducers.zip
+
+// array lengths are equal
+let a1 = [1, 2, 3]
+let a2 = ['x', 'y', 'z']
+let zippedA = a1.reduce(zip(a2), [])
+// [[1, 'x'], [2, 'y'], [3, 'z']]
+
+// origin array is longer
+let b1 = [1, 2, 3, 4]
+let b2 = ['x', 'y', 'z']
+let zippedB = b1.reduce(zip(b2), [])
+// [[1, 'x'], [2, 'y'], [3, 'z']]
+
+// zip array is longer
+let c1 = [1, 2, 3]
+let c2 = ['x', 'y', 'z', 'extra']
+let zippedC = c1.reduce(zip(c2), [])
+// [[1, 'x'], [2, 'y'], [3, 'z']]
+```
 
 ### toMap
 

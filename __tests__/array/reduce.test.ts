@@ -5,7 +5,6 @@ import groupBy = Reducer.groupBy
 import flat = Reducer.flat
 import toMap = Reducer.toMap
 import toObject = Reducer.toObject
-import Map = Reducer.Map
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
@@ -13,6 +12,36 @@ import ImmutableMapFactory = Reducer.ImmutableMap
 import ImmutableObject = Reducer.ImmutableObject
 
 describe('Reducer', () => {
+    describe('zip', () => {
+        it('should zip two arrays', () => {
+            let a1 = [1, 2, 3]
+            let a2 = ['x', 'y', 'z']
+            let zipped = a1.reduce(Reducer.zip(a2), [] as [number, string][])
+            expect(zipped).toHaveLength(3)
+            expect(zipped).toMatchObject([[1, 'x'], [2, 'y'], [3, 'z']])
+        });
+        it('should zip two arrays with different length [first longer]', () => {
+            let a1 = [1, 2, 3, 4, 5, 6]
+            let a2 = ['x', 'y', 'z']
+            let zipped = a1.reduce(Reducer.zip(a2), [])
+            expect(zipped).toHaveLength(3)
+            expect(zipped).toMatchObject([[1, 'x'], [2, 'y'], [3, 'z']])
+        });
+        it('should zip two arrays with different length [second longer]', () => {
+            let a1 = [1, 2, 3]
+            let a2 = ['x', 'y', 'z', '0']
+            let zipped = a1.reduce(Reducer.zip(a2), [])
+            expect(zipped).toHaveLength(3)
+            expect(zipped).toMatchObject([[1, 'x'], [2, 'y'], [3, 'z']])
+        });
+        it('should zip two arrays with undefined and nulls', () => {
+            let a1 = [1, 2, null]
+            let a2 = [null, undefined, null]
+            let zipped = a1.reduce(Reducer.zip(a2), [])
+            expect(zipped).toHaveLength(3)
+            expect(zipped).toMatchObject([[1, null], [2, undefined], [null, null]])
+        });
+    });
     describe('Throw on invalid key', () => {
         it('should throw when toObjectAndValue key is not defined', () => {
             expect(
