@@ -2467,7 +2467,7 @@ data.reduce(toObject(
 			<p>Groups by key resolved from callback to map where key is <code>string</code> and value is an <code>array</code> of items. (groupby for javascript)
 				Custom implementation of Map can be passed as a second parameter. It must implement interface <a href="#methodmap">MethodMap</a>.
 			Provided implementations can be imported from same namespace <code>Reducer.ImmutableMap</code> or <code>Reducer.Map</code> </p>
-			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reduergroupby">link</a></p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducergroupby">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> groupBy = Reducers.groupBy
 <span class="hljs-keyword">import</span> <span class="hljs-built_in">Map</span> = Reducers.Map
@@ -2495,6 +2495,7 @@ data.reduce(groupBy(<span class="hljs-string">'genre'</span>), <span class="hljs
 			</a>
 			<p>Collects two arrays into one array of tuples, two element array(<code>[x ,y]</code>).
 			The length of zipped array will be length of shortest array.</p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerzip">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> zip = Reducers.zip
 
@@ -2535,6 +2536,7 @@ data.reduce(groupBy(<span class="hljs-string">'genre'</span>), <span class="hljs
 				and returns boolean</li>
 			</ul>
 			<p>Example <strong>predicate function</strong></p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerpartitionbycallback">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducer } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> partitionBy = Reducer.partitionBy
 <span class="hljs-keyword">import</span> Partition = Reducer.Partition
@@ -2549,6 +2551,7 @@ array.reduce(partitionBy(isEven), [[], []])
 array.reduce(partitionBy(isEven), Partition())
 <span class="hljs-comment">// [[2, 4, 6], [1, 3, 5]]</span></code></pre>
 			<p>Example <strong>element key</strong></p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerpartitionbykey">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducer } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> partitionBy = Reducer.partitionBy
 <span class="hljs-keyword">import</span> Partition = Reducer.Partition
@@ -2570,6 +2573,7 @@ array.reduce(partitionBy(<span class="hljs-string">'isEven'</span>), Partition()
 <span class="hljs-comment">//   [{ value: 1, isEven: false }, { value: 3, isEven: false }]</span>
 <span class="hljs-comment">// ]</span></code></pre>
 			<p>Example <strong>object to match</strong></p>
+			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerpartitionbyobject">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducer } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> partitionBy = Reducer.partitionBy
 <span class="hljs-keyword">import</span> Partition = Reducer.Partition

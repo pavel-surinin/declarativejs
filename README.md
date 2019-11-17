@@ -90,7 +90,7 @@ Groups by key resolved from callback to map where key is `string` and value is a
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
 Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
 
-_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reduergroupby)
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducergroupby)
 
 ```javascript
 import { Reducers } from 'declarative-js'
@@ -123,6 +123,9 @@ import flat = Reducers.flat
 
 Collects two arrays into one array of tuples, two element array(`[x ,y]`).
 The length of zipped array will be length of shortest array.
+
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerzip)
 
 ```javascript
 import { Reducers } from 'declarative-js'
@@ -166,6 +169,9 @@ Boolean constructor (Boolean())
 and returns boolean
 
 Example **predicate function**
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerpartitionbycallback)
+
 ```javascript
 import { Reducer } from 'declarative-js'
 import partitionBy = Reducer.partitionBy
@@ -183,6 +189,9 @@ array.reduce(partitionBy(isEven), Partition())
 ```
 
 Example **element key**
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerpartitionbykey)
+
 ```javascript
 import { Reducer } from 'declarative-js'
 import partitionBy = Reducer.partitionBy
@@ -207,6 +216,9 @@ array.reduce(partitionBy('isEven'), Partition())
 ```
 
 Example **object to match**
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerpartitionbyobject)
+
 ```javascript
 import { Reducer } from 'declarative-js'
 import partitionBy = Reducer.partitionBy

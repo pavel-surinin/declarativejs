@@ -21,12 +21,18 @@
     "groupby",
     "group by",
     "filter",
+    "unique",
     "tomap",
     "to map",
     "toobject",
     "to object",
     "collect",
     "zip",
+    "partition",
+    "partition by",
+    "functional",
+    "declarative",
+    "optimized",
     "flat"
   ],
   "dependencies": {
