@@ -190,8 +190,8 @@ import Partition = Reducer.Partition
  
 let array = [
     { value: 1, isEven: false },
-      { value: 2, isEven: true }, 
-      { value: 3, isEven: false }
+    { value: 2, isEven: true }, 
+    { value: 3, isEven: false }
   ]
 array.reduce(partitionBy('isEven'), [[], []])
 // [
