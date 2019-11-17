@@ -1,7 +1,7 @@
 import eq from 'fast-deep-equal'
 import { MethodMap } from '../map/MethodMap'
 import { ImmutableBuilder } from '../map/ImmutableBuilder'
-import { StringMap, KeyGetter, Getter } from '../types'
+import { StringMap, KeyGetter, Getter, Predicate, Tuple } from '../types'
 import { groupByCallBack, groupByValueOfKey } from '../internal/groupBy'
 import { toObjectAndValue, toObjectValueObject } from '../internal/toObject'
 import { toMapAndValue, toMapKeyMap } from '../internal/toMap'
@@ -327,8 +327,6 @@ export namespace Reducer {
         }
     }
 
-    export type Tuple<E1, E2> = [E1, E2]
-
     /**
      * Function to be used in {@link Array.prototype.reduce} as a callback.
      * Collects two arrays into one array of tuples, two element array([x ,y]).
@@ -369,6 +367,154 @@ export namespace Reducer {
                 return agr
             }
             agr.push([value, arrayValue])
+            return agr
+        }
+    }
+
+    export const Partition = <E>() => [[], []] as any as Tuple<E, E>
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback. 
+     * It reduces array in a tuple ([[], []]) with two arrays.
+     * First array contains elements, that matches predicate,
+     * second array, that does not match.
+     * As a second paramter in reduce (callback, initialValue), as an
+     * initial value need to pass empty tuple of arrays ([[], []])
+     * Or use Reducer.Partition function to create initial value for it.
+     * Predicate is a function that takes current element as a parameter 
+     * and returns boolean.
+     *
+     * @export
+     * @template T                          element type in array
+     * @param {(T) => boolean} matches      predicate function that has a a value 
+     *                                      current element and returns boolean
+     * @returns {(agr: [T[], T[]], value: T) => [T[], T[]]} function to pass to Array.reduce
+     * @see Reducer.Partition
+     * 
+     * @example
+     * import { Reducer } from 'declarative-js'
+     * import partitionBy = Reducer.partitionBy
+     * import Partition = Reducer.Partition
+     * 
+     * let array = [1, 2, 3, 4, 5, 6]
+     * let isEven = number => number % 2 === 0
+     * array.reduce(partitionBy(isEven), [[], []])
+     * // [[2, 4, 6], [1, 3, 5]]
+     * 
+     * let array = [1, 2, 3, 4, 5, 6]
+     * let isEven = number => number % 2 === 0
+     * array.reduce(partitionBy(isEven), Partition())
+     * // [[2, 4, 6], [1, 3, 5]]
+     */
+    export function partitionBy<T>(matches: Predicate<T>): (agr: Tuple<T[], T[]>, value: T) => Tuple<T[], T[]>
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback. 
+     * It reduces array in a tuple ([[], []]) with two arrays.
+     * First array contains elements, that matches predicate,
+     * second array, that does not match.
+     * As a second paramter in reduce (callback, initialValue), as an
+     * initial value need to pass empty tuple of arrays ([[], []])
+     * Or use Reducer.Partition function to create initial value for it.
+     * Predicate is an objects key, that will be coerced to boolean with 
+     * Boolean constructor (Boolean()). 
+     *
+     * @export
+     * @template T                          element type in array
+     * @param {key of T: string} matches    element key, which value is used to 
+     *                                      decide in which partition array to add
+     *                                      element 
+     * @returns {(agr: [T[], T[]], value: T) => [T[], T[]]} function to pass to Array.reduce
+     * @see Reducer.Partition
+     * 
+     * @example
+     * import { Reducer } from 'declarative-js'
+     * import partitionBy = Reducer.partitionBy
+     * import Partition = Reducer.Partition
+     * 
+     *  let array = [
+     *      { value: 1, isEven: false },
+     *      { value: 2, isEven: true }, 
+     *      { value: 3, isEven: false }
+     *  ]
+     * array.reduce(partitionBy('isEven'), [[], []])
+     * // [
+     * //   [{ value: 2, isEven: true }],
+     * //   [{ value: 1, isEven: false }, { value: 3, isEven: false }]
+     * // ]
+     * 
+     * array.reduce(partitionBy('isEven'), Partition())
+     * // [
+     * //   [{ value: 2, isEven: true }],
+     * //   [{ value: 1, isEven: false }, { value: 3, isEven: false }]
+     * // ]
+     */
+    export function partitionBy<T, K extends keyof T>(matches: K): (agr: Tuple<T[], T[]>, value: T) => Tuple<T[], T[]>
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback. 
+     * It reduces array in a tuple ([[], []]) with two arrays.
+     * First array contains elements, that matches predicate,
+     * second array, that does not match.
+     * As a second paramter in reduce (callback, initialValue), as an
+     * initial value need to pass empty tuple of arrays ([[], []])
+     * Or use Reducer.Partition function to create initial value for it.
+     * Predicate is an object, which key and values must match current element.
+     * For matching all key-value pairs, element will be placed in
+     * first partition array.
+     *
+     * @export
+     * @template T                          element type in array
+     * @param {T} matches                   object to match key value pairs in current element  
+     * @returns {(agr: [T[], T[]], value: T) => [T[], T[]]} function to pass to Array.reduce
+     * @see Reducer.Partition
+     * 
+     * @example
+     * import { Reducer } from 'declarative-js'
+     * import partitionBy = Reducer.partitionBy
+     * import Partition = Reducer.Partition
+     * 
+     *  let array = [
+     *      { name: 'Bart', lastName: 'Simpson' },
+     *      { name: 'Homer', lastName: 'Simpson' },
+     *      { name: 'Ned', lastName: 'Flanders' },
+     *  ]
+     * array.reduce(partitionBy({ lastName: 'Simpson' }), [[], []])
+     * // [
+     * //   [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' } ],
+     * //   [{ name: 'Ned', lastName: 'Flanders' }]
+     * // ]
+     * 
+     * array.reduce(partitionBy({ lastName: 'Simpson' }), Partition())
+     * // [
+     * //   [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' } ],
+     * //   [{ name: 'Ned', lastName: 'Flanders' }]
+     * // ]
+     */
+    export function partitionBy<T>(matches: Partial<T>): (agr: Tuple<T[], T[]>, value: T) => Tuple<T[], T[]>
+
+    export function partitionBy<T extends object, K extends keyof T>(matches: Predicate<T> | K | T) {
+        // tslint:disable-next-line
+        const errorMessage = `Predicate for 'partitionBy' can be key of object, predicate function or partial object to match, instead got '${matches}'`;
+        let predicate: Predicate<T>
+        if (typeof matches === 'string') {
+            predicate = (value: T) => Boolean(value[matches])
+        } else if (typeof matches === 'function') {
+            predicate = (value: T) => (matches as Function)(value)
+        } else if (typeof matches === 'object') {
+            if (matches === null) {
+                throw new Error(errorMessage)
+            }
+            predicate = (value: T) => Object.keys(matches).every(key => value[key as K] === matches[key as K])
+        } else {
+            throw new Error(errorMessage)
+        }
+        return function _partitionByProp(agr: Tuple<T[], T[]>, value: T): Tuple<T[], T[]> {
+            if (predicate(value)) {
+                agr[0].push(value)
+            } else {
+                agr[1].push(value)
+            }
             return agr
         }
     }

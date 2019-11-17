@@ -8,10 +8,69 @@ import toObject = Reducer.toObject
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
+import partitionBy = Reducer.partitionBy
 import ImmutableMapFactory = Reducer.ImmutableMap
 import ImmutableObject = Reducer.ImmutableObject
+import { Predicate } from '../../src/types'
 
 describe('Reducer', () => {
+    describe('partition', () => {
+        it('should partition by odd even callback', () => {
+            let arr = [1, 2, 3, 4, 5, 6]
+            let isEven: Predicate<number> = (x: number) => x % 2 === 0
+            let result = arr.reduce(partitionBy(isEven), [[], []])
+            expect(result).toMatchObject([[2, 4, 6], [1, 3, 5]])
+        });
+        it('should partition by odd even callback to provided partition', () => {
+            let arr = [1, 2, 3, 4, 5, 6]
+            let isEven: Predicate<number> = (x: number) => x % 2 === 0
+            let result = arr.reduce(partitionBy(isEven), Reducer.Partition())
+            expect(result).toMatchObject([[2, 4, 6], [1, 3, 5]])
+        });
+        it('should partition by boolean property', () => {
+            let arr = [
+                { value: 1, isEven: false },
+                { value: 2, isEven: true },
+                { value: 3, isEven: false }
+            ]
+            let result = arr.reduce(partitionBy('isEven'), [[], []])
+            expect(result).toMatchObject([
+                [{ value: 2, isEven: true }],
+                [{ value: 1, isEven: false }, { value: 3, isEven: false }]
+            ])
+        });
+        it('should partition by tuple of key value object with one prop', () => {
+            let arr = [
+                { name: 'Bart', lastName: 'Simpson' },
+                { name: 'Homer', lastName: 'Simpson' },
+                { name: 'Ned', lastName: 'Flanders' },
+            ]
+            let result = arr.reduce(partitionBy({ lastName: 'Simpson' }), [[], []])
+            expect(result).toMatchObject([
+                [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' }],
+                [{ name: 'Ned', lastName: 'Flanders' }],
+            ])
+        });
+        it('should partition by tuple of key value object with two props', () => {
+            let arr = [
+                { name: 'Bart', lastName: 'Simpson' },
+                { name: 'Homer', lastName: 'Simpson' },
+                { name: 'Ned', lastName: 'Flanders' },
+            ]
+            let result = arr.reduce(partitionBy({ name: 'Ned', lastName: 'Flanders' }), [[], []])
+            expect(result).toMatchObject([
+                [{ name: 'Ned', lastName: 'Flanders' }],
+                [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' }],
+            ])
+        });
+        it('should throw on invalid predicate', () => {
+            let arr = [1, 2, 3, 4, 5, 6]
+            expect(() => arr.reduce(partitionBy(false as any), [[], []])).toThrow()
+            expect(() => arr.reduce(partitionBy(null as any), [[], []])).toThrow()
+            expect(() => arr.reduce(partitionBy(undefined as any), [[], []])).toThrow()
+            expect(() => arr.reduce(partitionBy(1), [[], []])).toThrow()
+        });
+    });
     describe('zip', () => {
         it('should zip two arrays', () => {
             let a1 = [1, 2, 3]

@@ -147,6 +147,89 @@ let zippedC = c1.reduce(zip(c2), [])
 // [[1, 'x'], [2, 'y'], [3, 'z']]
 ```
 
+### partitionBy
+
+It reduces array in a tuple (`[[], []]`) with two arrays.
+First array contains elements, that matches predicate,
+second array, that does not match.
+As a second parameter in reduce (callback, initialValue), as an
+initial value need to pass empty tuple of arrays (`[[], []]`)
+Or use Reducer.Partition function to create initial value for it.
+
+Predicate is :
+ - an object, which key and values must match current element.
+For matching all key-value pairs, element will be placed in
+first partition array.
+ - objects key, that will be coerced to boolean with 
+Boolean constructor (Boolean())
+ - a function that takes current element as a parameter 
+and returns boolean
+
+Example **predicate function**
+```javascript
+import { Reducer } from 'declarative-js'
+import partitionBy = Reducer.partitionBy
+import Partition = Reducer.Partition
+ 
+let array = [1, 2, 3, 4, 5, 6]
+let isEven = number => number % 2 === 0
+array.reduce(partitionBy(isEven), [[], []])
+// [[2, 4, 6], [1, 3, 5]]
+
+let array = [1, 2, 3, 4, 5, 6]
+let isEven = number => number % 2 === 0
+array.reduce(partitionBy(isEven), Partition())
+// [[2, 4, 6], [1, 3, 5]]
+```
+
+Example **element key**
+```javascript
+import { Reducer } from 'declarative-js'
+import partitionBy = Reducer.partitionBy
+import Partition = Reducer.Partition
+ 
+let array = [
+    { value: 1, isEven: false },
+      { value: 2, isEven: true }, 
+      { value: 3, isEven: false }
+  ]
+array.reduce(partitionBy('isEven'), [[], []])
+// [
+//   [{ value: 2, isEven: true }],
+//   [{ value: 1, isEven: false }, { value: 3, isEven: false }]
+// ]
+
+array.reduce(partitionBy('isEven'), Partition())
+// [
+//   [{ value: 2, isEven: true }],
+//   [{ value: 1, isEven: false }, { value: 3, isEven: false }]
+// ]
+```
+
+Example **object to match**
+```javascript
+import { Reducer } from 'declarative-js'
+import partitionBy = Reducer.partitionBy
+import Partition = Reducer.Partition
+
+ let array = [
+     { name: 'Bart', lastName: 'Simpson' },
+     { name: 'Homer', lastName: 'Simpson' },
+     { name: 'Ned', lastName: 'Flanders' },
+ ]
+array.reduce(partitionBy({ lastName: 'Simpson' }), [[], []])
+// [
+//   [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' } ],
+//   [{ name: 'Ned', lastName: 'Flanders' }]
+// ]
+
+array.reduce(partitionBy({ lastName: 'Simpson' }), Partition())
+// [
+//   [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' } ],
+//   [{ name: 'Ned', lastName: 'Flanders' }]
+// ]
+
+```
 ### toMap
 
 Collects items by key, to map. Second parameter in function `toMap` can be used to resolve value to put in map. If it is omitted, whole object will be put as a value to map.
