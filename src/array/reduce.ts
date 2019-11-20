@@ -2,11 +2,15 @@ import eq from 'fast-deep-equal'
 import { MethodMap } from '../map/MethodMap'
 import { ImmutableBuilder } from '../map/ImmutableBuilder'
 import { StringMap, KeyGetter, Getter, Predicate, Tuple } from '../types'
-import { groupByCallBack, groupByValueOfKey } from '../internal/groupBy'
 import { toObjectAndValue, toObjectValueObject } from '../internal/toObject'
 import { toMapAndValue, toMapKeyMap } from '../internal/toMap'
 import { JMap } from '../map/JMap'
-import { isLastElement, onDuplacateDefaultFunction } from '../internal/reducer.utils'
+import {
+    isLastElement,
+    onDuplacateDefaultFunction as onDuplicateDefaultFunction,
+    finalizeMap,
+    valid
+} from '../internal/reducer.utils'
 
 /**
  * Functions to be used in {@link Array.prototype.reduce} as a callback.
@@ -22,7 +26,7 @@ import { isLastElement, onDuplacateDefaultFunction } from '../internal/reducer.u
  */
 export namespace Reducer {
 
-    export type OnDuplacateFunction<K> = (v1: K, v2: K, key: string) => K | never
+    export type OnDuplicateFunction<K> = (v1: K, v2: K, key: string) => K | never
 
     export function Map<T>(data?: StringMap<T>): MethodMap<T> {
         return new JMap(data) as MethodMap<T>
@@ -82,12 +86,41 @@ export namespace Reducer {
      */
     export function groupBy<T>(getKey: KeyGetter<T>):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
+
+    export function groupBy<T, TR>(getKey: KeyGetter<T>, transformer: Getter<T, TR>):
+        (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
+
     export function groupBy<T, K extends keyof T>(getKey: KeyGetter<T> | K) {
-        const grouper: any = typeof getKey !== 'string'
-            ? groupByCallBack(getKey)
-            : groupByValueOfKey(getKey as never)
-        return function _groupBy(agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
-            return grouper(agr, value, index, array)
+        if (typeof getKey === 'string') {
+            const key = getKey
+            return function (agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
+                const derivedKey = value[key]
+                if (typeof derivedKey === 'string') {
+                    const derivedValue = agr.get(derivedKey)
+                    if (derivedValue) {
+                        derivedValue.push(value)
+                    } else {
+                        agr.put(derivedKey, [value])
+                    }
+                    return isLastElement(array, index) ? finalizeMap(agr) : agr
+                }
+                // tslint:disable-next-line:max-line-length
+                throw new Error('Value of "' + key + '" in groupBy ' + ' must be string, instead get: ' + typeof value[key])
+            }
+        } else if (typeof getKey === 'function') {
+            return function (agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
+                const key = valid(getKey(value))
+                const extractedValue = agr.get(key)
+                if (extractedValue !== void 0) {
+                    extractedValue.push(value)
+                } else {
+                    agr.put(key, [value])
+                }
+                return isLastElement(array, index) ? finalizeMap(agr) : agr
+            }
+        } else {
+            // tslint:disable-next-line:max-line-length
+            throw new Error(`Reducer.groupBy function accepts as a paramter string or callback, instead got ${typeof getKey}`)
         }
     }
 
@@ -207,9 +240,6 @@ export namespace Reducer {
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>):
         (agr: StringMap<K>, value: T, index: number, array: T[]) => StringMap<K>
 
-    export function toObject<T>(getKey: KeyGetter<T>):
-        (agr: StringMap<T>, value: T, index: number, array: T[]) => StringMap<T>
-
     /**
      * Function to be used in {@link Array.prototype.reduce} as a callback
      * Collects items to object by key from callback. If function resolves key,
@@ -237,7 +267,7 @@ export namespace Reducer {
         (agr: StringMap<K>, value: T, index: number, array: T[]) => StringMap<K>
 
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter?: Getter<T, K>, merge?: (v1: K, v2: K) => K) {
-        const onDuplicate: OnDuplacateFunction<K> = merge || onDuplacateDefaultFunction
+        const onDuplicate: OnDuplicateFunction<K> = merge || onDuplicateDefaultFunction
         const reducer: any = valueGetter === undefined
             ? toObjectValueObject(getKey)
             : toObjectAndValue(getKey, valueGetter, onDuplicate)
@@ -367,6 +397,117 @@ export namespace Reducer {
                 return agr
             }
             agr.push([value, arrayValue])
+            return agr
+        }
+    }
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * Collects all arrays to arrays of arrays, with elements
+     * at being grouped with elements from other arrays by same index.
+     * The length of zipped array will be length of shortest array.
+     * Almost the same as {@link Reducer.zip}, except zipAll accepts
+     * multiple array to zip with.
+     *
+     * @export
+     * @param {...Array[]} arraysToZip
+     * @returns function to use in Array.reduce
+     * @see Reducer.zip
+     * @example
+     * import { Reducer } from 'declarative-js'
+     * import zipAll = Reducer.zipAll'
+     * 
+     * let numbers = [1, 2]
+     * let chars = ['a', 'b']
+     * let booleans = [true, false]
+     * let result = numbers.reduce(zipAll(chars, booleans), [])
+     * // [[1, 'a', true], [2, 'b', false]]
+     * 
+     * let numbers1 = [1, 2, 3, 4, 5]
+     * let chars1 = ['a', 'b']
+     * let booleans1 = [true, false]
+     * let result1 = numbers.reduce(zipAll(chars, booleans), [])
+     * // [[1, 'a', true], [2, 'b', false]]
+     */
+    export function zipAll(...arraysToZip: Array<any>[]) {
+        let isZipped = false
+        let lengthOfArrays = arraysToZip.length
+        return function _zipAll(agr: any[][], currentValue: any, currentValueIndex: number) {
+            if (isZipped) {
+                return agr
+            }
+            if (lengthOfArrays == currentValueIndex) {
+                isZipped = true
+                return agr
+            }
+            const zipee = [currentValue]
+            for (let index = 0; index < arraysToZip.length; index++) {
+                zipee.push(arraysToZip[index][currentValueIndex])
+            }
+            agr.push(zipee)
+            return agr
+        }
+    }
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * It does the opposite as {@link Reducer.zip} or {@link Reducer.zipAll}. 
+     * It collects from all zipped arrays one arrays, that was before zip.
+     * Takes from each nested arrays and element and for each index will 
+     * collect to new array.
+     * The length of and array will be the shortest length of arrays to unzip
+     * 
+     * @export
+     * @returns function to use in Array.reduce
+     * @see Reducer.zip
+     * @see Reducer.zipAll
+     * @example
+     * 
+     * import { Reducer } from 'declarative-js'
+     * import zipAll = Reducer.zipAll
+     * import unzip = Reducer.unzip
+     * 
+     * let zipped = [[1, 'a', true], [2, 'b', false]]
+     * zipped.reduce(unzip(), [])
+     * // [
+     * //   [1, 2],
+     * //   ['a', 'b'],
+     * //   [true, false]
+     * // ]
+     * 
+     * let zippedDifferentLength = [[1, 'a'], [2, 'b', false]]
+     * zippedDifferentLength.reduce(unzip(), [])
+     * // [
+     * //   [1, 2],
+     * //   ['a', 'b']
+     * // ]
+     * 
+     * let numbers = [1, 2]
+     * let chars = ['a', 'b']
+     * let booleans = [true, false]
+     * let zipped = numbers.reduce(zipAll(chars, booleans), [])
+     * zipped.reduce(unzip(), [])
+     * // matches content
+     * // [
+     * //   numbers, 
+     * //   chars,
+     * //   booleans
+     * // ]
+     */
+    export function unzip<T>() {
+        let zippersLength: number
+        // @ts-ignore
+        return function _unzip(agr: T[][], value: T[], index: number, arrays: T[][]) {
+            if (zippersLength == null) {
+                zippersLength = arrays.map(arr => arr.length).reduce(min)
+            }
+            for (let valueArrayIndex = 0; valueArrayIndex < zippersLength; valueArrayIndex++) {
+                const agrUnzipArray = agr[valueArrayIndex]
+                if (agrUnzipArray) {
+                    agrUnzipArray.push(value[valueArrayIndex])
+                } else {
+                    agr[valueArrayIndex] = [value[valueArrayIndex]]
+                }
+            }
             return agr
         }
     }

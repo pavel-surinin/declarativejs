@@ -150,6 +150,69 @@ let zippedC = c1.reduce(zip(c2), [])
 // [[1, 'x'], [2, 'y'], [3, 'z']]
 ```
 
+### zipAll
+Collects all arrays to arrays of arrays, with elements
+at being grouped with elements from other arrays by same index.
+The length of zipped array will be length of shortest array.
+Almost the same as `Reducer.zip`, except zipAll accepts
+multiple array to zip with.
+
+```javascript
+import { Reducer } from 'declarative-js'
+import zipAll = Reducer.zipAll
+
+let numbers = [1, 2]
+let chars = ['a', 'b']
+let booleans = [true, false]
+let result = numbers.reduce(zipAll(chars, booleans), [])
+// [[1, 'a', true], [2, 'b', false]]
+
+let numbers1 = [1, 2, 3, 4, 5]
+let chars1 = ['a', 'b']
+let booleans1 = [true, false]
+let result1 = numbers.reduce(zipAll(chars, booleans), [])
+// [[1, 'a', true], [2, 'b', false]]
+```
+### unzip
+It does the opposite as `Reducer.zip` or `Reducer.zipAll`. 
+It collects from all zipped arrays one arrays, that was before zip.
+Takes from each nested arrays and element and for each index will 
+collect to new array.
+The length of and array will be the shortest length of arrays to unzip
+
+```javascript
+import { Reducer } from 'declarative-js'
+import zipAll = Reducer.zipAll
+import unzip = Reducer.unzip
+
+let zipped = [[1, 'a', true], [2, 'b', false]]
+zipped.reduce(unzip(), [])
+// [
+//   [1, 2],
+//   ['a', 'b'],
+//   [true, false]
+// ]
+
+let zippedDifferentLength = [[1, 'a'], [2, 'b', false]]
+zippedDifferentLength.reduce(unzip(), [])
+// [
+//   [1, 2],
+//   ['a', 'b']
+// ]
+
+let numbers = [1, 2]
+let chars = ['a', 'b']
+let booleans = [true, false]
+let zipped = numbers.reduce(zipAll(chars, booleans), [])
+zipped.reduce(unzip(), [])
+// matches content of
+// [
+//   numbers, 
+//   chars,
+//   booleans
+// ]
+```
+
 ### partitionBy
 
 It reduces array in a tuple (`[[], []]`) with two arrays.

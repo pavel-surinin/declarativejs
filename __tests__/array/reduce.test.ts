@@ -2,13 +2,15 @@ import { ImmutableMap } from '../../src/map/ImmutableMap'
 import { JMap } from '../../src/map/JMap'
 import { Reducer } from '../../src/array/reduce'
 import groupBy = Reducer.groupBy
+import partitionBy = Reducer.partitionBy
 import flat = Reducer.flat
 import toMap = Reducer.toMap
 import toObject = Reducer.toObject
+import zipAll = Reducer.zipAll
+import unzip = Reducer.unzip
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
-import partitionBy = Reducer.partitionBy
 import ImmutableMapFactory = Reducer.ImmutableMap
 import ImmutableObject = Reducer.ImmutableObject
 import { Predicate } from '../../src/types'
@@ -99,6 +101,64 @@ describe('Reducer', () => {
             let zipped = a1.reduce(Reducer.zip(a2), [])
             expect(zipped).toHaveLength(3)
             expect(zipped).toMatchObject([[1, null], [2, undefined], [null, null]])
+        });
+    });
+    describe('zipAll', () => {
+        it('should zip several arrays with shortest length [to zip shorter]', () => {
+            let numbers = [1, 2, 3, 4, 5, 6]
+            let chars = ['a', 'b']
+            let booleans = [true, false]
+            let result = numbers.reduce(zipAll(chars, booleans), [])
+            expect(result).toMatchObject([[1, 'a', true], [2, 'b', false]])
+        });
+        it('should zip several arrays with shortest length [origin shorter]', () => {
+            let numbers = [1, 2]
+            let chars = ['a', 'b', 'c']
+            let booleans = [true, false, false, false]
+            let result = numbers.reduce(zipAll(chars, booleans), [])
+            expect(result).toMatchObject([[1, 'a', true], [2, 'b', false]])
+        });
+        it('should zip several arrays', () => {
+            let numbers = [1, 2]
+            let chars = ['a', 'b']
+            let booleans = [true, false]
+            let result = numbers.reduce(zipAll(chars, booleans), [])
+            expect(result).toMatchObject([[1, 'a', true], [2, 'b', false]])
+        });
+    })
+    describe('unzip', () => {
+        it('should unzip multiple arrays', () => {
+            let zipped = [[1, 'a', true], [2, 'b', false]]
+            let result = zipped.reduce(unzip(), [])
+            expect(result).toMatchObject([
+                [1, 2],
+                ['a', 'b'],
+                [true, false]
+            ])
+        });
+        it('should unzip multiple arrays with shortest length [shorter at the end]', () => {
+            let zipped = [[1, 'a', true], [2, 'b']]
+            let result = zipped.reduce(unzip(), [])
+            expect(result).toMatchObject([
+                [1, 2],
+                ['a', 'b']
+            ])
+        });
+        it('should unzip multiple arrays with shortest length, [shorter at the start]', () => {
+            let zipped = [[1, 'a'], [2, 'b', false]]
+            let result = zipped.reduce(unzip(), [])
+            expect(result).toMatchObject([
+                [1, 2],
+                ['a', 'b']
+            ])
+        });
+        it('should unzip zipped arrays', () => {
+            let numbers = [1, 2]
+            let chars = ['a', 'b']
+            let booleans = [true, false]
+            let zipped = numbers.reduce(zipAll(chars, booleans), [])
+            let result = zipped.reduce(unzip(), [])
+            expect(result).toMatchObject([numbers, chars, booleans])
         });
     });
     describe('Throw on invalid key', () => {
@@ -210,17 +270,32 @@ describe('Reducer', () => {
             )
         })
     })
-    it('should groupBy to JMap', () => {
-        const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v), new JMap())
-        expect(reduced.keys()).toMatchObject(['a', 'b'])
-        expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
-    })
-    it('should groupBy string to JMap', () => {
-        const reduced =
-            [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }].reduce(Reducer.groupBy('name'), new JMap())
-        expect(reduced.keys()).toMatchObject(['Mike', 'John'])
-        expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
-    })
+    describe('groupBy', () => {
+        it('should group by callback', () => {
+            const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v), new JMap())
+            expect(reduced.keys()).toMatchObject(['a', 'b'])
+            expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
+        })
+        it('should group by string', () => {
+            const array = [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }]
+            const reduced = array.reduce(
+                Reducer.groupBy('name'),
+                Reducer.Map()
+            )
+            expect(reduced.keys()).toMatchObject(['Mike', 'John'])
+            expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
+        })
+        it.skip('group by and modify elements by callback', () => {
+            // const array = [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }]
+            // const reduced = array.reduce(
+            //     Reducer.groupBy(x => x.name),
+            //     Reducer.Map()
+            // )
+            // expect(reduced.keys()).toMatchObject(['Mike', 'John'])
+            // expect(reduced.values()).toMatchObject([['Mike'], ['John', 'John']])
+            // reduced.values().map(x => x.m)
+        })
+    });
     it('should flat from 2d array to simple array', () => {
         const reduced = [[1, 2], [2, 3], [3, 4]]
             .reduce(flat)

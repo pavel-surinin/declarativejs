@@ -1,4 +1,3 @@
-import { uniqueByMappedValue, uniqueByProp } from '../internal/unique'
 import { Getter, Predicate } from '../types'
 import deepEqual from 'fast-deep-equal'
 /**
@@ -123,10 +122,29 @@ export namespace toBe {
 
     export function uniqueBy<T, R, K extends keyof T>(toComparableProp: Getter<T, R> | K) {
         let set = new Set()
-        return function _uniqueBy(value: T): boolean {
-            return typeof toComparableProp === 'string'
-                ? uniqueByProp(toComparableProp as never, value, set)
-                : uniqueByMappedValue(toComparableProp, value, set)
+        if (typeof toComparableProp === 'string') {
+            return function _uniqueBy(value: T) {
+                let check = value[toComparableProp]
+                if (set.has(check)) {
+                    return false
+                } else {
+                    set.add(check)
+                    return true
+                }
+            }
+        } else if (typeof toComparableProp === 'function') {
+            return function _uniqueBy(value: T) {
+                let check = toComparableProp(value)
+                if (set.has(check)) {
+                    return false
+                } else {
+                    set.add(check)
+                    return true
+                }
+            }
+        } else {
+            // tslint:disable-next-line:max-line-length
+            throw new Error(`toBe.uniqueBy expected to have as a parameter string or function, instead got ${typeof toComparableProp}`)
         }
     }
 

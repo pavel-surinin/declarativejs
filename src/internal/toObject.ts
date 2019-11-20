@@ -13,7 +13,7 @@ export const toObjectValueObject =
     }
 
 export const toObjectAndValue = <T, R>(
-    getKey: KeyGetter<T>, getValue: Getter<T, R>, onDuplicate: Reducer.OnDuplacateFunction<R>
+    getKey: KeyGetter<T>, getValue: Getter<T, R>, onDuplicate: Reducer.OnDuplicateFunction<R>
 ) => (agr: StringMap<R>, value: T, index: number, array: T[]) => {
     const key = valid(getKey(value))
     if (Object.prototype.hasOwnProperty.call(agr, key)) {

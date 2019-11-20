@@ -2516,6 +2516,66 @@ data.reduce(groupBy(<span class="hljs-string">'genre'</span>), <span class="hljs
 <span class="hljs-keyword">let</span> c2 = [<span class="hljs-string">'x'</span>, <span class="hljs-string">'y'</span>, <span class="hljs-string">'z'</span>, <span class="hljs-string">'extra'</span>]
 <span class="hljs-keyword">let</span> zippedC = c1.reduce(zip(c2), [])
 <span class="hljs-comment">// [[1, 'x'], [2, 'y'], [3, 'z']]</span></code></pre>
+			<a href="#zipall" id="zipall" style="color: inherit; text-decoration: none;">
+				<h3>zipAll</h3>
+			</a>
+			<p>Collects all arrays to arrays of arrays, with elements
+				at being grouped with elements from other arrays by same index.
+				The length of zipped array will be length of shortest array.
+				Almost the same as <code>Reducer.zip</code>, except zipAll accepts
+			multiple array to zip with.</p>
+			<pre><code class="language-javascript">import { Reducer } from &#39;declarative-js&#39;
+import zipAll = Reducer.zipAll&#39;
+
+let numbers = [1, 2]
+let chars = [&#39;a&#39;, &#39;b&#39;]
+let booleans = [true, false]
+let result = numbers.reduce(zipAll(chars, booleans), [])
+// [[1, &#39;a&#39;, true], [2, &#39;b&#39;, false]]
+
+let numbers1 = [1, 2, 3, 4, 5]
+let chars1 = [&#39;a&#39;, &#39;b&#39;]
+let booleans1 = [true, false]
+let result1 = numbers.reduce(zipAll(chars, booleans), [])
+// [[1, &#39;a&#39;, true], [2, &#39;b&#39;, false]]</code></pre>
+			<a href="#unzip" id="unzip" style="color: inherit; text-decoration: none;">
+				<h3>unzip</h3>
+			</a>
+			<p>It does the opposite as <a href="modules/_array_reduce_.reducer.html#zip">Reducer.zip</a> or <a href="modules/_array_reduce_.reducer.html#zipall">Reducer.zipAll</a>.
+				It collects from all zipped arrays one arrays, that was before zip.
+				Takes from each nested arrays and element and for each index will
+				collect to new array.
+			The length of and array will be the shortest length of arrays to unzip</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducer } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> zipAll = Reducer.zipAll
+<span class="hljs-keyword">import</span> unzip = Reducer.unzip
+
+<span class="hljs-keyword">let</span> zipped = [[<span class="hljs-number">1</span>, <span class="hljs-string">'a'</span>, <span class="hljs-literal">true</span>], [<span class="hljs-number">2</span>, <span class="hljs-string">'b'</span>, <span class="hljs-literal">false</span>]]
+zipped.reduce(unzip(), [])
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   [1, 2],</span>
+<span class="hljs-comment">//   ['a', 'b'],</span>
+<span class="hljs-comment">//   [true, false]</span>
+<span class="hljs-comment">// ]</span>
+
+<span class="hljs-keyword">let</span> zippedDifferentLength = [[<span class="hljs-number">1</span>, <span class="hljs-string">'a'</span>], [<span class="hljs-number">2</span>, <span class="hljs-string">'b'</span>, <span class="hljs-literal">false</span>]]
+zippedDifferentLength.reduce(unzip(), [])
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   [1, 2],</span>
+<span class="hljs-comment">//   ['a', 'b']</span>
+<span class="hljs-comment">// ]</span>
+
+<span class="hljs-keyword">let</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]
+<span class="hljs-keyword">let</span> chars = [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>]
+<span class="hljs-keyword">let</span> booleans = [<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>]
+<span class="hljs-keyword">let</span> zipped = numbers.reduce(zipAll(chars, booleans), [])
+zipped.reduce(unzip(), [])
+<span class="hljs-comment">// matches content of</span>
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   numbers, </span>
+<span class="hljs-comment">//   chars,</span>
+<span class="hljs-comment">//   booleans</span>
+<span class="hljs-comment">// ]</span></code></pre>
 			<a href="#partitionby" id="partitionby" style="color: inherit; text-decoration: none;">
 				<h3>partitionBy</h3>
 			</a>
