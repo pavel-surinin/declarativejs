@@ -94,6 +94,7 @@ Provided implementations can be imported from same namespace `Reducer.ImmutableM
 *group by original values example*
 
 _performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducergroupby)
+
 ```javascript
 import { Reducers } from 'declarative-js'
 import groupBy = Reducers.groupBy
@@ -120,6 +121,7 @@ data.reduce(groupBy('genre'), Map())
 //   ],
 // }
 ``` 
+
 *group by transformed values example*
 
 ```javascript
