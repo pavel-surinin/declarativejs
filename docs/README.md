@@ -159,7 +159,7 @@ multiple array to zip with.
 
 ```javascript
 import { Reducer } from 'declarative-js'
-import zipAll = Reducer.zipAll'
+import zipAll = Reducer.zipAll
 
 let numbers = [1, 2]
 let chars = ['a', 'b']
@@ -174,7 +174,7 @@ let result1 = numbers.reduce(zipAll(chars, booleans), [])
 // [[1, 'a', true], [2, 'b', false]]
 ```
 ### unzip
-It does the opposite as {@link Reducer.zip} or {@link Reducer.zipAll}. 
+It does the opposite as `Reducer.zip` or `Reducer.zipAll`. 
 It collects from all zipped arrays one arrays, that was before zip.
 Takes from each nested arrays and element and for each index will 
 collect to new array.

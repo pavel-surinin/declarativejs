@@ -2524,24 +2524,24 @@ data.reduce(groupBy(<span class="hljs-string">'genre'</span>), <span class="hljs
 				The length of zipped array will be length of shortest array.
 				Almost the same as <code>Reducer.zip</code>, except zipAll accepts
 			multiple array to zip with.</p>
-			<pre><code class="language-javascript">import { Reducer } from &#39;declarative-js&#39;
-import zipAll = Reducer.zipAll&#39;
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducer } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> zipAll = Reducer.zipAll
 
-let numbers = [1, 2]
-let chars = [&#39;a&#39;, &#39;b&#39;]
-let booleans = [true, false]
-let result = numbers.reduce(zipAll(chars, booleans), [])
-// [[1, &#39;a&#39;, true], [2, &#39;b&#39;, false]]
+<span class="hljs-keyword">let</span> numbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]
+<span class="hljs-keyword">let</span> chars = [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>]
+<span class="hljs-keyword">let</span> booleans = [<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>]
+<span class="hljs-keyword">let</span> result = numbers.reduce(zipAll(chars, booleans), [])
+<span class="hljs-comment">// [[1, 'a', true], [2, 'b', false]]</span>
 
-let numbers1 = [1, 2, 3, 4, 5]
-let chars1 = [&#39;a&#39;, &#39;b&#39;]
-let booleans1 = [true, false]
-let result1 = numbers.reduce(zipAll(chars, booleans), [])
-// [[1, &#39;a&#39;, true], [2, &#39;b&#39;, false]]</code></pre>
+<span class="hljs-keyword">let</span> numbers1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+<span class="hljs-keyword">let</span> chars1 = [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>]
+<span class="hljs-keyword">let</span> booleans1 = [<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>]
+<span class="hljs-keyword">let</span> result1 = numbers.reduce(zipAll(chars, booleans), [])
+<span class="hljs-comment">// [[1, 'a', true], [2, 'b', false]]</span></code></pre>
 			<a href="#unzip" id="unzip" style="color: inherit; text-decoration: none;">
 				<h3>unzip</h3>
 			</a>
-			<p>It does the opposite as <a href="modules/_array_reduce_.reducer.html#zip">Reducer.zip</a> or <a href="modules/_array_reduce_.reducer.html#zipall">Reducer.zipAll</a>.
+			<p>It does the opposite as <code>Reducer.zip</code> or <code>Reducer.zipAll</code>.
 				It collects from all zipped arrays one arrays, that was before zip.
 				Takes from each nested arrays and element and for each index will
 				collect to new array.
