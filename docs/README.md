@@ -6,7 +6,7 @@ _declarative-js_ is modern JavaScript library, that helps to:
 # Why _declarative-js_?
  - performance [(link to benchmarks)](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md)
  - ability to use with built in api (js array)
- - it is writen in `typescript`. All functions provides great type inferance
+ - it is written in `typescript`. All functions provides great type inference
  - declarative code instead of imperative
  - reduces boilerplate code providing performant and tested solutions
  - comprehensive documentation [(link)](https://pavel-surinin.github.io/declarativejs/#/) 
@@ -75,7 +75,7 @@ const data = [
 data.reduce(toObject(
         movie => movie.genre, 
         movie => [movie.title], 
-        (movie1, moveie2) => movie1.concat(movie2)), 
+        (movie1, movie2) => movie1.concat(movie2)), 
         {}
     )
 // {    
@@ -90,8 +90,10 @@ Groups by key resolved from callback to map where key is `string` and value is a
 Custom implementation of Map can be passed as a second parameter. It must implement interface [MethodMap](#methodmap).
 Provided implementations can be imported from same namespace `Reducer.ImmutableMap` or `Reducer.Map` 
 
-_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducergroupby)
 
+*group by original values example*
+
+_performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducergroupby)
 ```javascript
 import { Reducers } from 'declarative-js'
 import groupBy = Reducers.groupBy
@@ -107,6 +109,48 @@ const data = [
 data.reduce(groupBy(movie => move.genre), Map())
 data.reduce(groupBy('genre'), Map())
 
+// {
+//   'scy-fy': [
+//    { title: 'Predator', genre: 'scy-fy' },
+//    { title: 'Predator 2', genre: 'scy-fy' },
+//    { title: 'Alien vs Predator', genre: 'scy-fy' }
+//   ],
+//   'cartoon': [
+//    { title: 'Tom & Jerry', genre: 'cartoon' }
+//   ],
+// }
+``` 
+*group by transformed values example*
+
+```javascript
+import { Reducers } from 'declarative-js'
+import groupBy = Reducers.groupBy
+import Map = Reducers.Map
+
+const data = [
+ { title: 'Predator', genre: 'sci-fi' },
+ { title: 'Predator 2', genre: 'sci-fi'},
+ { title: 'Alien vs Predator', genre: 'sci-fi' }, 
+ { title: 'Tom & Jerry', genre: 'cartoon' } 
+]
+
+data.reduce(
+    groupBy(
+        movie => move.genre, 
+        movie => movie.title
+    ), 
+    Map(),
+)
+data.reduce(groupBy('genre', movie => movie.title), Map())
+
+// {
+//   'scy-fy': [
+//     'Predator',
+//     'Predator2',
+//     'Alien vs Predator'
+//   ],
+//   'cartoon': [ 'Tom & Jerry' ],
+// }
 ``` 
 
 ### flat
@@ -331,7 +375,7 @@ reduced2.values() // [11, 12]
 
 ### toMergedObject
 Reduces array of objects to one object
-There is three predifined merge strategies
+There is three predefined merge strategies
 
 ```javascript
 import { Reducer } from 'declarative-js'
@@ -366,8 +410,8 @@ import MergeStrategy = Reducers.MergeStrategy
 [ {e: 1}, {e: 2}, {c: 3} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) // ERROR
 ```
 
-Since MergeStrategy is just a predicate function with delaration: `(aggregatorValue: T, currentValue: T, key: string) => boolean`
-Developer can define its own predicate to avoid object raversing and check, are all properties equal.
+Since MergeStrategy is just a predicate function with declaration: `(aggregatorValue: T, currentValue: T, key: string) => boolean`
+Developer can define its own predicate to avoid object traversing and check, are all properties equal.
 
 ```javascript
 import { Reducers } from 'declarative-js'
@@ -387,7 +431,7 @@ import toMergedObject = Reducers.toMergedObject
         }
     },
     {
-        alienVspredator: {
+        alienVsPredator: {
             title: 'Alien vs Predator', 
             genre: 'scy-fy'
         }

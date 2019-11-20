@@ -2394,7 +2394,7 @@ img {
 			<ul>
 				<li>performance <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md">(link to benchmarks)</a></li>
 				<li>ability to use with built in api (js array)</li>
-				<li>it is writen in <code>typescript</code>. All functions provides great type inferance</li>
+				<li>it is written in <code>typescript</code>. All functions provides great type inference</li>
 				<li>declarative code instead of imperative</li>
 				<li>reduces boilerplate code providing performant and tested solutions</li>
 				<li>comprehensive documentation <a href="https://pavel-surinin.github.io/declarativejs/#/">(link)</a> </li>
@@ -2454,7 +2454,7 @@ data.reduce(toObject(<span class="hljs-function"><span class="hljs-params">perso
 data.reduce(toObject(
         <span class="hljs-function"><span class="hljs-params">movie</span> =&gt;</span> movie.genre, 
         movie =&gt; [movie.title], 
-        (movie1, moveie2) =&gt; movie1.concat(movie2)), 
+        (movie1, movie2) =&gt; movie1.concat(movie2)), 
         {}
     )
 <span class="hljs-comment">// {    </span>
@@ -2467,6 +2467,7 @@ data.reduce(toObject(
 			<p>Groups by key resolved from callback to map where key is <code>string</code> and value is an <code>array</code> of items. (groupby for javascript)
 				Custom implementation of Map can be passed as a second parameter. It must implement interface <a href="#methodmap">MethodMap</a>.
 			Provided implementations can be imported from same namespace <code>Reducer.ImmutableMap</code> or <code>Reducer.Map</code> </p>
+			<p><em>group by original values example</em></p>
 			<p><em>performance benchmark</em>: <a href="https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducergroupby">link</a></p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> groupBy = Reducers.groupBy
@@ -2481,7 +2482,46 @@ data.reduce(toObject(
 
 data.reduce(groupBy(<span class="hljs-function"><span class="hljs-params">movie</span> =&gt;</span> move.genre), <span class="hljs-built_in">Map</span>())
 data.reduce(groupBy(<span class="hljs-string">'genre'</span>), <span class="hljs-built_in">Map</span>())
-</code></pre>
+
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   'scy-fy': [</span>
+<span class="hljs-comment">//    { title: 'Predator', genre: 'scy-fy' },</span>
+<span class="hljs-comment">//    { title: 'Predator 2', genre: 'scy-fy' },</span>
+<span class="hljs-comment">//    { title: 'Alien vs Predator', genre: 'scy-fy' }</span>
+<span class="hljs-comment">//   ],</span>
+<span class="hljs-comment">//   'cartoon': [</span>
+<span class="hljs-comment">//    { title: 'Tom &amp; Jerry', genre: 'cartoon' }</span>
+<span class="hljs-comment">//   ],</span>
+<span class="hljs-comment">// }</span></code></pre>
+			<p><em>group by transformed values example</em></p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> groupBy = Reducers.groupBy
+<span class="hljs-keyword">import</span> <span class="hljs-built_in">Map</span> = Reducers.Map
+
+<span class="hljs-keyword">const</span> data = [
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> },
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span>},
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> }, 
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Tom &amp; Jerry'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'cartoon'</span> } 
+]
+
+data.reduce(
+    groupBy(
+        <span class="hljs-function"><span class="hljs-params">movie</span> =&gt;</span> move.genre, 
+        movie =&gt; movie.title
+    ), 
+    <span class="hljs-built_in">Map</span>(),
+)
+data.reduce(groupBy(<span class="hljs-string">'genre'</span>, movie =&gt; movie.title), <span class="hljs-built_in">Map</span>())
+
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   'scy-fy': [</span>
+<span class="hljs-comment">//     'Predator',</span>
+<span class="hljs-comment">//     'Predator2',</span>
+<span class="hljs-comment">//     'Alien vs Predator'</span>
+<span class="hljs-comment">//   ],</span>
+<span class="hljs-comment">//   'cartoon': [ 'Tom &amp; Jerry' ],</span>
+<span class="hljs-comment">// }</span></code></pre>
 			<a href="#flat" id="flat" style="color: inherit; text-decoration: none;">
 				<h3>flat</h3>
 			</a>
@@ -2680,7 +2720,7 @@ reduced2.values() <span class="hljs-comment">// [11, 12]</span></code></pre>
 				<h3>toMergedObject</h3>
 			</a>
 			<p>Reduces array of objects to one object
-			There is three predifined merge strategies</p>
+			There is three predefined merge strategies</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducer } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-comment">/**
  * Overrides value by duplicated key while merging objects
@@ -2706,8 +2746,8 @@ Reducer.MergeStrategy.CHECKED</code></pre>
 
 [ {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">c</span>: <span class="hljs-number">3</span>} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) <span class="hljs-comment">// ERROR</span>
 [ {<span class="hljs-attr">e</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">e</span>: <span class="hljs-number">2</span>}, {<span class="hljs-attr">c</span>: <span class="hljs-number">3</span>} ].reduce(toMergedObject(MergeStrategy.UNIQUE), {}) <span class="hljs-comment">// ERROR</span></code></pre>
-			<p>Since MergeStrategy is just a predicate function with delaration: <code>(aggregatorValue: T, currentValue: T, key: string) =&gt; boolean</code>
-			Developer can define its own predicate to avoid object raversing and check, are all properties equal.</p>
+			<p>Since MergeStrategy is just a predicate function with declaration: <code>(aggregatorValue: T, currentValue: T, key: string) =&gt; boolean</code>
+			Developer can define its own predicate to avoid object traversing and check, are all properties equal.</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> toMergedObject = Reducers.toMergedObject
 
@@ -2725,7 +2765,7 @@ Reducer.MergeStrategy.CHECKED</code></pre>
         }
     },
     {
-        <span class="hljs-attr">alienVspredator</span>: {
+        <span class="hljs-attr">alienVsPredator</span>: {
             <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, 
             <span class="hljs-attr">genre</span>: <span class="hljs-string">'scy-fy'</span>
         }
