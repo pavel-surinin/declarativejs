@@ -178,7 +178,7 @@ export namespace Reducer {
         transformer: Getter<T, TR> = x => x as any as TR
     ) {
         switch (typeof getKey) {
-            case 'string':
+            case 'string': {
                 const key = getKey
                 return function (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) {
                     const derivedKey = value[key]
@@ -194,7 +194,8 @@ export namespace Reducer {
                     // tslint:disable-next-line:max-line-length
                     throw new Error('Value of "' + key + '" in groupBy ' + ' must be string, instead get: ' + typeof value[key])
                 }
-            case 'function':
+            }
+            case 'function': {
                 return function (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) {
                     const key = valid(getKey(value))
                     const extractedValue = agr.get(key)
@@ -205,6 +206,7 @@ export namespace Reducer {
                     }
                     return isLastElement(array, index) ? finalizeMap(agr) : agr
                 }
+            }
             default:
                 // tslint:disable-next-line:max-line-length
                 throw new Error(`Reducer.groupBy function accepts as a paramter string or callback, instead got ${typeof getKey}`)

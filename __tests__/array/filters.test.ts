@@ -87,4 +87,9 @@ describe('Filters', () => {
             .filter(toBe.takeWhile(x => x === 0))
         expect(fa).toHaveLength(0)
     })
+    it('should throw when uniqueBy uniqueness criteria is not supported', () => {
+        expect(
+            () => [{ a: {} }, { a: 3 }, { a: 1 }].filter(toBe.uniqueBy(['a'] as any))
+        ).toThrow(`toBe.uniqueBy expected to have as a parameter string or function, instead got object`)
+    })
 })

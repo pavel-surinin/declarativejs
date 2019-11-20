@@ -217,6 +217,11 @@ describe('Reducer', () => {
                 () => [{ a: {} }, { a: 3 }, { a: 1 }].reduce(groupBy('a'), new JMap())
             ).toThrow(`Value of "a" in groupBy  must be string, instead get: object`)
         })
+        it('should throw when groupBy grouper is not supported', () => {
+            expect(
+                () => [{ a: {} }, { a: 3 }, { a: 1 }].reduce(groupBy(['a'] as any), new JMap())
+            ).toThrow(`Reducer.groupBy function accepts as a paramter string or callback, instead got object`)
+        })
     })
     describe('to collect to Immutable', () => {
         it('should groupBy to ImmutableMap', () => {
