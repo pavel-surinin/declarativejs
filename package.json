@@ -28,6 +28,7 @@
     "to object",
     "collect",
     "zip",
+    "unzip",
     "partition",
     "partition by",
     "functional",

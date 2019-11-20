@@ -285,15 +285,23 @@ describe('Reducer', () => {
             expect(reduced.keys()).toMatchObject(['Mike', 'John'])
             expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
         })
-        it.skip('group by and modify elements by callback', () => {
-            // const array = [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }]
-            // const reduced = array.reduce(
-            //     Reducer.groupBy(x => x.name),
-            //     Reducer.Map()
-            // )
-            // expect(reduced.keys()).toMatchObject(['Mike', 'John'])
-            // expect(reduced.values()).toMatchObject([['Mike'], ['John', 'John']])
-            // reduced.values().map(x => x.m)
+        it('group by callback and modify elements by callback', () => {
+            const array = [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }]
+            const reduced = array.reduce(
+                Reducer.groupBy(x => x.name, x => x.name),
+                Reducer.Map()
+            )
+            expect(reduced.keys()).toMatchObject(['Mike', 'John'])
+            expect(reduced.values()).toMatchObject([['Mike'], ['John', 'John']])
+        })
+        it('group by key and modify elements by callback', () => {
+            const array = [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }]
+            const reduced = array.reduce(
+                Reducer.groupBy('name', x => x.name),
+                Reducer.Map()
+            )
+            expect(reduced.keys()).toMatchObject(['Mike', 'John'])
+            expect(reduced.values()).toMatchObject([['Mike'], ['John', 'John']])
         })
     });
     it('should flat from 2d array to simple array', () => {

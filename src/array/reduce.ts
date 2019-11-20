@@ -41,10 +41,7 @@ export namespace Reducer {
         return Object.defineProperty(
             object,
             'immutable',
-            {
-                value: true,
-                enumerable: false
-            }
+            { value: true, enumerable: false }
         ) as StringMap<T>
     }
 
@@ -55,20 +52,30 @@ export namespace Reducer {
      * Reducer.ImmutableMap()
      * Or own implementation of {@link MethodMap}
      * @param {string}  key     objects key to resolve value,to group by it
-     * @throws {Error}          if resolved key from callback is not a string 
      * @example
      * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
+     *  { title: 'Predator', genre: 'scy-fy' },
+     *  { title: 'Predator 2', genre: 'scy-fy'},
+     *  { title: 'Alien vs Predator', genre: 'scy-fy' }, 
+     *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
      * ]
      *  .reduce(groupBy('genre'), Reducer.Map())
+     * // {
+     * //   'scy-fy': [
+     * //    { title: 'Predator', genre: 'scy-fy' },
+     * //    { title: 'Predator 2', genre: 'scy-fy' },
+     * //    { title: 'Alien vs Predator', genre: 'scy-fy' }
+     * //   ],
+     * //   'cartoon': [
+     * //    { title: 'Tom & Jerry', genre: 'cartoon' }
+     * //   ],
+     * // }
      */
     export function groupBy<T, K extends keyof T>(key: K):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
     /**
-     * Function to be used in {@link Array.prototype.reduce} as a callback to group by provided key.
+     * Groups an array by key resolved from callback.
+     * Function to be used in {@link Array.prototype.reduce} as a callback to group by provided function.
      * As second parameter in reduce function need to pass 
      * Reducer.Map()
      * Reducer.ImmutableMap()
@@ -83,44 +90,124 @@ export namespace Reducer {
      *  { title: 'Tom & Jerry', genre: 'cartoon }, 
      * ]
      *  .reduce(groupBy(movie => movie.genre), Reducer.Map())
+     * // {
+     * //   'scy-fy': [
+     * //    { title: 'Predator', genre: 'scy-fy' },
+     * //    { title: 'Predator 2', genre: 'scy-fy' },
+     * //    { title: 'Alien vs Predator', genre: 'scy-fy' }
+     * //   ],
+     * //   'cartoon': [
+     * //    { title: 'Tom & Jerry', genre: 'cartoon' }
+     * //   ],
+     * // }
      */
     export function groupBy<T>(getKey: KeyGetter<T>):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
 
+    /**
+     * Groups an array by key resolved from callback and transform value to put in new grouped array.
+     * Function to be used in {@link Array.prototype.reduce} as a callback to group by provided key.
+     * As second parameter in reduce function need to pass
+     * {@link Reducer.Map()}, {@link Reducer.ImmutableMap()} or own implementation of {@link MethodMap}
+     *
+     * @export
+     * @template T type of element in array
+     * @template TR type of element in grouped array
+     * @param {KeyGetter<T>} getKey function to get key, output must be a string
+     *                              by this key an array will be grouped
+     * @param {Getter<T, TR>} transformer function to transform array element in grouped array
+     * @returns {(agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>}
+     *          function to use in Array.reduce
+     * @throws {Error} if resolved key from callback is not a string 
+     * @example
+     * [
+     *  { title: 'Predator', genre: 'scy-fy },
+     *  { title: 'Predator 2', genre: 'scy-fy},
+     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
+     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
+     * ]
+     *  .reduce(groupBy(movie => movie.genre, movie -> movie.title), Reducer.Map())
+     * // {
+     * //   'scy-fy': [
+     * //     'Predator',
+     * //     'Predator2',
+     * //     'Alien vs Predator'
+     * //   ],
+     * //   'cartoon': [ 'Tom & Jerry' ],
+     * // }
+     */
     export function groupBy<T, TR>(getKey: KeyGetter<T>, transformer: Getter<T, TR>):
-        (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
+        (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>
 
-    export function groupBy<T, K extends keyof T>(getKey: KeyGetter<T> | K) {
-        if (typeof getKey === 'string') {
-            const key = getKey
-            return function (agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
-                const derivedKey = value[key]
-                if (typeof derivedKey === 'string') {
-                    const derivedValue = agr.get(derivedKey)
-                    if (derivedValue) {
-                        derivedValue.push(value)
+    /**
+     * Groups an array by key and transform value to put in new grouped array.
+     * Function to be used in {@link Array.prototype.reduce} as a callback to group by provided key.
+     * As second parameter in reduce function need to pass
+     * {@link Reducer.Map()}, {@link Reducer.ImmutableMap()} or own implementation of {@link MethodMap}
+     *
+     * @export
+     * @template T type of element in array
+     * @template TR type of element in grouped array
+     * @param {string} key of an element in array object to group by it
+     * @param {Getter<T, TR>} transformer function to transform array element in grouped array
+     * @returns {(agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>}
+     *          function to use in Array.reduce
+     * @example
+     * [
+     *  { title: 'Predator', genre: 'scy-fy },
+     *  { title: 'Predator 2', genre: 'scy-fy},
+     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
+     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
+     * ]
+     *  .reduce(groupBy('genre', movie -> movie.title), Reducer.Map())
+     * // {
+     * //   'scy-fy': [
+     * //     'Predator',
+     * //     'Predator2',
+     * //     'Alien vs Predator'
+     * //   ],
+     * //   'cartoon': [ 'Tom & Jerry' ],
+     * // }
+     */
+
+    export function groupBy<T, TR, K extends keyof T>(key: K, transformer: Getter<T, TR>):
+        (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>
+
+    export function groupBy<T, K extends keyof T, TR>(
+        getKey: KeyGetter<T> | K,
+        transformer: Getter<T, TR> = x => x as any as TR
+    ) {
+        switch (typeof getKey) {
+            case 'string':
+                const key = getKey
+                return function (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) {
+                    const derivedKey = value[key]
+                    if (typeof derivedKey === 'string') {
+                        const derivedValue = agr.get(derivedKey)
+                        if (derivedValue) {
+                            derivedValue.push(transformer(value))
+                        } else {
+                            agr.put(derivedKey, [transformer(value)])
+                        }
+                        return isLastElement(array, index) ? finalizeMap(agr) : agr
+                    }
+                    // tslint:disable-next-line:max-line-length
+                    throw new Error('Value of "' + key + '" in groupBy ' + ' must be string, instead get: ' + typeof value[key])
+                }
+            case 'function':
+                return function (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) {
+                    const key = valid(getKey(value))
+                    const extractedValue = agr.get(key)
+                    if (extractedValue !== void 0) {
+                        extractedValue.push(transformer(value))
                     } else {
-                        agr.put(derivedKey, [value])
+                        agr.put(key, [transformer(value)])
                     }
                     return isLastElement(array, index) ? finalizeMap(agr) : agr
                 }
+            default:
                 // tslint:disable-next-line:max-line-length
-                throw new Error('Value of "' + key + '" in groupBy ' + ' must be string, instead get: ' + typeof value[key])
-            }
-        } else if (typeof getKey === 'function') {
-            return function (agr: MethodMap<T[]>, value: T, index: number, array: T[]) {
-                const key = valid(getKey(value))
-                const extractedValue = agr.get(key)
-                if (extractedValue !== void 0) {
-                    extractedValue.push(value)
-                } else {
-                    agr.put(key, [value])
-                }
-                return isLastElement(array, index) ? finalizeMap(agr) : agr
-            }
-        } else {
-            // tslint:disable-next-line:max-line-length
-            throw new Error(`Reducer.groupBy function accepts as a paramter string or callback, instead got ${typeof getKey}`)
+                throw new Error(`Reducer.groupBy function accepts as a paramter string or callback, instead got ${typeof getKey}`)
         }
     }
 
