@@ -13,7 +13,7 @@ _declarative-js_ is modern JavaScript library, that helps to:
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
 [![Build Status](https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
-[![Coverage Status](https://coveralls.io/repos/github/pavel-surinin/declarative-js/badge.svg?branch=master)](https://coveralls.io/github/pavel-surinin/declarative-js?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/pavel-surinin/declarativejs/badge.svg?branch=master)](https://coveralls.io/github/pavel-surinin/declarativejs?branch=master)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/pavel-surinin/declarativejs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/pavel-surinin/declarativejs/context:javascript)
 ![](https://shields-staging.herokuapp.com/npm/dm/declarative-js.svg)
 ![](https://shields-staging.herokuapp.com/npm/types/declarative-js.svg)
