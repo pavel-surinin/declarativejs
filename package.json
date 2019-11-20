@@ -54,7 +54,7 @@
     "tslint": "5.18.0",
     "typedoc": "0.15.0",
     "typedoc-plugin-markdown": "2.1.1",
-    "typescript": "2.8.3"
+    "typescript": "3.7.2"
   },
   "scripts": {
     "babel": "./node_modules/.bin/babel ./target/out --out-dir ./target/out-es5",
