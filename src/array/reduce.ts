@@ -477,28 +477,30 @@ export namespace Reducer {
         (agr: Array<Tuple<T1, T2>>, value: T1, index: number) => Tuple<T1, T2>[]
 
     /**
-      * Function to be used in {@link Array.prototype.reduce} as a callback.
-      * Collects two arrays into one array of aggregated objects by provided function.
-      * The length of zipped array will be length of shortest array.
-      * 
-      * @param {Array} array array to zip with
-      * @param {Function} withFx function that will combine two elements into one
-      * @returns array with elements from two arrays
-      * @example
-      * 
-      * let a1 = [1, 2, 3]
-      * let a2 = ['x', 'y', 'z']
-      * let zipped = a1.reduce(Reducer.zip(a2, (number, letter) => ({number, letter}) ), [])
-      * // [{number: 1, letter: 'x'}, {number: 2, letter: 'y'}, {number: 3, letter: 'z'}]
-      */
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * Collects two arrays into one array of aggregated objects by provided function.
+     * The length of zipped array will be length of shortest array.
+     * 
+     * @param {Array} array array to zip with
+     * @param {Function} withFx function that will combine two elements into one
+     * @returns array with elements from two arrays
+     * @example
+     * 
+     * let a1 = [1, 2, 3]
+     * let a2 = ['x', 'y', 'z']
+     * let zipped = a1.reduce(Reducer.zip(a2, (number, letter) => ({number, letter}) ), [])
+     * // [{number: 1, letter: 'x'}, {number: 2, letter: 'y'}, {number: 3, letter: 'z'}]
+     */
     export function zip<T1, T2, R>(array: T2[], withFx: (t1: T1, t2: T2) => R):
         (agr: Array<R>, value: T1, index: number) => Array<R>
 
-    export function zip<T1, T2,>(
+    export function zip<T1, T2>(
         array: T2[],
         withFx?: (t1: T1, t2: T2) => any
     ) {
-        let t = withFx ? withFx : (t1: T1, t2: T2) => [t1, t2]
+        let t = withFx
+            ? withFx
+            : (t1: T1, t2: T2) => [t1, t2]
         let isZipped = false
         let secondArrLength = array.length
         return function _zip(agr: Array<any>, value: T1, index: number): Array<any> {

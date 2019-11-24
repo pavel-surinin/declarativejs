@@ -7,6 +7,8 @@ import flat = Reducer.flat
 import toMap = Reducer.toMap
 import toObject = Reducer.toObject
 import zipAll = Reducer.zipAll
+import zipWith = Reducer.zipWith
+import zip = Reducer.zip
 import unzip = Reducer.unzip
 import min = Reducer.min
 import max = Reducer.max
@@ -151,6 +153,12 @@ describe('Reducer', () => {
                 [1, 2],
                 ['a', 'b']
             ])
+        });
+        it('should zip to objects', () => {
+            let ages = [22, 21, 23]
+            let names = ['Dylan', 'Dutch']
+            let result = ages.reduce(zip(names, (age, name) => ({ age, name })), [])
+            expect(result).toMatchObject([{ age: 22, name: 'Dylan' }, { age: 21, name: 'Dutch' }])
         });
         it('should unzip zipped arrays', () => {
             let numbers = [1, 2]
