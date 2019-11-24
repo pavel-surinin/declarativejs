@@ -77,7 +77,7 @@ describe('Reducer', () => {
         it('should zip two arrays', () => {
             let a1 = [1, 2, 3]
             let a2 = ['x', 'y', 'z']
-            let zipped = a1.reduce(Reducer.zip(a2), [] as [number, string][])
+            let zipped = a1.reduce(Reducer.zip(a2), [])
             expect(zipped).toHaveLength(3)
             expect(zipped).toMatchObject([[1, 'x'], [2, 'y'], [3, 'z']])
         });

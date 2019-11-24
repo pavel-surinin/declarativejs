@@ -170,7 +170,6 @@ import flat = Reducers.flat
 Collects two arrays into one array of tuples, two element array(`[x ,y]`).
 The length of zipped array will be length of shortest array.
 
-
 _performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#reducerzip)
 
 ```javascript
@@ -194,6 +193,22 @@ let c1 = [1, 2, 3]
 let c2 = ['x', 'y', 'z', 'extra']
 let zippedC = c1.reduce(zip(c2), [])
 // [[1, 'x'], [2, 'y'], [3, 'z']]
+```
+
+Can pass a function as a second parameter, that will combine two elements
+```javascript
+import { Reducers } from 'declarative-js'
+import zip = Reducers.zip
+
+let numbers = [1, 2, 3]
+let letters = ['x', 'y', 'z']
+let toObject = (number, letter) => ({number, letter})
+let zippedA = numbers.reduce(zip(letters, toObject), [])
+// [
+//    {number: 1, letter: 'x'}, 
+//    {number: 2, letter: 'y'}, 
+//    {number: 3, letter: 'z'}
+// ]
 ```
 
 ### zipAll
