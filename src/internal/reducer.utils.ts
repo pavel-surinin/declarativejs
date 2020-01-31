@@ -1,6 +1,6 @@
 import { MethodMap } from '../map/MethodMap'
-import { ImmutableBuilder } from '../map/ImmutableBuilder'
 import { StringMap } from '../types'
+import { JMapType } from '../map/JMap'
 
 export function valid(key: string) {
     if (typeof key !== 'string') {
@@ -10,8 +10,9 @@ export function valid(key: string) {
 }
 
 export const finalizeMap = <T>(map: MethodMap<T>): MethodMap<T> => {
-    if (map instanceof ImmutableBuilder) {
-        return (map as ImmutableBuilder<T>).buildMap()
+    if (Object.getOwnPropertyDescriptor(map, 'immutable')) {
+        Object.seal((map as JMapType<T>).storage)
+        return map;
     }
     return map
 }

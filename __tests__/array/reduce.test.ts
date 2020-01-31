@@ -1,4 +1,3 @@
-import { ImmutableMap } from '../../src/map/ImmutableMap'
 import { JMap } from '../../src/map/JMap'
 import { Reducer } from '../../src/array/reduce'
 import groupBy = Reducer.groupBy
@@ -7,7 +6,6 @@ import flat = Reducer.flat
 import toMap = Reducer.toMap
 import toObject = Reducer.toObject
 import zipAll = Reducer.zipAll
-import zipWith = Reducer.zipWith
 import zip = Reducer.zip
 import unzip = Reducer.unzip
 import min = Reducer.min
@@ -236,16 +234,13 @@ describe('Reducer', () => {
             const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v), ImmutableMapFactory())
             expect(reduced.keys()).toMatchObject(['a', 'b'])
             expect(reduced.values()).toMatchObject([['a', 'a'], ['b']])
-            expect(reduced).toBeInstanceOf(ImmutableMap)
             expect(() => reduced.put('qwerty', [])).toThrow()
-            expect(() => reduced.toObject().qwerty = []).toThrow()
         })
         it('should groupBy string to ImmutableMap', () => {
             const reduced = [{ name: 'Mike' }, { name: 'John' }, { name: 'John' }]
                 .reduce(groupBy('name'), ImmutableMapFactory())
             expect(reduced.keys()).toMatchObject(['Mike', 'John'])
             expect(reduced.values()).toMatchObject([[{ name: 'Mike' }], [{ name: 'John' }, { name: 'John' }]])
-            expect(reduced).toBeInstanceOf(ImmutableMap)
         })
         it('should collect toMap ImmutableMap', () => {
             const arr: { name: string }[] = [{ name: 'john' }, { name: 'mike' }]
@@ -253,13 +248,11 @@ describe('Reducer', () => {
                 .reduce(toMap(va => va.name), ImmutableMapFactory())
             expect(reduced.keys()).toMatchObject(['john', 'mike'])
             expect(reduced.values()).toMatchObject([{ name: 'john' }, { name: 'mike' }])
-            expect(reduced).toBeInstanceOf(ImmutableMap)
         })
         it('should reduce to map with other value', () => {
             const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }]
                 .reduce(Reducer.toMap(x => x.a, x => x.b), ImmutableMapFactory())
             expect(res.toObject()).toMatchObject({ a: 1, b: 2 })
-            expect(res).toBeInstanceOf(ImmutableMap)
         })
         it('should reduce to object and second callback to map value', () => {
             const res = [{ a: 'a', b: 1 }, { a: 'b', b: 2 }]

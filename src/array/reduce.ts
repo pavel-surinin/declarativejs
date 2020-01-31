@@ -1,6 +1,5 @@
 import eq from 'fast-deep-equal'
 import { MethodMap } from '../map/MethodMap'
-import { ImmutableBuilder } from '../map/ImmutableBuilder'
 import { StringMap, KeyGetter, Getter, Predicate, Tuple } from '../types'
 import { toObjectAndValue, toObjectValueObject } from '../internal/toObject'
 import { toMapAndValue, toMapKeyMap } from '../internal/toMap'
@@ -33,7 +32,12 @@ export namespace Reducer {
     }
 
     export function ImmutableMap<T>(): MethodMap<T> {
-        return new ImmutableBuilder<T>() as any as MethodMap<T>
+        const map = new JMap()
+        return Object.defineProperty(
+            map,
+            'immutable',
+            { value: true, enumerable: false }
+        ) as MethodMap<T>
     }
 
     export function ImmutableObject<T>(): Readonly<StringMap<T>> {

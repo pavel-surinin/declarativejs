@@ -1,6 +1,7 @@
 import { JMap } from '../../src/map/JMap'
+import { MethodMap } from '../../src/map/MethodMap'
 
-let sample: JMap<number>
+let sample: MethodMap<number>
 
 beforeEach(() => {
     sample = new JMap()

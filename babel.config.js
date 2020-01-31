@@ -2,11 +2,11 @@ const presets = [
     [
         "@babel/env",
         {
-            targets: {
-                ie: 11
-            },
+            targets: { ie: 11 },
             useBuiltIns: "usage",
+            corejs: { version: 3 }
         },
+        "minify"
     ]
 ];
 
