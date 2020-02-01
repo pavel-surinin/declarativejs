@@ -8,7 +8,8 @@ import {
     isLastElement,
     onDuplacateDefaultFunction as onDuplicateDefaultFunction,
     finalizeMap,
-    valid
+    valid,
+    IMMUTABLE
 } from '../internal/reducer.utils'
 
 /**
@@ -35,7 +36,7 @@ export namespace Reducer {
         const map = new JMap()
         return Object.defineProperty(
             map,
-            'immutable',
+            IMMUTABLE,
             { value: true, enumerable: false }
         ) as MethodMap<T>
     }
@@ -44,7 +45,7 @@ export namespace Reducer {
         const object = {}
         return Object.defineProperty(
             object,
-            'immutable',
+            IMMUTABLE,
             { value: true, enumerable: false }
         ) as StringMap<T>
     }

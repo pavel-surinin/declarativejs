@@ -37,16 +37,9 @@
     "flat"
   ],
   "dependencies": {
-    "fast-deep-equal": "2.0.1",
-    "core-js": "^3.6.4"
+    "fast-deep-equal": "2.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.4",
-    "@babel/core": "7.8.4",
-    "@babel/polyfill": "7.8.3",
-    "@babel/preset-env": "7.8.4",
-    "@types/jest": "22.2.3",
-    "babel-preset-minify": "^0.5.1",
     "coveralls": "3.0.5",
     "docsify": "4.9.4",
     "docsify-cli": "4.3.0",
@@ -59,7 +52,6 @@
     "typescript": "3.7.2"
   },
   "scripts": {
-    "babel": "./node_modules/.bin/babel ./target/out --out-dir ./target/out-es5",
     "compile": "tsc -d",
     "lint": "tslint -c tslint.json -p tsconfig.json -t stylish",
     "test": "jest -c jest.config.js",
@@ -71,12 +63,12 @@
     "docs:commit": "npm run docs && git add . && git commit -m \"Updated generated documentation\" && git push",
     "now": "cd docs && now -n declarativejs",
     "docs:start": "docsify serve ./docs",
-    "build": "npm run delete:target && npm run lint && npm run compile && npm run test:coverage && npm run babel",
-    "copy": "cp package.json target/out-es5/package.json && cp LICENCE target/out-es5/LICENCE",
-    "publish:prepatch": "npm run build && npm version prepatch && npm run copy && npm publish target/out-es5",
-    "publish:patch": "npm run build && npm version patch && npm run copy && npm publish target/out-es5",
-    "publish:minor": "npm run build && npm version minor && npm run copy && npm publish target/out-es5",
-    "publish:major": "npm run build && npm version major && npm run copy && npm publish target/out-es5",
+    "build": "npm run delete:target && npm run lint && npm run compile && npm run test:coverage",
+    "copy": "cp package.json target/out/package.json && cp LICENCE target/out/LICENCE",
+    "publish:prepatch": "npm run build && npm version prepatch && npm run copy && npm publish target/out",
+    "publish:patch": "npm run build && npm version patch && npm run copy && npm publish target/out",
+    "publish:minor": "npm run build && npm version minor && npm run copy && npm publish target/out",
+    "publish:major": "npm run build && npm version major && npm run copy && npm publish target/out",
     "coveralls": "cat target/coverage/lcov.info | coveralls"
   }
 }

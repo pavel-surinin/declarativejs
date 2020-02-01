@@ -1,6 +1,5 @@
 import { MethodMap, Entry } from './MethodMap'
 
-
 export type JMapType<T> = MethodMap<T> & { storage: Record<string, T> }
 
 function Map<T>(this: JMapType<T>, init: Record<string, T> = {}) {

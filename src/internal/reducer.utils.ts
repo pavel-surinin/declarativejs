@@ -9,19 +9,21 @@ export function valid(key: string) {
     return key
 }
 
+export const IMMUTABLE = '_immutable'
+
 export const finalizeMap = <T>(map: MethodMap<T>): MethodMap<T> => {
-    if (Object.getOwnPropertyDescriptor(map, 'immutable')) {
+    if (Object.getOwnPropertyDescriptor(map, IMMUTABLE)) {
         Object.seal((map as JMapType<T>).storage)
-        return map;
+        return map
     }
     return map
 }
 
-export const finalizeObject = <T>(map: StringMap<T>) => {
-    if (Object.getOwnPropertyDescriptor(map, 'immutable')) {
-        return Object.seal(map)
+export const finalizeObject = <T>(object: StringMap<T>) => {
+    if (Object.getOwnPropertyDescriptor(object, IMMUTABLE)) {
+        return Object.seal(object)
     }
-    return map
+    return object
 }
 
 export const isLastElement = <T>(array: T[], index: number) => array.length - 1 === index
