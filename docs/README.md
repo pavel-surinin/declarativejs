@@ -10,6 +10,8 @@ _declarative-js_ is modern JavaScript library, that helps to:
  - declarative code instead of imperative
  - reduces boilerplate code providing performant and tested solutions
  - comprehensive documentation [(link)](https://pavel-surinin.github.io/declarativejs/#/) 
+ - Target version of javascript is ES5
+ - Internet Explorer 11 compatible 
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
 [![Build Status](https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)
@@ -797,26 +799,16 @@ Converts value to array. If value is not present returns empty array. If value i
     optional(myVar).ifPresent(() => console.warn('I am here'))
 ```
 
-## orElse
+## or
+
 ```javascript
 import { optional } from 'declarative-js'
 
+// instant  
 optional(myVar).orElse('Alternative')
-```
-
-## orElseGet
-
-```javascript
-import { optional } from 'declarative-js'
-
+// lazy
 optional(myVar).orElseGet(() => 'Alternative')
-```
-
-## orElseThrow
-
-```javascript
-import { optional } from 'declarative-js'
-
+// error
 optional(myVar).orElseThrow('This is bad')
 ```
 
@@ -871,32 +863,6 @@ interface MethodMap<T> {
     size(): number
     toObject(): {[keyof: string]: T}
 }
-```
-
-# ImmutableMap
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/classes/_map_immutablemap_.immutablemap.html)
-
-Map that has disabled `put` method. If this method is called, `TypeError` exception will be thrown. 
-Method `toObject` will return immutable object constructed with `Object.freeze`. 
-Implements typescript `interface` [MethodMap](#methodmap) 
-```javascript
-const b = ImmutableMap.builder()
-b.put('mike', 1)
-b.put('john', 2)
-const sample = b.buildMap()
-
-sample.keys() // ['mike', 'john']
-sample.values() // [1, 2]
-sample.size() // 2
-sample.get('mike') // 1
-sample.containsValue(1) // true
-sample.containsKey('mike') //false
-sample.entries() // [ {key: 'mike', value: 1}, {key: 'john', value: 2} ]
-```
-This map can be created from `object` as well.
-```javascript
-const map = new ImmutableMap({a: 1, b: 2})
-
 ```
 
 # JMap

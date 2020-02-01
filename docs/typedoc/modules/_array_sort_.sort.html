@@ -2402,6 +2402,11 @@ img {
 				<div class="lead">
 					<p>Functions to be used in {@link Array.prototype.sort} as a callback.</p>
 				</div>
+				<dl class="tsd-comment-tags">
+					<dt>see</dt>
+					<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=sorters">https://pavel-surinin.github.io/declarativejs/#/?id=sorters</a></p>
+					</dd>
+				</dl>
 			</div>
 		</section>
 		<section class="tsd-panel-group tsd-index-group">
@@ -2440,7 +2445,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/b8cd720/src/array/sort.ts#L40">array/sort.ts:40</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/sort.ts#L29">array/sort.ts:29</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2451,19 +2456,8 @@ img {
 								It accepts as many callbacks as You need.</p>
 							</div>
 							<dl class="tsd-comment-tags">
-								<dt>example</dt>
-								<dd><p>names.sort(ascendingBy(
-										x =&gt; x.name,
-										x =&gt; x.lastName,
-										x =&gt; x.age
-										))
-										// [
-										//  { name: &#39;andrew&#39;, lastName: &#39;Aa&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 2 },
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 1 },
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 5 },
-									// ]</p>
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=ascendingby">https://pavel-surinin.github.io/declarativejs/#/?id=ascendingby</a></p>
 								</dd>
 							</dl>
 						</div>
@@ -2509,7 +2503,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/b8cd720/src/array/sort.ts#L60">array/sort.ts:60</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/sort.ts#L41">array/sort.ts:41</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2521,15 +2515,8 @@ img {
 								It accepts as many keys as You need.</p>
 							</div>
 							<dl class="tsd-comment-tags">
-								<dt>example</dt>
-								<dd><p>names.sort(ascendingBy(&#39;name&#39;, &#39;lastName&#39;, &#39;age&#39;))
-										// [
-										//  { name: &#39;andrew&#39;, lastName: &#39;Aa&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 2 },
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 1 },
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 5 },
-									// ]</p>
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=ascendingby">https://pavel-surinin.github.io/declarativejs/#/?id=ascendingby</a></p>
 								</dd>
 							</dl>
 						</div>
@@ -2588,7 +2575,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/b8cd720/src/array/sort.ts#L151">array/sort.ts:151</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/sort.ts#L103">array/sort.ts:103</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2604,16 +2591,8 @@ img {
 								<dt>type</dt>
 								<dd><p>R type of item that will be mapped from callback and will be compared</p>
 								</dd>
-								<dt>example</dt>
-								<dd><p>const result =
-										testTodoData.sort(by(
-										{ toValue: x =&gt; x.severity, order: [&#39;low&#39;, &#39;medium&#39;, &#39;high&#39;] },
-										{ toValue: x =&gt; x.task, order: [&#39;Sleep&#39;, &#39;Drink&#39;] }
-										))
-										// { task: &#39;Sleep&#39;, severity: &#39;low&#39; },
-										// { task: &#39;Drink&#39;, severity: &#39;low&#39; },
-										// { task: &#39;Eat&#39;, severity: &#39;medium&#39; },
-									// { task: &#39;Code&#39;, severity: &#39;high&#39; },</p>
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=by">https://pavel-surinin.github.io/declarativejs/#/?id=by</a></p>
 								</dd>
 							</dl>
 						</div>
@@ -2656,7 +2635,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/b8cd720/src/array/sort.ts#L168">array/sort.ts:168</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/sort.ts#L115">array/sort.ts:115</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2665,12 +2644,8 @@ img {
 								Function that will sort items in array with custom values, by provided order.</p>
 							</div>
 							<dl class="tsd-comment-tags">
-								<dt>example</dt>
-								<dd><p>const result =
-										testTodoData.sort(by(&#39;severity&#39;, [&#39;low&#39;, &#39;medium&#39;, &#39;high&#39;]))
-										// { task: &#39;Sleep&#39;, severity: &#39;low&#39; },
-										// { task: &#39;Eat&#39;, severity: &#39;medium&#39; },
-									// { task: &#39;Code&#39;, severity: &#39;high&#39; },</p>
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=by">https://pavel-surinin.github.io/declarativejs/#/?id=by</a></p>
 								</dd>
 							</dl>
 						</div>
@@ -2737,7 +2712,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/b8cd720/src/array/sort.ts#L94">array/sort.ts:94</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/sort.ts#L63">array/sort.ts:63</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2748,19 +2723,8 @@ img {
 								It accepts as many callbacks as You need.</p>
 							</div>
 							<dl class="tsd-comment-tags">
-								<dt>example</dt>
-								<dd><p>names.sort(descendingBy(
-										x =&gt; x.name,
-										x =&gt; x.lastName,
-										x =&gt; x.age
-										))
-										// [
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 5 },
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 2 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Aa&#39;, age: 1 },
-									// ]</p>
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=descendingby">https://pavel-surinin.github.io/declarativejs/#/?id=descendingby</a></p>
 								</dd>
 							</dl>
 						</div>
@@ -2806,7 +2770,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/b8cd720/src/array/sort.ts#L114">array/sort.ts:114</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/sort.ts#L75">array/sort.ts:75</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2818,15 +2782,8 @@ img {
 								It accepts as many keys as You need.</p>
 							</div>
 							<dl class="tsd-comment-tags">
-								<dt>example</dt>
-								<dd><p>names.sort(descendingBy(&#39;name&#39;, &#39;lastName&#39;, &#39;age&#39;))
-										// [
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 5 },
-										//  { name: &#39;billy&#39;, lastName: &#39;Cc&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 2 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Bb&#39;, age: 1 },
-										//  { name: &#39;andrew&#39;, lastName: &#39;Aa&#39;, age: 1 },
-									// ]</p>
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=descendingby">https://pavel-surinin.github.io/declarativejs/#/?id=descendingby</a></p>
 								</dd>
 							</dl>
 						</div>
@@ -2884,7 +2841,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/b8cd720/src/array/sort.ts#L193">array/sort.ts:193</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/sort.ts#L135">array/sort.ts:135</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2895,12 +2852,8 @@ img {
 								Element, that are not present in order array will be at he the end of the sorted list.</p>
 							</div>
 							<dl class="tsd-comment-tags">
-								<dt>example</dt>
-								<dd><p>const testData =
-										[&#39;bar&#39;, &#39;medium&#39;, &#39;foo&#39;, &#39;low&#39;]
-										const result =
-										testData.sort(orderedBy([&#39;low&#39;, &#39;medium&#39;, &#39;high&#39;]))
-									// result =&gt; [&#39;low&#39;, &#39;medium&#39;, &#39;bar&#39;, &#39;foo&#39;, ]</p>
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=orderedby">https://pavel-surinin.github.io/declarativejs/#/?id=orderedby</a></p>
 								</dd>
 							</dl>
 						</div>

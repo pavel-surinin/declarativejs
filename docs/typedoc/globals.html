@@ -2398,6 +2398,8 @@ img {
 				<li>declarative code instead of imperative</li>
 				<li>reduces boilerplate code providing performant and tested solutions</li>
 				<li>comprehensive documentation <a href="https://pavel-surinin.github.io/declarativejs/#/">(link)</a> </li>
+				<li>Target version of javascript is ES5</li>
+				<li>Internet Explorer 11 compatible </li>
 			</ul>
 			<p><a href="https://www.npmjs.com/package/declarative-js"><img src="https://badge.fury.io/js/declarative-js.svg" alt="npm version"></a>
 				<a href="https://travis-ci.org/pavel-surinin/declarative-js"><img src="https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master" alt="Build Status"></a>
@@ -3125,28 +3127,6 @@ optional(myVar).orElseThrow(<span class="hljs-string">'This is bad'</span>)</cod
     size(): <span class="hljs-built_in">number</span>
     toObject(): {[keyof: <span class="hljs-built_in">string</span>]: T}
 }</code></pre>
-			<a href="#immutablemap" id="immutablemap" style="color: inherit; text-decoration: none;">
-				<h1>ImmutableMap</h1>
-			</a>
-			<p>API documentation <a href="https://pavel-surinin.github.io/declarativejs/typedoc/classes/_map_immutablemap_.immutablemap.html">link</a></p>
-			<p>Map that has disabled <code>put</code> method. If this method is called, <code>TypeError</code> exception will be thrown.
-				Method <code>toObject</code> will return immutable object constructed with <code>Object.freeze</code>.
-			Implements typescript <code>interface</code> <a href="#methodmap">MethodMap</a> </p>
-			<pre><code class="language-javascript"><span class="hljs-keyword">const</span> b = ImmutableMap.builder()
-b.put(<span class="hljs-string">'mike'</span>, <span class="hljs-number">1</span>)
-b.put(<span class="hljs-string">'john'</span>, <span class="hljs-number">2</span>)
-<span class="hljs-keyword">const</span> sample = b.buildMap()
-
-sample.keys() <span class="hljs-comment">// ['mike', 'john']</span>
-sample.values() <span class="hljs-comment">// [1, 2]</span>
-sample.size() <span class="hljs-comment">// 2</span>
-sample.get(<span class="hljs-string">'mike'</span>) <span class="hljs-comment">// 1</span>
-sample.containsValue(<span class="hljs-number">1</span>) <span class="hljs-comment">// true</span>
-sample.containsKey(<span class="hljs-string">'mike'</span>) <span class="hljs-comment">//false</span>
-sample.entries() <span class="hljs-comment">// [ {key: 'mike', value: 1}, {key: 'john', value: 2} ]</span></code></pre>
-			<p>This map can be created from <code>object</code> as well.</p>
-			<pre><code class="language-javascript"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> ImmutableMap({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>})
-</code></pre>
 			<a href="#jmap" id="jmap" style="color: inherit; text-decoration: none;">
 				<h1>JMap</h1>
 			</a>
@@ -3178,8 +3158,6 @@ sample.entries() <span class="hljs-comment">// [ {key: 'mike', value: 1}, {key: 
 							<li class="tsd-kind-external-module"><a href="modules/_array_mappers_.html" class="tsd-kind-icon">"array/mappers"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_array_reduce_.html" class="tsd-kind-icon">"array/reduce"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_array_sort_.html" class="tsd-kind-icon">"array/sort"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_map_immutablebuilder_.html" class="tsd-kind-icon">"map/<wbr>Immutable<wbr>Builder"</a></li>
-							<li class="tsd-kind-external-module"><a href="modules/_map_immutablemap_.html" class="tsd-kind-icon">"map/<wbr>Immutable<wbr>Map"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_jmap_.html" class="tsd-kind-icon">"map/JMap"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_map_methodmap_.html" class="tsd-kind-icon">"map/<wbr>Method<wbr>Map"</a></li>
 							<li class="tsd-kind-external-module"><a href="modules/_optional_optional_.html" class="tsd-kind-icon">"optional/<wbr>Optional"</a></li>
