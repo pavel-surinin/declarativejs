@@ -2,6 +2,8 @@ import { AlwaysArray, Getter } from '../types'
 import { toArray } from '../internal/ToArray'
 
 export interface OptionalInterface<T> {
+    map<T, R>(mapper: Getter<T, R>): OptionalInterface<NonNullable<R>>,
+    filter<T>(predicate: (value: T) => boolean): OptionalInterface<T>,
     orElse(value: T): T
     isPresent(): boolean,
     isAbsent(): boolean,
@@ -9,7 +11,8 @@ export interface OptionalInterface<T> {
     orElseThrow(errorMessage?: string): T | never
     ifPresent(consumer: () => void): void
     ifAbsent(consumer: () => void): void
-    get(): NonNullable<T>
+    get(): NonNullable<T>,
+    toArray<T>(): AlwaysArray<T>
 }
 
 type OptionalType<T> = OptionalInterface<T> & { value: T | undefined }
