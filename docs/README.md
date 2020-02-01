@@ -797,16 +797,26 @@ Converts value to array. If value is not present returns empty array. If value i
     optional(myVar).ifPresent(() => console.warn('I am here'))
 ```
 
-## or
+## orElse
+```javascript
+import { optional } from 'declarative-js'
+
+optional(myVar).orElse('Alternative')
+```
+
+## orElseGet
 
 ```javascript
 import { optional } from 'declarative-js'
 
-// instant  
-optional(myVar).orElse('Alternative')
-// lazy
 optional(myVar).orElseGet(() => 'Alternative')
-// error
+```
+
+## orElseThrow
+
+```javascript
+import { optional } from 'declarative-js'
+
 optional(myVar).orElseThrow('This is bad')
 ```
 

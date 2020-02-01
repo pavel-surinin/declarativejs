@@ -1,17 +1,77 @@
 import { AlwaysArray, Getter } from '../types'
 import { toArray } from '../internal/ToArray'
 
+/**
+ * Idea of this function is from Java Optional This function checks value to be non null or undefined. 
+ * @see https://pavel-surinin.github.io/declarativejs/#/?id=optional
+ */
 export interface OptionalInterface<T> {
+    /**
+     * Transforms object 
+     * @param mapper 
+     * @returns optional with mapped object
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=map
+     */
     map<R>(mapper: Getter<T, R>): OptionalInterface<NonNullable<R>>,
+    /**
+     * Checks optional value against condition in predicate,
+     * if condition resolve to false, empty optional will be returned
+     * @param predicate 
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=filter
+     */
     filter(predicate: (value: T) => boolean): OptionalInterface<T>,
+    /**
+     * If value already known or computed use this method to return if
+     * optional is empty
+     * @param value
+     * @returns value if optional is empty
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=orelse
+     */
     orElse(value: T): T
-    isPresent(): boolean,
-    isAbsent(): boolean,
+    /**
+     * If value needs to be computed better to use lazy getter return if
+     * optional is empty
+     * @param value
+     * @returns value if optional is empty
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=orelseget
+     */
     orElseGet(supplier: () => T): T,
+    /**
+     * Throws an error if optional is empty.
+     * @param errorMessage 
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=orelsethrow
+     */
     orElseThrow(errorMessage?: string): T | never
+    /**
+     * @returns true is value is present
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=ispresent
+     */
+    isPresent(): boolean,
+    /**
+     * @returns true is value is absent
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=isabsent
+     */
+    isAbsent(): boolean,
     ifPresent(consumer: () => void): void
+    /**
+     * Evaluate callback function if optional is empty
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=ifabsent
+     */
     ifAbsent(consumer: () => void): void
+    /**
+     * @returns value from optional
+     * @throws if value is not present
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=get
+     */
     get(): NonNullable<T>,
+    /**
+     * If value is not present, empty array will be returned,
+     * if value is single cardinality returns and array from one element,
+     * if value is an array returns an array.
+     * @returns value converted to an array
+     * @throws if value is not present
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=toarray
+     */
     toArray(): AlwaysArray<T>
 }
 

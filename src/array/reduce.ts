@@ -14,15 +14,7 @@ import {
 
 /**
  * Functions to be used in {@link Array.prototype.reduce} as a callback.
- * 
- * @example
- * [
- *  { title: 'Predator', genre: 'scy-fy },
- *  { title: 'Predator 2', genre: 'scy-fy},
- *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
- *  { title: 'Tom & Jerry', genre: 'cartoon }, 
- * ]
- *  .reduce(Reducer.groupBy('genre'), Reducer.Map())
+ * @see https://pavel-surinin.github.io/declarativejs/#/?id=reducers
  */
 export namespace Reducer {
 
@@ -57,24 +49,8 @@ export namespace Reducer {
      * Reducer.ImmutableMap()
      * Or own implementation of {@link MethodMap}
      * @param {string}  key     objects key to resolve value,to group by it
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy' },
-     *  { title: 'Predator 2', genre: 'scy-fy'},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy' }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
-     * ]
-     *  .reduce(groupBy('genre'), Reducer.Map())
-     * // {
-     * //   'scy-fy': [
-     * //    { title: 'Predator', genre: 'scy-fy' },
-     * //    { title: 'Predator 2', genre: 'scy-fy' },
-     * //    { title: 'Alien vs Predator', genre: 'scy-fy' }
-     * //   ],
-     * //   'cartoon': [
-     * //    { title: 'Tom & Jerry', genre: 'cartoon' }
-     * //   ],
-     * // }
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=groupby
+     * 
      */
     export function groupBy<T, K extends keyof T>(key: K):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
@@ -87,24 +63,7 @@ export namespace Reducer {
      * Or own implementation of {@link MethodMap}
      * @param {Function} getKey              callback to resolve key,to group by it
      * @throws {Error}                       if resolved key from callback is not a string 
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *  .reduce(groupBy(movie => movie.genre), Reducer.Map())
-     * // {
-     * //   'scy-fy': [
-     * //    { title: 'Predator', genre: 'scy-fy' },
-     * //    { title: 'Predator 2', genre: 'scy-fy' },
-     * //    { title: 'Alien vs Predator', genre: 'scy-fy' }
-     * //   ],
-     * //   'cartoon': [
-     * //    { title: 'Tom & Jerry', genre: 'cartoon' }
-     * //   ],
-     * // }
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=groupby
      */
     export function groupBy<T>(getKey: KeyGetter<T>):
         (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
@@ -124,22 +83,7 @@ export namespace Reducer {
      * @returns {(agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>}
      *          function to use in Array.reduce
      * @throws {Error} if resolved key from callback is not a string 
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *  .reduce(groupBy(movie => movie.genre, movie -> movie.title), Reducer.Map())
-     * // {
-     * //   'scy-fy': [
-     * //     'Predator',
-     * //     'Predator2',
-     * //     'Alien vs Predator'
-     * //   ],
-     * //   'cartoon': [ 'Tom & Jerry' ],
-     * // }
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=groupby
      */
     export function groupBy<T, TR>(getKey: KeyGetter<T>, transformer: Getter<T, TR>):
         (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>
@@ -157,22 +101,7 @@ export namespace Reducer {
      * @param {Getter<T, TR>} transformer function to transform array element in grouped array
      * @returns {(agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>}
      *          function to use in Array.reduce
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *  .reduce(groupBy('genre', movie -> movie.title), Reducer.Map())
-     * // {
-     * //   'scy-fy': [
-     * //     'Predator',
-     * //     'Predator2',
-     * //     'Alien vs Predator'
-     * //   ],
-     * //   'cartoon': [ 'Tom & Jerry' ],
-     * // }
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=groupby
      */
 
     export function groupBy<T, TR, K extends keyof T>(key: K, transformer: Getter<T, TR>):
@@ -225,8 +154,7 @@ export namespace Reducer {
      * @param {T[]} agr              to collect in
      * @param {T[]} value            to concatenate with
      * @returns {T[]}                concatenated array
-     * @example
-     * [[1,2],[3,4]].reduce(flat, []) // [1,2,3,4]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=flat
      */
     export const flat = <T>(agr: T[], value: T[]) => {
         if (Array.isArray(value)) {
@@ -253,14 +181,7 @@ export namespace Reducer {
      * @param {T} value                     value that that is passed in function for each iteration
      * @throws Error                        if resolved key from callback is not a string 
      * @throws Error                        if map has duplicate keys will thrown error
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *   .reduce(toMap(movie => movie.title), Reducer.Map())
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tomap
      */
     export function toMap<T>(getKey: KeyGetter<T>):
         (agr: MethodMap<T>, value: T, index: number, array: T[]) => MethodMap<T>
@@ -274,14 +195,7 @@ export namespace Reducer {
      * @param {Function} getValue           callback to get value to put in object
      * @throws {Error}                      if map has duplicate keys will thrown error 
      * @throws {Error}                      if resolved key from callback is not a string
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *   .reduce(toMap(movie => movie.title, movie => movie.genre), Reducer.Map())
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tomap
      */
     export function toMap<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>):
         (agr: MethodMap<K>, value: T, index: number, array: T[]) => MethodMap<K>
@@ -302,14 +216,7 @@ export namespace Reducer {
      * @param {Function} getKey               callback to get key from value
      * @throws {Error}                        if map has duplicate keys will thrown error   
      * @throws {Error}                        if resolved key from callback is not a string      *   * 
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *   .reduce(toObject(movie => movie.title), {})
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=toobject
      */
     export function toObject<T>(getKey: KeyGetter<T>):
         (agr: StringMap<T>, value: T, index: number, array: T[]) => StringMap<T>
@@ -322,14 +229,7 @@ export namespace Reducer {
      * @param {Function} getValue           callback to get value to put in object
      * @throws {Error}                      if map has duplicate keys will thrown error 
      * @throws {Error}                      if resolved key from callback is not a string      * 
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *   .reduce(toObject(movie => movie.title, movie => movie.genre), {})
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=toobject
      */
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>):
         (agr: StringMap<K>, value: T, index: number, array: T[]) => StringMap<K>
@@ -343,19 +243,7 @@ export namespace Reducer {
      * @param {Function} getValue           callback to get value to put in object
      * @param {Function} merge              callback to merge values with duplicate key
      * @throws {Error}                      if resolved key from callback is not a string      * 
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'scy-fy },
-     *  { title: 'Predator 2', genre: 'scy-fy},
-     *  { title: 'Alien vs Predator', genre: 'scy-fy }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon }, 
-     * ]
-     *   .reduce(toObject(
-     *  movie => movie.genre, 
-     *  movie => [movie.title], 
-     *  (movie1, moveie2) => movie1.concat(movie2)), 
-     *  {}
-     * )
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=toobject
      */
     export function toObject<T, K>(getKey: KeyGetter<T>, valueGetter: Getter<T, K>, merge: (v1: K, v2: K) => K):
         (agr: StringMap<K>, value: T, index: number, array: T[]) => StringMap<K>
@@ -374,9 +262,7 @@ export namespace Reducer {
      * Function to be used in {@link Array.prototype.reduce} as a callback.
      * Finds lowest value in array. Array must contain only numbers
      * @returns {number} lowest value in array.
-     * 
-     * @example
-     * [1, 2, 3].reduce(Reducer.min) // 1 
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=min
      */
     // @ts-ignore
     export function min(agr: number, value: number, index: number, array: number[]) {
@@ -387,9 +273,7 @@ export namespace Reducer {
      * Function to be used in {@link Array.prototype.reduce} as a callback.
      * Finds highest value in array. Array must contain only numbers
      * @returns {number} highest value in array.
-     * 
-     * @example
-     * [1, 2, 3].reduce(Reducer.max) // 3 
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=max
      */
     // @ts-ignore
     export function max(agr: number, value: number, index: number, array: number[]) {
@@ -400,9 +284,7 @@ export namespace Reducer {
      * Function to be used in {@link Array.prototype.reduce} as a callback.
      * Finds sum of values in array. Array must contain only numbers
      * @returns {number} sum of values in array.
-     * 
-     * @example
-     * [1, 2, 3].reduce(Reducer.sum) // 6 
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=sum
      */
     export const sum = (agr: number, value: number) => {
         return agr + value
@@ -433,8 +315,9 @@ export namespace Reducer {
     /**
      * Function to be used in {@link Array.prototype.reduce} as a callback.
      * Reduces array of objects to one object, There is three merge strategies 
-     * @see MergeStrategy
      * @param merge {@link MergeStrategy} = default is OVERRIDE
+     * @see MergeStrategy
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tomergedobject
      */
     export function toMergedObject(isMergable: IsMergable = MergeStrategy.OVERRIDE) {
         return function _toMergedObject<T extends object, R extends object>(agr: R, value: T): T & R {
@@ -458,25 +341,7 @@ export namespace Reducer {
      * 
      * @param {Array} array array to zip with
      * @returns array with elements from two arrays as tuples
-     * @example
-     * 
-     * // array lengths are equal
-     * let a1 = [1, 2, 3]
-     * let a2 = ['x', 'y', 'z']
-     * let zipped = a1.reduce(Reducer.zip(a2), [])
-     * // [[1, 'x'], [2, 'y'], [3, 'z']]
-     * 
-     * // origin array is longer
-     * let b1 = [1, 2, 3, 4]
-     * let b2 = ['x', 'y', 'z']
-     * let zipped = b1.reduce(Reducer.zip(b2), [])
-     * // [[1, 'x'], [2, 'y'], [3, 'z']]
-     * 
-     * // zip array is longer
-     * let c1 = [1, 2, 3]
-     * let c2 = ['x', 'y', 'z', 'extra']
-     * let zipped = c1.reduce(Reducer.zip(c2), [])
-     * // [[1, 'x'], [2, 'y'], [3, 'z']]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=zip
      */
     export function zip<T1, T2>(array: T2[]):
         (agr: Array<Tuple<T1, T2>>, value: T1, index: number) => Tuple<T1, T2>[]
@@ -489,12 +354,7 @@ export namespace Reducer {
      * @param {Array} array array to zip with
      * @param {Function} withFx function that will combine two elements into one
      * @returns array with elements from two arrays
-     * @example
-     * 
-     * let a1 = [1, 2, 3]
-     * let a2 = ['x', 'y', 'z']
-     * let zipped = a1.reduce(Reducer.zip(a2, (number, letter) => ({number, letter}) ), [])
-     * // [{number: 1, letter: 'x'}, {number: 2, letter: 'y'}, {number: 3, letter: 'z'}]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=zip
      */
     export function zip<T1, T2, R>(array: T2[], withFx: (t1: T1, t2: T2) => R):
         (agr: Array<R>, value: T1, index: number) => Array<R>
@@ -534,21 +394,7 @@ export namespace Reducer {
      * @param {...Array[]} arraysToZip
      * @returns function to use in Array.reduce
      * @see Reducer.zip
-     * @example
-     * import { Reducer } from 'declarative-js'
-     * import zipAll = Reducer.zipAll'
-     * 
-     * let numbers = [1, 2]
-     * let chars = ['a', 'b']
-     * let booleans = [true, false]
-     * let result = numbers.reduce(zipAll(chars, booleans), [])
-     * // [[1, 'a', true], [2, 'b', false]]
-     * 
-     * let numbers1 = [1, 2, 3, 4, 5]
-     * let chars1 = ['a', 'b']
-     * let booleans1 = [true, false]
-     * let result1 = numbers.reduce(zipAll(chars, booleans), [])
-     * // [[1, 'a', true], [2, 'b', false]]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=zipall
      */
     export function zipAll(...arraysToZip: Array<any>[]) {
         let isZipped = false
@@ -582,38 +428,7 @@ export namespace Reducer {
      * @returns function to use in Array.reduce
      * @see Reducer.zip
      * @see Reducer.zipAll
-     * @example
-     * 
-     * import { Reducer } from 'declarative-js'
-     * import zipAll = Reducer.zipAll
-     * import unzip = Reducer.unzip
-     * 
-     * let zipped = [[1, 'a', true], [2, 'b', false]]
-     * zipped.reduce(unzip(), [])
-     * // [
-     * //   [1, 2],
-     * //   ['a', 'b'],
-     * //   [true, false]
-     * // ]
-     * 
-     * let zippedDifferentLength = [[1, 'a'], [2, 'b', false]]
-     * zippedDifferentLength.reduce(unzip(), [])
-     * // [
-     * //   [1, 2],
-     * //   ['a', 'b']
-     * // ]
-     * 
-     * let numbers = [1, 2]
-     * let chars = ['a', 'b']
-     * let booleans = [true, false]
-     * let zipped = numbers.reduce(zipAll(chars, booleans), [])
-     * zipped.reduce(unzip(), [])
-     * // matches content
-     * // [
-     * //   numbers, 
-     * //   chars,
-     * //   booleans
-     * // ]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=unzip
      */
     export function unzip<T>() {
         let zippersLength: number
@@ -653,21 +468,7 @@ export namespace Reducer {
      *                                      current element and returns boolean
      * @returns {(agr: [T[], T[]], value: T) => [T[], T[]]} function to pass to Array.reduce
      * @see Reducer.Partition
-     * 
-     * @example
-     * import { Reducer } from 'declarative-js'
-     * import partitionBy = Reducer.partitionBy
-     * import Partition = Reducer.Partition
-     * 
-     * let array = [1, 2, 3, 4, 5, 6]
-     * let isEven = number => number % 2 === 0
-     * array.reduce(partitionBy(isEven), [[], []])
-     * // [[2, 4, 6], [1, 3, 5]]
-     * 
-     * let array = [1, 2, 3, 4, 5, 6]
-     * let isEven = number => number % 2 === 0
-     * array.reduce(partitionBy(isEven), Partition())
-     * // [[2, 4, 6], [1, 3, 5]]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=partitionby
      */
     export function partitionBy<T>(matches: Predicate<T>): (agr: Tuple<T[], T[]>, value: T) => Tuple<T[], T[]>
 
@@ -689,28 +490,7 @@ export namespace Reducer {
      *                                      element 
      * @returns {(agr: [T[], T[]], value: T) => [T[], T[]]} function to pass to Array.reduce
      * @see Reducer.Partition
-     * 
-     * @example
-     * import { Reducer } from 'declarative-js'
-     * import partitionBy = Reducer.partitionBy
-     * import Partition = Reducer.Partition
-     * 
-     *  let array = [
-     *      { value: 1, isEven: false },
-     *      { value: 2, isEven: true }, 
-     *      { value: 3, isEven: false }
-     *  ]
-     * array.reduce(partitionBy('isEven'), [[], []])
-     * // [
-     * //   [{ value: 2, isEven: true }],
-     * //   [{ value: 1, isEven: false }, { value: 3, isEven: false }]
-     * // ]
-     * 
-     * array.reduce(partitionBy('isEven'), Partition())
-     * // [
-     * //   [{ value: 2, isEven: true }],
-     * //   [{ value: 1, isEven: false }, { value: 3, isEven: false }]
-     * // ]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=partitionby
      */
     export function partitionBy<T, K extends keyof T>(matches: K): (agr: Tuple<T[], T[]>, value: T) => Tuple<T[], T[]>
 
@@ -731,28 +511,7 @@ export namespace Reducer {
      * @param {T} matches                   object to match key value pairs in current element  
      * @returns {(agr: [T[], T[]], value: T) => [T[], T[]]} function to pass to Array.reduce
      * @see Reducer.Partition
-     * 
-     * @example
-     * import { Reducer } from 'declarative-js'
-     * import partitionBy = Reducer.partitionBy
-     * import Partition = Reducer.Partition
-     * 
-     *  let array = [
-     *      { name: 'Bart', lastName: 'Simpson' },
-     *      { name: 'Homer', lastName: 'Simpson' },
-     *      { name: 'Ned', lastName: 'Flanders' },
-     *  ]
-     * array.reduce(partitionBy({ lastName: 'Simpson' }), [[], []])
-     * // [
-     * //   [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' } ],
-     * //   [{ name: 'Ned', lastName: 'Flanders' }]
-     * // ]
-     * 
-     * array.reduce(partitionBy({ lastName: 'Simpson' }), Partition())
-     * // [
-     * //   [{ name: 'Bart', lastName: 'Simpson' }, { name: 'Homer', lastName: 'Simpson' } ],
-     * //   [{ name: 'Ned', lastName: 'Flanders' }]
-     * // ]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=partitionby
      */
     export function partitionBy<T>(matches: Partial<T>): (agr: Tuple<T[], T[]>, value: T) => Tuple<T[], T[]>
 

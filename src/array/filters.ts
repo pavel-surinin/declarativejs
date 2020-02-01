@@ -2,9 +2,7 @@ import { Getter, Predicate } from '../types'
 import deepEqual from 'fast-deep-equal'
 /**
  * Functions to be used in {@link Array.prototype.filter} as a callback.
- * 
- * @example 
- * [1, 2, 2].filter(toBe.unique)
+ * @see https://pavel-surinin.github.io/declarativejs/#/?id=filters
  */
 export namespace toBe {
     /**
@@ -12,6 +10,7 @@ export namespace toBe {
      * Filters out items that are not present ({@code undefined} and {@code null}) in array
      * 
      * @returns {boolean}
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobepresent
      */
     export function present<T>(value: T) {
         return value != undefined
@@ -21,6 +20,7 @@ export namespace toBe {
      * Filters out items that are empty
      *  
      * @returns {boolean}
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobenotempty
      */
     export function notEmpty<T>(value: T) {
         return value != undefined
@@ -33,6 +33,7 @@ export namespace toBe {
      * Objects are compared to be deep equal. 
      *  
      * @returns {function} 
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobeequal
      */
     export function equal<T>(valueToMatch: T) {
         return function _equal(value: T) {
@@ -45,6 +46,7 @@ export namespace toBe {
      * Objects are compared to be deep equal.
      * 
      * @returns {function}
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobenotequal
      */
     export function notEqual<T>(valueToMatch: T) {
         return function _notEqual(value: T) {
@@ -58,12 +60,7 @@ export namespace toBe {
      * uniqueness. 
      * 
      * @returns () => {boolean} 
-     * 
-     * @example 
-     * [1, 2, 2].filter(toBe.unique())
-     * // [1, 2]
-     * [{a: 1}, {a: 1}, {a: 2}].filter(toBe.unique())
-     * // [{a: 1}, {a: 2}]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobeunique
      */
     export function unique() {
         let set = new Set()
@@ -84,18 +81,7 @@ export namespace toBe {
      * Determines uniqueness by value from callback. This value must be 
      * comparable with strict equals
      * @param { Function } getValue     callback to resolve comparable value        
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'sci-fi' },
-     *  { title: 'Predator 2', genre: 'sci-fi' },
-     *  { title: 'Alien vs Predator', genre: 'sci-fi' }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
-     * ]
-     *   .filter(toBe.uniqueBy(movie => movie.genre))
-     * // [
-     * //  { title: 'Predator', genre: 'sci-fi' },
-     * //  { title: 'Tom & Jerry', genre: 'cartoon' }
-     * // ]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobeuniqueby
      */
     export function uniqueBy<T, R>(getValue: Getter<T, R>): (value: T, index: number, arr: T[]) => boolean
 
@@ -105,18 +91,7 @@ export namespace toBe {
      * comparable with strict equals
      * 
      * @param { string } key    objects key to resolve comparable value        
-     * @example
-     * [
-     *  { title: 'Predator', genre: 'sci-fi' },
-     *  { title: 'Predator 2', genre: 'sci-fi'},
-     *  { title: 'Alien vs Predator', genre: 'sci-fi' }, 
-     *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
-     * ]
-     *   .filter(toBe.uniqueBy('genre'))
-     * // [
-     * //  { title: 'Predator', genre: 'sci-fi' },
-     * //  { title: 'Tom & Jerry', genre: 'cartoon' }
-     * // ]
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobeunique
      */
     export function uniqueBy<T, K extends keyof T>(key: K): (value: T, index: number, arr: T[]) => boolean
 
@@ -154,22 +129,7 @@ export namespace toBe {
      * returns {@code false} none of the items will pass.
      * 
      * @param {function} predicate callback function that returns boolean
-     * @example
-     * import {toBe} from 'declarative-js'
-     * import takeWhile = toBe.takeWhile
-     * 
-     * [
-     *  { title: 'Predator', genre: 'sci-fi' },
-     *  { title: 'Predator 2', genre: 'sci-fi'},
-     *  { title: 'Tom & Jerry', genre: 'cartoon' }, 
-     *  { title: 'Alien vs Predator', genre: 'sci-fi' }, 
-     * ]
-     *   .filter(takeWhile(film => film.genre === 'sci-fi'))
-     * // =>
-     * // [
-     * //  { title: 'Predator', genre: 'sci-fi' },
-     * //  { title: 'Predator 2', genre: 'sci-fi' }
-     * // ] 
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobetakewhile
      */
     export function takeWhile<T>(predicate: Predicate<T>) {
         let is = false
