@@ -64,7 +64,7 @@
     "now": "cd docs && now -n declarativejs",
     "docs:start": "docsify serve ./docs",
     "build": "npm run delete:target && npm run lint && npm run compile && npm run test:coverage",
-    "copy": "cp package.json target/out/package.json && cp LICENCE target/out/LICENCE",
+    "copy": "cp package.json target/out/package.json && cp LICENCE target/out/LICENCE && node scripts/readme",
     "publish:prepatch": "npm run build && npm version prepatch && npm run copy && npm publish target/out",
     "publish:patch": "npm run build && npm version patch && npm run copy && npm publish target/out",
     "publish:minor": "npm run build && npm version minor && npm run copy && npm publish target/out",
