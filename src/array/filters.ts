@@ -1,4 +1,4 @@
-import { Getter, Predicate, Consumer } from '../types'
+import { Getter, Predicate } from '../types'
 import deepEqual from 'fast-deep-equal'
 /**
  * Functions to be used in {@link Array.prototype.filter} as a callback.
@@ -124,12 +124,7 @@ export namespace toBe {
     }
 
     /**
-     * Function to be used in {@link Array} filter function as a callback.
-     * It will pass items from array, while predicate matches. When predicate
-     * returns {@code false} none of the items will pass.
-     * 
-     * @param {function} predicate callback function that returns boolean
-     * @see https://pavel-surinin.github.io/declarativejs/#/?id=takewhile
+     * @deprecated use Filter object
      */
     export function takeWhile<T>(predicate: Predicate<T>) {
         let is = false
@@ -142,6 +137,32 @@ export namespace toBe {
         }
     }
 
+}
+
+/**
+ * Functions to be used in {@link Array.prototype.filter} as a callback.
+ * @see https://pavel-surinin.github.io/declarativejs/#/?id=filters
+ */
+export namespace Filter {
+    /**
+     * Function to be used in {@link Array} filter function as a callback.
+     * It will pass items from array, while predicate matches. When predicate
+     * returns {@code false} none of the items will pass.
+     * 
+     * @param {function} predicate callback function that returns boolean
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=takewhile
+     * @deprecated use Filters object
+     */
+    export function takeWhile<T>(predicate: Predicate<T>) {
+        let is = false
+        return function _takeWhile(value: T, index: number): boolean {
+            if (index === 0 || is) {
+                is = predicate(value)
+                return is
+            }
+            return is
+        }
+    }
     /**
      * Function to be used in {@link Array} filter function as a callback.
      * It will skip items from array, while predicate matches. When predicate

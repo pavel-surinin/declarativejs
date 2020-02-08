@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;map/JMap&quot; | declarative-js</title>
+	<title>Filter | declarative-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -2375,70 +2375,188 @@ img {
 </header>
 <nav class="tsd-navigation secondary">
 	<ul>
-		<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-			<a href="_map_jmap_.html#jmaptype" class="tsd-kind-icon">JMap<wbr>Type</a>
+		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+			<a href="_array_filters_.filter.html#skiponerror" class="tsd-kind-icon">skip<wbr>OnError</a>
 		</li>
-		<li class=" tsd-kind-variable tsd-parent-kind-external-module">
-			<a href="_map_jmap_.html#jmap" class="tsd-kind-icon">JMap</a>
+		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+			<a href="_array_filters_.filter.html#skipwhile" class="tsd-kind-icon">skip<wbr>While</a>
+		</li>
+		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+			<a href="_array_filters_.filter.html#takewhile" class="tsd-kind-icon">take<wbr>While</a>
 		</li>
 	</ul>
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
+		<section class="tsd-panel tsd-comment">
+			<div class="tsd-comment tsd-typography">
+				<div class="lead">
+					<p>Functions to be used in {@link Array.prototype.filter} as a callback.</p>
+				</div>
+				<dl class="tsd-comment-tags">
+					<dt>see</dt>
+					<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=filters">https://pavel-surinin.github.io/declarativejs/#/?id=filters</a></p>
+					</dd>
+				</dl>
+			</div>
+		</section>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
 				<div class="tsd-index-content">
 					<section class="tsd-index-section ">
-						<h3>Type aliases</h3>
+						<h3>Functions</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_map_jmap_.html#jmaptype" class="tsd-kind-icon">JMap<wbr>Type</a></li>
-						</ul>
-					</section>
-					<section class="tsd-index-section ">
-						<h3>Variables</h3>
-						<ul class="tsd-index-list">
-							<li class="tsd-kind-variable tsd-parent-kind-external-module"><a href="_map_jmap_.html#jmap" class="tsd-kind-icon">JMap</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.filter.html#skiponerror" class="tsd-kind-icon">skip<wbr>OnError</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.filter.html#skipwhile" class="tsd-kind-icon">skip<wbr>While</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.filter.html#takewhile" class="tsd-kind-icon">take<wbr>While</a></li>
 						</ul>
 					</section>
 				</div>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
-			<h2>Type aliases</h2>
-			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-				<a name="jmaptype" class="tsd-anchor"></a>
-				<h3>JMap<wbr>Type</h3>
-				<div class="tsd-signature tsd-kind-icon">JMap<wbr>Type&lt;T&gt;<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_map_methodmap_.methodmap.html" class="tsd-signature-type">MethodMap</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/c96755a/src/map/JMap.ts#L3">map/JMap.ts:3</a></li>
-					</ul>
-				</aside>
-				<h4 class="tsd-type-parameters-title">Type parameters</h4>
-				<ul class="tsd-type-parameters">
-					<li>
-						<h4>T</h4>
+			<h2>Functions</h2>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+				<a name="skiponerror" class="tsd-anchor"></a>
+				<h3>skip<wbr>OnError</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">skip<wbr>OnError&lt;T&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, onError<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_skipOnError</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/c96755a/src/array/filters.ts#L193">array/filters.ts:193</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Skips an element, if predicate is resolving to false or
+									an error occurred, predicate will also resolve to false.
+								Error will be catched</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=skiponerror">https://pavel-surinin.github.io/declarativejs/#/?id=skiponerror</a></p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-type-parameters-title">Type parameters</h4>
+						<ul class="tsd-type-parameters">
+							<li>
+								<h4>T</h4>
+							</li>
+						</ul>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>predicate: <a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>to filter elements</p>
+								</div>
+							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> onError: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>callback to be called on error occurred</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_skipOnError</span></h4>
 					</li>
 				</ul>
 			</section>
-		</section>
-		<section class="tsd-panel-group tsd-member-group ">
-			<h2>Variables</h2>
-			<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
-				<a name="jmap" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> JMap</h3>
-				<div class="tsd-signature tsd-kind-icon">JMap<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;Map as any</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/c96755a/src/map/JMap.ts#L9">map/JMap.ts:9</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-type-declaration">
-					<h4>Type declaration</h4>
-					<ul class="tsd-parameters">
-					</ul>
-				</div>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+				<a name="skipwhile" class="tsd-anchor"></a>
+				<h3>skip<wbr>While</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">skip<wbr>While&lt;T&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_skipWhile</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/c96755a/src/array/filters.ts#L174">array/filters.ts:174</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array} filter function as a callback.
+									It will skip items from array, while predicate matches. When predicate
+								returns {@code false}, other items will be returned form that point.</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=skipwhile">https://pavel-surinin.github.io/declarativejs/#/?id=skipwhile</a></p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-type-parameters-title">Type parameters</h4>
+						<ul class="tsd-type-parameters">
+							<li>
+								<h4>T</h4>
+							</li>
+						</ul>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>predicate: <a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>callback function that returns boolean</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_skipWhile</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+				<a name="takewhile" class="tsd-anchor"></a>
+				<h3>take<wbr>While</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">take<wbr>While&lt;T&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_takeWhile</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/c96755a/src/array/filters.ts#L156">array/filters.ts:156</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array} filter function as a callback.
+									It will pass items from array, while predicate matches. When predicate
+								returns {@code false} none of the items will pass.</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=takewhile">https://pavel-surinin.github.io/declarativejs/#/?id=takewhile</a></p>
+								</dd>
+								<dt>deprecated</dt>
+								<dd><p>use Filters object</p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-type-parameters-title">Type parameters</h4>
+						<ul class="tsd-type-parameters">
+							<li>
+								<h4>T</h4>
+							</li>
+						</ul>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>predicate: <a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>callback function that returns boolean</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_takeWhile</span></h4>
+					</li>
+				</ul>
 			</section>
 		</section>
 		<footer class="with-border-bottom">

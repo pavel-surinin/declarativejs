@@ -650,7 +650,7 @@ returns `false` none of the items will pass.
 
 ```javascript
 import {toBe} from 'declarative-js'
-import takeWhile = toBe.takeWhile
+import takeWhile = Filter.takeWhile
 
 function isScienceFiction(film) {
     return film.genre === 'sci-fi'
@@ -680,7 +680,7 @@ returns {@code false}, other items will be returned form that point.
  
 ```javascript
 import {toBe} from 'declarative-js'
-import skipWhile = toBe.skipWhile
+import skipWhile = Filter.skipWhile
 
 function isScienceFiction(film) {
     return film.genre === 'sci-fi'
@@ -710,7 +710,7 @@ an error occurred predicate will also resolve to false
 Ignoring error
 ```javascript
 import {toBe} from 'declarative-js'
-import skipOnError = toBe.skipOnError
+import skipOnError = Filter.skipOnError
 
 const array = [1, 2, 3, 4, 5]
 const result = array
@@ -728,17 +728,17 @@ Consuming error
 import {toBe} from 'declarative-js'
 import skipOnError = toBe.skipOnError
 
+function filterNone(x) {
+    if (x === 3) {
+        throw new Error('Invalid number')
+    }
+    return true
+}
+
 const array = [1, 2, 3, 4, 5]
 const result = array
     .filter(skipOnError(
-        // filter
-        x => {
-            if (x === 3) {
-                throw new Error('Invalid number')
-            }
-            return true
-        },
-        // error callback
+        filterNone,
         (error, element, index) => console.warn({error, element, index})
     ))
 // console.warn: { error, [Error], element: 3, index: 2}

@@ -2946,7 +2946,7 @@ data.filter(toBe.uniqueBy(<span class="hljs-string">'genre'</span>))
 				It will pass items from array, while predicate matches. When predicate
 			returns <code>false</code> none of the items will pass.</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
-<span class="hljs-keyword">import</span> takeWhile = toBe.takeWhile
+<span class="hljs-keyword">import</span> takeWhile = Filter.takeWhile
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isScienceFiction</span>(<span class="hljs-params">film</span>) </span>{
     <span class="hljs-keyword">return</span> film.genre === <span class="hljs-string">'sci-fi'</span>
@@ -2973,7 +2973,7 @@ films.filter(takeWhile(isScienceFiction))
 				It will skip items from array, while predicate matches. When predicate
 			returns {@code false}, other items will be returned form that point.</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
-<span class="hljs-keyword">import</span> skipWhile = toBe.skipWhile
+<span class="hljs-keyword">import</span> skipWhile = Filter.skipWhile
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isScienceFiction</span>(<span class="hljs-params">film</span>) </span>{
     <span class="hljs-keyword">return</span> film.genre === <span class="hljs-string">'sci-fi'</span>
@@ -3000,7 +3000,7 @@ films.filter(skipWhile(isScienceFiction))
 			an error occurred predicate will also resolve to false</p>
 			<p>Ignoring error</p>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
-<span class="hljs-keyword">import</span> skipOnError = toBe.skipOnError
+<span class="hljs-keyword">import</span> skipOnError = Filter.skipOnError
 
 <span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
 <span class="hljs-keyword">const</span> result = array
@@ -3015,17 +3015,17 @@ films.filter(skipWhile(isScienceFiction))
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
 <span class="hljs-keyword">import</span> skipOnError = toBe.skipOnError
 
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filterNone</span>(<span class="hljs-params">x</span>) </span>{
+    <span class="hljs-keyword">if</span> (x === <span class="hljs-number">3</span>) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Invalid number'</span>)
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+}
+
 <span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
 <span class="hljs-keyword">const</span> result = array
     .filter(skipOnError(
-        <span class="hljs-comment">// filter</span>
-        <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> {
-            <span class="hljs-keyword">if</span> (x === <span class="hljs-number">3</span>) {
-                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Invalid number'</span>)
-            }
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
-        },
-        <span class="hljs-comment">// error callback</span>
+        filterNone,
         (error, element, index) =&gt; <span class="hljs-built_in">console</span>.warn({error, element, index})
     ))
 <span class="hljs-comment">// console.warn: { error, [Error], element: 3, index: 2}</span>
