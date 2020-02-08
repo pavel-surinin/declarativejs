@@ -190,7 +190,10 @@ export namespace Filter {
      * @param {function} onError callback to be called on error occurred
      * @see https://pavel-surinin.github.io/declarativejs/#/?id=skiponerror
      */
-    export function skipOnError<T>(predicate: Predicate<T>, onError?: (error: Error, element: T, index: number) => void) {
+    export function skipOnError<T>(
+        predicate: Predicate<T>,
+        onError?: (error: Error, element: T, index: number) => void
+    ) {
         return function _skipOnError(value: T, index: number) {
             try {
                 return predicate(value)
