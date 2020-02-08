@@ -463,6 +463,18 @@ import toMergedObject = Reducers.toMergedObject
 
 ```
 
+### pairwise
+Groups pairs of consecutive elements together and returns them as an array of two values.
+
+```javascript
+import { Reducers } from 'declarative-js'
+import pairwise = Reducers.pairwise
+
+const array = [1, 2, 3]
+array.reduce(pairwise(), []) // [[1, 2], [2, 3]]
+
+```
+
 ### min
 Finds min value of an array of numbers
 
@@ -614,7 +626,7 @@ data.filter(toBe.uniqueBy('genre'))
 // ]
 ```
 
-### toBe.takeWhile
+### takeWhile
 
 Function to be used in `Array#filter` function as a callback.
 It will pass items from array, while predicate matches. When predicate
@@ -642,6 +654,79 @@ films.filter(takeWhile(isScienceFiction))
 //  { title: 'Predator 2', genre: 'sci-fi' }
 // ]
 
+```
+
+### skipWhile
+
+Function to be used in `Array#filter` function as a callback.
+It will skip items from array, while predicate matches. When predicate
+returns {@code false}, other items will be returned form that point.
+ 
+```javascript
+import {toBe} from 'declarative-js'
+import skipWhile = toBe.skipWhile
+
+function isScienceFiction(film) {
+    return film.genre === 'sci-fi'
+}
+
+const films = [
+ { title: 'Predator', genre: 'sci-fi' },
+ { title: 'Predator 2', genre: 'sci-fi'},
+ { title: 'Tom & Jerry', genre: 'cartoon' }, 
+ { title: 'Alien vs Predator', genre: 'sci-fi' }
+]
+
+films.filter(skipWhile(isScienceFiction))
+// =>
+// [
+//  { title: 'Tom & Jerry', genre: 'cartoon' }, 
+//  { title: 'Alien vs Predator', genre: 'sci-fi' }
+// ]
+
+```
+
+### skipOnError
+
+Skips an element, if predicate is resolving to false or
+an error occurred predicate will also resolve to false
+
+Ignoring error
+```javascript
+import {toBe} from 'declarative-js'
+import skipOnError = toBe.skipOnError
+
+const array = [1, 2, 3, 4, 5]
+const result = array
+    .filter(skipOnError(x => {
+        if (x === 3) {
+            throw new Error()
+        }
+        return x % 2 != 0
+    }))
+// [1, 5]
+```
+
+Consuming error
+```javascript
+import {toBe} from 'declarative-js'
+import skipOnError = toBe.skipOnError
+
+const array = [1, 2, 3, 4, 5]
+const result = array
+    .filter(skipOnError(
+        // filter
+        x => {
+            if (x === 3) {
+                throw new Error('Invalid number')
+            }
+            return true
+        },
+        // error callback
+        (error, element, index) => console.warn({error, element, index})
+    ))
+// console.warn: { error, [Error], element: 3, index: 2}
+// [1, 2, 4, 5]
 ```
 
 ## Mappers

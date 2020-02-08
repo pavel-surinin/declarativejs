@@ -20,3 +20,5 @@ export type AlwaysArray<T> = T extends any[] ? T : T[]
 export type NonNull<R> = R extends undefined | null ? R : R
 
 export type Tuple<E1, E2> = [E1, E2]
+
+export type Consumer<T> = (value: T) => void

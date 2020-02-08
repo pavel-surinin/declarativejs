@@ -2791,6 +2791,16 @@ Reducer.MergeStrategy.CHECKED</code></pre>
 <span class="hljs-comment">// return always true and will override a property.</span>
 .reduce(toMergedObject(<span class="hljs-function">(<span class="hljs-params">o1, o2</span>) =&gt;</span> o1.title !== o2.title), {}) <span class="hljs-comment">// ERROR</span>
 </code></pre>
+			<a href="#pairwise" id="pairwise" style="color: inherit; text-decoration: none;">
+				<h3>pairwise</h3>
+			</a>
+			<p>Groups pairs of consecutive elements together and returns them as an array of two values.</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Reducers } <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> pairwise = Reducers.pairwise
+
+<span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+array.reduce(pairwise(), []) <span class="hljs-comment">// [[1, 2], [2, 3]]</span>
+</code></pre>
 			<a href="#min" id="min" style="color: inherit; text-decoration: none;">
 				<h3>min</h3>
 			</a>
@@ -2915,8 +2925,8 @@ data.filter(toBe.uniqueBy(<span class="hljs-string">'genre'</span>))
 <span class="hljs-comment">//  { title: 'Predator', genre: 'sci-fi' },</span>
 <span class="hljs-comment">//  { title: 'Tom &amp; Jerry', genre: 'cartoon' }</span>
 <span class="hljs-comment">// ]</span></code></pre>
-			<a href="#tobetakewhile" id="tobetakewhile" style="color: inherit; text-decoration: none;">
-				<h3>toBe.takeWhile</h3>
+			<a href="#takewhile" id="takewhile" style="color: inherit; text-decoration: none;">
+				<h3>takeWhile</h3>
 			</a>
 			<p>Function to be used in <code>Array#filter</code> function as a callback.
 				It will pass items from array, while predicate matches. When predicate
@@ -2942,6 +2952,70 @@ films.filter(takeWhile(isScienceFiction))
 <span class="hljs-comment">//  { title: 'Predator 2', genre: 'sci-fi' }</span>
 <span class="hljs-comment">// ]</span>
 </code></pre>
+			<a href="#skipwhile" id="skipwhile" style="color: inherit; text-decoration: none;">
+				<h3>skipWhile</h3>
+			</a>
+			<p>Function to be used in <code>Array#filter</code> function as a callback.
+				It will skip items from array, while predicate matches. When predicate
+			returns {@code false}, other items will be returned form that point.</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> skipWhile = toBe.skipWhile
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isScienceFiction</span>(<span class="hljs-params">film</span>) </span>{
+    <span class="hljs-keyword">return</span> film.genre === <span class="hljs-string">'sci-fi'</span>
+}
+
+<span class="hljs-keyword">const</span> films = [
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> },
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Predator 2'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span>},
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Tom &amp; Jerry'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'cartoon'</span> }, 
+ { <span class="hljs-attr">title</span>: <span class="hljs-string">'Alien vs Predator'</span>, <span class="hljs-attr">genre</span>: <span class="hljs-string">'sci-fi'</span> }
+]
+
+films.filter(skipWhile(isScienceFiction))
+<span class="hljs-comment">// =&gt;</span>
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//  { title: 'Tom &amp; Jerry', genre: 'cartoon' }, </span>
+<span class="hljs-comment">//  { title: 'Alien vs Predator', genre: 'sci-fi' }</span>
+<span class="hljs-comment">// ]</span>
+</code></pre>
+			<a href="#skiponerror" id="skiponerror" style="color: inherit; text-decoration: none;">
+				<h3>skipOnError</h3>
+			</a>
+			<p>Skips an element, if predicate is resolving to false or
+			an error occurred predicate will also resolve to false</p>
+			<p>Ignoring error</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> skipOnError = toBe.skipOnError
+
+<span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+<span class="hljs-keyword">const</span> result = array
+    .filter(skipOnError(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> {
+        <span class="hljs-keyword">if</span> (x === <span class="hljs-number">3</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>()
+        }
+        <span class="hljs-keyword">return</span> x % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>
+    }))
+<span class="hljs-comment">// [1, 5]</span></code></pre>
+			<p>Consuming error</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {toBe} <span class="hljs-keyword">from</span> <span class="hljs-string">'declarative-js'</span>
+<span class="hljs-keyword">import</span> skipOnError = toBe.skipOnError
+
+<span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+<span class="hljs-keyword">const</span> result = array
+    .filter(skipOnError(
+        <span class="hljs-comment">// filter</span>
+        <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> {
+            <span class="hljs-keyword">if</span> (x === <span class="hljs-number">3</span>) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Invalid number'</span>)
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+        },
+        <span class="hljs-comment">// error callback</span>
+        (error, element, index) =&gt; <span class="hljs-built_in">console</span>.warn({error, element, index})
+    ))
+<span class="hljs-comment">// console.warn: { error, [Error], element: 3, index: 2}</span>
+<span class="hljs-comment">// [1, 2, 4, 5]</span></code></pre>
 			<a href="#mappers" id="mappers" style="color: inherit; text-decoration: none;">
 				<h2>Mappers</h2>
 			</a>

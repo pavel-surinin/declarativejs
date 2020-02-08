@@ -2388,6 +2388,12 @@ img {
 			<a href="_array_filters_.tobe.html#present" class="tsd-kind-icon">present</a>
 		</li>
 		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+			<a href="_array_filters_.tobe.html#skiponerror" class="tsd-kind-icon">skip<wbr>OnError</a>
+		</li>
+		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+			<a href="_array_filters_.tobe.html#skipwhile" class="tsd-kind-icon">skip<wbr>While</a>
+		</li>
+		<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 			<a href="_array_filters_.tobe.html#takewhile" class="tsd-kind-icon">take<wbr>While</a>
 		</li>
 		<li class=" tsd-kind-function tsd-parent-kind-module">
@@ -2423,6 +2429,8 @@ img {
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.tobe.html#notempty" class="tsd-kind-icon">not<wbr>Empty</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.tobe.html#notequal" class="tsd-kind-icon">not<wbr>Equal</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.tobe.html#present" class="tsd-kind-icon">present</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.tobe.html#skiponerror" class="tsd-kind-icon">skip<wbr>OnError</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.tobe.html#skipwhile" class="tsd-kind-icon">skip<wbr>While</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.tobe.html#takewhile" class="tsd-kind-icon">take<wbr>While</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-module"><a href="_array_filters_.tobe.html#unique" class="tsd-kind-icon">unique</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_array_filters_.tobe.html#uniqueby" class="tsd-kind-icon">unique<wbr>By</a></li>
@@ -2443,7 +2451,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L38">array/filters.ts:38</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L38">array/filters.ts:38</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2484,7 +2492,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L25">array/filters.ts:25</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L25">array/filters.ts:25</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2524,7 +2532,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L51">array/filters.ts:51</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L51">array/filters.ts:51</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2565,7 +2573,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L15">array/filters.ts:15</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L15">array/filters.ts:15</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2596,6 +2604,100 @@ img {
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+				<a name="skiponerror" class="tsd-anchor"></a>
+				<h3>skip<wbr>OnError</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">skip<wbr>OnError&lt;T&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, onError<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_skipOnError</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L172">array/filters.ts:172</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Skips an element, if predicate is resolving to false or
+									an error occurred, predicate will also resolve to false.
+								Error will be catched</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=skiponerror">https://pavel-surinin.github.io/declarativejs/#/?id=skiponerror</a></p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-type-parameters-title">Type parameters</h4>
+						<ul class="tsd-type-parameters">
+							<li>
+								<h4>T</h4>
+							</li>
+						</ul>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>predicate: <a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>to filter elements</p>
+								</div>
+							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> onError: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>callback to be called on error occurred</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_skipOnError</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+				<a name="skipwhile" class="tsd-anchor"></a>
+				<h3>skip<wbr>While</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<li class="tsd-signature tsd-kind-icon">skip<wbr>While&lt;T&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">_skipWhile</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L153">array/filters.ts:153</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Function to be used in {@link Array} filter function as a callback.
+									It will skip items from array, while predicate matches. When predicate
+								returns {@code false}, other items will be returned form that point.</p>
+							</div>
+							<dl class="tsd-comment-tags">
+								<dt>see</dt>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=skipwhile">https://pavel-surinin.github.io/declarativejs/#/?id=skipwhile</a></p>
+								</dd>
+							</dl>
+						</div>
+						<h4 class="tsd-type-parameters-title">Type parameters</h4>
+						<ul class="tsd-type-parameters">
+							<li>
+								<h4>T</h4>
+							</li>
+						</ul>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>predicate: <a href="_types_.html#predicate" class="tsd-signature-type">Predicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>callback function that returns boolean</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">_skipWhile</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 				<a name="takewhile" class="tsd-anchor"></a>
 				<h3>take<wbr>While</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
@@ -2605,7 +2707,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L134">array/filters.ts:134</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L134">array/filters.ts:134</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2616,7 +2718,7 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>see</dt>
-								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=tobetakewhile">https://pavel-surinin.github.io/declarativejs/#/?id=tobetakewhile</a></p>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=takewhile">https://pavel-surinin.github.io/declarativejs/#/?id=takewhile</a></p>
 								</dd>
 							</dl>
 						</div>
@@ -2649,7 +2751,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L65">array/filters.ts:65</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L65">array/filters.ts:65</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2681,7 +2783,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L86">array/filters.ts:86</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L86">array/filters.ts:86</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2743,7 +2845,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/f73a718/src/array/filters.ts#L96">array/filters.ts:96</a></li>
+								<li>Defined in <a href="https://github.com/pavel-surinin/declarativejs/blob/ab9d1ea/src/array/filters.ts#L96">array/filters.ts:96</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2754,7 +2856,7 @@ img {
 							</div>
 							<dl class="tsd-comment-tags">
 								<dt>see</dt>
-								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=tobeunique">https://pavel-surinin.github.io/declarativejs/#/?id=tobeunique</a></p>
+								<dd><p><a href="https://pavel-surinin.github.io/declarativejs/#/?id=tobeuniqueby">https://pavel-surinin.github.io/declarativejs/#/?id=tobeuniqueby</a></p>
 								</dd>
 							</dl>
 						</div>

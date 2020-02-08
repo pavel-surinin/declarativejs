@@ -11,6 +11,8 @@ import unzip = Reducer.unzip
 import min = Reducer.min
 import max = Reducer.max
 import sum = Reducer.sum
+import pairwise = Reducer.pairwise
+import scan = Reducer.scan
 import ImmutableMapFactory = Reducer.ImmutableMap
 import ImmutableObject = Reducer.ImmutableObject
 import { Predicate } from '../../src/types'
@@ -413,6 +415,28 @@ describe('Reducer', () => {
         it('should call isMergable and throw an error ', () => {
             const objects = [{ a: 1 }, { b: 2 }, { c: 3 }]
             expect(() => objects.reduce(Reducer.toMergedObject(() => false), {})).toThrowError()
+        });
+    });
+    describe('pairwise', () => {
+        it('should reduce to paris', () => {
+            const array = [1, 2, 3]
+            expect(array.reduce(pairwise(), [])).toMatchObject([[1, 2], [2, 3]])
+        });
+        it('should reduce to empty array', () => {
+            const array = []
+            expect(array.reduce(pairwise(), [])).toMatchObject([])
+        });
+    });
+    describe('scan', () => {
+        it('should scan numbers', () => {
+            const numbers = [1, 2, 3]
+            const result = numbers.reduce(scan((acc, value) => acc + value, 0), [])
+            expect(result).toMatchObject([1, 3, 6])
+        });
+        it('should scan strings', () => {
+            const numbers = ['a', 'b', 'c']
+            const result = numbers.reduce(scan((acc, value) => acc.concat(value), ''), [])
+            expect(result).toMatchObject(['a', 'ab', 'abc'])
         });
     });
 })

@@ -540,4 +540,37 @@ export namespace Reducer {
             return agr
         }
     }
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback.
+     * Groups pairs of consecutive elements together and returns them as an array of two values.
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=pairwise
+     */
+    export function pairwise<T>() {
+        // @ts-ignore
+        return function _pairwise(agr: Array<Tuple<T, T>>, value: T, index: number, array: T[]) {
+            if (array.length - 1 != index) {
+                agr.push([array[index], array[index + 1]])
+            }
+            return agr
+        }
+    }
+
+    /**
+     * Function to be used in {@link Array.prototype.reduce} as a callback. 
+     * Applies an accumulator function over the current element 
+     * and returns each intermediate result for accumulation
+     * @param {function} accFunction accumulator function
+     * @param {T} initial value
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=scan
+     */
+    export function scan<T, R>(accFunction: (acc: R, current: T) => R, initial: R) {
+        let acc = initial
+        return function _scan(agr: R[], value: T) {
+            const scanned = accFunction(acc, value)
+            acc = accFunction(acc, value)
+            agr.push(scanned)
+            return agr
+        }
+    }
 }

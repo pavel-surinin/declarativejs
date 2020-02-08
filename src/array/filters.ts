@@ -1,4 +1,4 @@
-import { Getter, Predicate } from '../types'
+import { Getter, Predicate, Consumer } from '../types'
 import deepEqual from 'fast-deep-equal'
 /**
  * Functions to be used in {@link Array.prototype.filter} as a callback.
@@ -91,7 +91,7 @@ export namespace toBe {
      * comparable with strict equals
      * 
      * @param { string } key    objects key to resolve comparable value        
-     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobeunique
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobeuniqueby
      */
     export function uniqueBy<T, K extends keyof T>(key: K): (value: T, index: number, arr: T[]) => boolean
 
@@ -129,7 +129,7 @@ export namespace toBe {
      * returns {@code false} none of the items will pass.
      * 
      * @param {function} predicate callback function that returns boolean
-     * @see https://pavel-surinin.github.io/declarativejs/#/?id=tobetakewhile
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=takewhile
      */
     export function takeWhile<T>(predicate: Predicate<T>) {
         let is = false
@@ -139,6 +139,46 @@ export namespace toBe {
                 return is
             }
             return is
+        }
+    }
+
+    /**
+     * Function to be used in {@link Array} filter function as a callback.
+     * It will skip items from array, while predicate matches. When predicate
+     * returns {@code false}, other items will be returned form that point.
+     * 
+     * @param {function} predicate callback function that returns boolean
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=skipwhile
+     */
+    export function skipWhile<T>(predicate: Predicate<T>) {
+        let is = false
+        return function _skipWhile(value: T, index: number): boolean {
+            if (index === 0 || !is) {
+                is = !predicate(value)
+                return is
+            }
+            return is
+        }
+    }
+
+    /**
+     * Skips an element, if predicate is resolving to false or
+     * an error occurred, predicate will also resolve to false.
+     * Error will be catched
+     * @param {function} predicate to filter elements
+     * @param {function} onError callback to be called on error occurred
+     * @see https://pavel-surinin.github.io/declarativejs/#/?id=skiponerror
+     */
+    export function skipOnError<T>(predicate: Predicate<T>, onError?: (error: Error, element: T, index: number) => void) {
+        return function _skipOnError(value: T, index: number) {
+            try {
+                return predicate(value)
+            } catch (e) {
+                if (onError) {
+                    onError(e, value, index)
+                }
+                return false
+            }
         }
     }
 }
