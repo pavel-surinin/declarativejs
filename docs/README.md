@@ -472,7 +472,23 @@ import pairwise = Reducers.pairwise
 
 const array = [1, 2, 3]
 array.reduce(pairwise(), []) // [[1, 2], [2, 3]]
+```
 
+### scan
+Groups pairs of consecutive elements together and returns them as an array of two values.
+Applies an accumulator function over the current element and returns each intermediate result for accumulation
+
+```javascript
+import { Reducers } from 'declarative-js'
+import scan = Reducers.scan
+
+const numbers = [1, 2, 3]
+numbers.reduce(scan((acc, value) => acc + value, 0), [])
+// [1, 3, 6]
+
+const strings = ['a', 'b', 'c']
+strings.reduce(scan((acc, value) => acc.concat(value), ''), [])
+// ['a', 'ab', 'abc']
 ```
 
 ### min
