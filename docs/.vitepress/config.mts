@@ -18,6 +18,7 @@ export default defineConfig({
     ]
   ],
   themeConfig: {
+    outline: [2, 3],
     nav: [
       { text: 'Guide', link: '/' },
       { text: 'API', link: '/typedoc/index.html' },
