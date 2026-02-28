@@ -127,6 +127,19 @@ describe('Reducer', () => {
             let result = numbers.reduce(zipAll(chars, booleans), [])
             expect(result).toMatchObject([[1, 'a', true], [2, 'b', false]])
         });
+        it('should zip until shortest auxiliary array length', () => {
+            let numbers = [1, 2, 3, 4]
+            let chars = ['a', 'b', 'c', 'd']
+            let booleans = [true, false, true, false]
+            let strings = ['x', 'y', 'z', 'w']
+            let result = numbers.reduce(zipAll(chars, booleans, strings), [])
+            expect(result).toMatchObject([
+                [1, 'a', true, 'x'],
+                [2, 'b', false, 'y'],
+                [3, 'c', true, 'z'],
+                [4, 'd', false, 'w']
+            ])
+        });
     })
     describe('unzip', () => {
         it('should unzip multiple arrays', () => {

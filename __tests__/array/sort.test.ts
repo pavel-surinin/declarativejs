@@ -1,4 +1,5 @@
 import { Sort } from '../../src/array/sort'
+import * as sortInternal from '../../src/internal/sort'
 import ascendingBy = Sort.ascendingBy
 import descendingBy = Sort.descendingBy
 import by = Sort.by
@@ -128,6 +129,13 @@ describe('Sort', () => {
                     ]
                 )
         })
+        it('should build getter sort function once', () => {
+            const getterSpy = jest.spyOn(sortInternal, 'sortByGetters')
+            const comparator = descendingBy((x: { a: number }) => x.a)
+            ;[{ a: 3 }, { a: 2 }, { a: 1 }].sort(comparator)
+            expect(getterSpy).toHaveBeenCalledTimes(1)
+            getterSpy.mockRestore()
+        })
     })
     describe('descending', () => {
         it('should sort descending numbers [key] ', () => {
@@ -157,6 +165,13 @@ describe('Sort', () => {
                         { name: 'andrew', lastName: 'Aa', age: 1 },
                     ]
                 )
+        })
+        it('should build key sort function once', () => {
+            const keySpy = jest.spyOn(sortInternal, 'sortByKeyValues')
+            const comparator = descendingBy('a')
+            ;[{ a: 3 }, { a: 2 }, { a: 1 }].sort(comparator)
+            expect(keySpy).toHaveBeenCalledTimes(1)
+            keySpy.mockRestore()
         })
     });
     describe('by', () => {

@@ -398,12 +398,11 @@ export namespace Reducer {
      */
     export function zipAll(...arraysToZip: Array<any>[]) {
         let isZipped = false
-        let lengthOfArrays = arraysToZip.length
         return function _zipAll(agr: any[][], currentValue: any, currentValueIndex: number) {
             if (isZipped) {
                 return agr
             }
-            if (lengthOfArrays == currentValueIndex) {
+            if (arraysToZip.some(arrayToZip => currentValueIndex >= arrayToZip.length)) {
                 isZipped = true
                 return agr
             }

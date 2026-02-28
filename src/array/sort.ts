@@ -77,11 +77,11 @@ export namespace Sort {
 
     export function descendingBy<T, K extends keyof T>
         (...getters: (Getter<T, AutoComparable> | K)[]) {
+        const descending = { true: -1, false: 1 }
+        const sort = typeof getters[0] === 'string'
+            ? sortByKeyValues(descending)(...getters as never[])
+            : sortByGetters(descending)(...getters as any)
         return function _descendingBy(a: T, b: T): number {
-            const descending = { true: -1, false: 1 }
-            const sort = typeof getters[0] === 'string'
-                ? sortByKeyValues(descending)(...getters as never[])
-                : sortByGetters(descending)(...getters as any)
             return sort(a, b)
         }
     }
