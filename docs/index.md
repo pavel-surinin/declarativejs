@@ -858,13 +858,13 @@ const result =
 // result => ['low', 'medium', 'bar', 'foo', ]
 ```
 
-# Optional
+## Optional
 API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/interfaces/OptionalInterface.html)
 
 Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
 This function checks value to be non `null` or `undefined`. It has two branches of functions, `.map(x)` when value is present and second when value is absent `.or.x`
 
-## toArray
+### toArray
 
 Converts value to array. If value is not present returns empty array. If value is single object returns `array` of one object . If value is `array` returns `array`.
 
@@ -876,31 +876,31 @@ Converts value to array. If value is not present returns empty array. If value i
     optional(undefined).toArray() // []
 ```
 
-## isAbsent
+### isAbsent
 
 ```javascript
     isAbsent() //true or false
 ```
 
-## ifAbsent
+### ifAbsent
 
 ```javascript
     optional(myVar).ifAbsent(() => console.warn('I am not here'))
 ```
 
-## isPresent
+### isPresent
 
 ```javascript
     optional(myVar).isPresent() //true or false
 ```
 
-## ifPresent
+### ifPresent
 
 ```javascript
     optional(myVar).ifPresent(() => console.warn('I am here'))
 ```
 
-## or
+### or
 
 ```javascript
 import { optional } from 'declarative-js'
@@ -913,7 +913,7 @@ optional(myVar).orElseGet(() => 'Alternative')
 optional(myVar).orElseThrow('This is bad')
 ```
 
-## map
+### map
 
 Every map call is checking is mapped value defined.
 If mapped value is undefined, other `map` calls will not be executed.  
@@ -929,7 +929,7 @@ If mapped value is undefined, other `map` calls will not be executed.
         .get() // if some map evaluated to undefined an error will be thrown
 ```
 
-## filter
+### filter
 
 Method predicate `(value: T) => boolean`. If filters predicate returns `false`, other piped `filter` or `map` calls will no be executed. 
 
