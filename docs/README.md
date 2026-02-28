@@ -23,6 +23,24 @@ _declarative-js_ is modern JavaScript library, that helps to:
 pnpm add declarative-js
 ```
 
+# Exports
+
+All existing exports are still available from their current namespaces (`Reducer`, `Sort`, `toBe`, `Filter`, `Mapper`, `optional`, `Optional`, `JMap`, `Map`).
+
+You can also import everything from the unified `d` namespace:
+
+```typescript
+import { d } from 'declarative-js'
+
+const grouped = [{ type: 'a', value: 1 }]
+    .reduce(d.Reducer.groupBy('type'), d.Reducer.Map())
+
+const mapped = [1, 2, 3].filter(d.toBe.present)
+
+const map: d.MethodMap<number> = d.Map({ a: 1 })
+const optional: d.OptionalInterface<number> = d.optional(42)
+```
+
 # Array Functions
 
 ## Reducers
