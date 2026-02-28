@@ -10,8 +10,6 @@ _declarative-js_ is modern JavaScript library, that helps to:
  - declarative code instead of imperative
  - reduces boilerplate code providing performant and tested solutions
  - comprehensive documentation [(link)](https://pavel-surinin.github.io/declarativejs/) 
- - Target version of javascript is ES5
- - Internet Explorer 11 compatible 
 
 [![npm version](https://badge.fury.io/js/declarative-js.svg)](https://www.npmjs.com/package/declarative-js)
 [![Build Status](https://travis-ci.org/pavel-surinin/declarativejs.svg?branch=master)](https://travis-ci.org/pavel-surinin/declarative-js)

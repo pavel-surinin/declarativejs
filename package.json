@@ -2,7 +2,15 @@
   "name": "declarative-js",
   "version": "3.8.15",
   "main": "index.js",
+  "module": "index.mjs",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "require": "./index.js",
+      "import": "./index.mjs"
+    }
+  },
   "author": "Pavel Surinin <pavel.surinin@gmail.com>",
   "license": "MIT",
   "packageManager": "pnpm@10.15.0",
@@ -51,7 +59,8 @@
     "vitepress": "^1.6.4"
   },
   "scripts": {
-    "compile": "tsc -d",
+    "compile": "node scripts/compile.js",
+    "typecheck": "tsc --noEmit",
     "lint": "tslint -c tslint.json -p tsconfig.json -t stylish",
     "test": "jest -c jest.config.js",
     "test:coverage": "pnpm run test --coverage",
@@ -64,8 +73,8 @@
     "docs:build": "vitepress build docs && rm -rf docs/.vitepress/dist/typedoc && cp -R docs/typedoc docs/.vitepress/dist/typedoc",
     "docs:preview": "vitepress preview docs",
     "docs:start": "pnpm run docs:dev",
-    "build": "pnpm run delete:target && pnpm run lint && pnpm run compile && pnpm run test:coverage",
-    "copy": "cp package.json target/out/package.json && cp LICENCE target/out/LICENCE && node scripts/readme",
+    "build": "pnpm run delete:target && pnpm run lint && pnpm run typecheck && pnpm run compile && pnpm run test:coverage",
+    "copy": "cp package.json target/out/package.json && cp licence target/out/LICENCE && node scripts/readme",
     "publish:prepatch": "pnpm run build && pnpm version prepatch && pnpm run copy && pnpm publish target/out",
     "publish:patch": "pnpm run build && pnpm version patch && pnpm run copy && pnpm publish target/out",
     "publish:minor": "pnpm run build && pnpm version minor && pnpm run copy && pnpm publish target/out",
