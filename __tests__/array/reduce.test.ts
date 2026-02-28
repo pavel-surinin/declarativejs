@@ -324,6 +324,43 @@ describe('Reducer', () => {
             expect(reduced.keys()).toMatchObject(['Mike', 'John'])
             expect(reduced.values()).toMatchObject([['Mike'], ['John', 'John']])
         })
+        it('should group by callback to object', () => {
+            const reduced = ['a', 'a', 'b'].reduce(groupBy(v => v), {} as { [keyof: string]: string[] })
+            expect(reduced).toMatchObject({ a: ['a', 'a'], b: ['b'] })
+        })
+        it('should keep typed output when grouping to object', () => {
+            const array = [
+                { status: 'open' as 'open' | 'closed', id: 1 },
+                { status: 'closed' as 'open' | 'closed', id: 2 },
+                { status: 'open' as 'open' | 'closed', id: 3 }
+            ]
+            const reduced = array.reduce(
+                Reducer.groupBy('status'),
+                {} as Record<'open' | 'closed', Array<{ status: 'open' | 'closed', id: number }>>
+            )
+            expect(reduced.open).toMatchObject([
+                { status: 'open', id: 1 },
+                { status: 'open', id: 3 }
+            ])
+            expect(reduced.closed).toMatchObject([{ status: 'closed', id: 2 }])
+        })
+        it('should infer typed output without casting with groupByObject', () => {
+            const array = [
+                { status: 'open' as 'open' | 'closed', id: 1 },
+                { status: 'closed' as 'open' | 'closed', id: 2 },
+                { status: 'open' as 'open' | 'closed', id: 3 }
+            ]
+            const reduced = array.reduce(
+                Reducer.groupByObject('status'),
+                {}
+            )
+            const check: Partial<Record<'open' | 'closed', Array<{ status: 'open' | 'closed', id: number }>>> = reduced
+            expect(check.open).toMatchObject([
+                { status: 'open', id: 1 },
+                { status: 'open', id: 3 }
+            ])
+            expect(check.closed).toMatchObject([{ status: 'closed', id: 2 }])
+        })
     });
     it('should flat from 2d array to simple array', () => {
         const reduced = [[1, 2], [2, 3], [3, 4]]

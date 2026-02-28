@@ -173,6 +173,26 @@ data.reduce(groupBy('genre', movie => movie.title), Map())
 // }
 ``` 
 
+### groupByObject
+
+Groups by key resolved from callback to plain object where key is `string` and value is an `array` of items.
+Use this variant when you want object output with implicit TypeScript key inference from `reduce(..., {})`.
+
+```typescript
+import { Reducers } from 'declarative-js'
+import groupByObject = Reducers.groupByObject
+
+const data = [
+  { status: 'open' as 'open' | 'closed', id: 1 },
+  { status: 'closed' as 'open' | 'closed', id: 2 },
+  { status: 'open' as 'open' | 'closed', id: 3 },
+]
+
+const grouped = data.reduce(groupByObject('status'), {})
+// grouped type:
+// Partial<Record<'open' | 'closed', Array<{ status: 'open' | 'closed', id: number }>>>
+```
+
 ### flat
 Flats 2d `array` to `array` 
         

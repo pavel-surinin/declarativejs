@@ -8,6 +8,7 @@ import {
     isLastElement,
     onDuplacateDefaultFunction as onDuplicateDefaultFunction,
     finalizeMap,
+    finalizeObject,
     valid,
     IMMUTABLE
 } from '../internal/reducer.utils'
@@ -53,7 +54,7 @@ export namespace Reducer {
      * 
      */
     export function groupBy<T, K extends keyof T>(key: K):
-        (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
+        <A extends MethodMap<T[]> | StringMap<T[]>>(agr: A, value: T, index: number, array: T[]) => A
     /**
      * Groups an array by key resolved from callback.
      * Function to be used in {@link Array.prototype.reduce} as a callback to group by provided function.
@@ -66,7 +67,7 @@ export namespace Reducer {
      * @see https://pavel-surinin.github.io/declarativejs/#/?id=groupby
      */
     export function groupBy<T>(getKey: KeyGetter<T>):
-        (agr: MethodMap<T[]>, value: T, index: number, array: T[]) => MethodMap<T[]>
+        <A extends MethodMap<T[]> | StringMap<T[]>>(agr: A, value: T, index: number, array: T[]) => A
 
     /**
      * Groups an array by key resolved from callback and transform value to put in new grouped array.
@@ -86,7 +87,7 @@ export namespace Reducer {
      * @see https://pavel-surinin.github.io/declarativejs/#/?id=groupby
      */
     export function groupBy<T, TR>(getKey: KeyGetter<T>, transformer: Getter<T, TR>):
-        (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>
+        <A extends MethodMap<TR[]> | StringMap<TR[]>>(agr: A, value: T, index: number, array: T[]) => A
 
     /**
      * Groups an array by key and transform value to put in new grouped array.
@@ -105,40 +106,154 @@ export namespace Reducer {
      */
 
     export function groupBy<T, TR, K extends keyof T>(key: K, transformer: Getter<T, TR>):
-        (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) => MethodMap<TR[]>
+        <A extends MethodMap<TR[]> | StringMap<TR[]>>(agr: A, value: T, index: number, array: T[]) => A
 
     export function groupBy<T, K extends keyof T, TR>(
         getKey: KeyGetter<T> | K,
         transformer: Getter<T, TR> = x => x as any as TR
     ) {
+        const isMethodMapAgr = (agr: MethodMap<TR[]> | StringMap<TR[]>): agr is MethodMap<TR[]> => {
+            const map = agr as MethodMap<TR[]>
+            return typeof map.get === 'function' && typeof map.put === 'function'
+        }
         switch (typeof getKey) {
             case 'string': {
                 const key = getKey
-                return function (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) {
+                return function <A extends MethodMap<TR[]> | StringMap<TR[]>>(
+                    agr: A, value: T, index: number, array: T[]
+                ): A {
                     const derivedKey = value[key]
                     if (typeof derivedKey === 'string') {
-                        const derivedValue = agr.get(derivedKey)
-                        if (derivedValue) {
-                            derivedValue.push(transformer(value))
+                        if (isMethodMapAgr(agr)) {
+                            const derivedValue = agr.get(derivedKey)
+                            if (derivedValue) {
+                                derivedValue.push(transformer(value))
+                            } else {
+                                agr.put(derivedKey, [transformer(value)])
+                            }
+                            return isLastElement(array, index) ? finalizeMap(agr) as A : agr
                         } else {
-                            agr.put(derivedKey, [transformer(value)])
+                            const objectAgr = agr as StringMap<TR[]>
+                            const derivedValue = objectAgr[derivedKey]
+                            if (derivedValue !== void 0) {
+                                derivedValue.push(transformer(value))
+                            } else {
+                                objectAgr[derivedKey] = [transformer(value)]
+                            }
+                            return isLastElement(array, index) ? finalizeObject(objectAgr) as A : agr
                         }
-                        return isLastElement(array, index) ? finalizeMap(agr) : agr
                     }
                     // tslint:disable-next-line:max-line-length
                     throw new Error('Value of "' + key + '" in groupBy ' + ' must be string, instead get: ' + typeof value[key])
                 }
             }
             case 'function': {
-                return function (agr: MethodMap<TR[]>, value: T, index: number, array: T[]) {
+                return function <A extends MethodMap<TR[]> | StringMap<TR[]>>(
+                    agr: A, value: T, index: number, array: T[]
+                ): A {
                     const key = valid(getKey(value))
-                    const extractedValue = agr.get(key)
+                    if (isMethodMapAgr(agr)) {
+                        const extractedValue = agr.get(key)
+                        if (extractedValue !== void 0) {
+                            extractedValue.push(transformer(value))
+                        } else {
+                            agr.put(key, [transformer(value)])
+                        }
+                        return isLastElement(array, index) ? finalizeMap(agr) as A : agr
+                    } else {
+                        const objectAgr = agr as StringMap<TR[]>
+                        const extractedValue = objectAgr[key]
+                        if (extractedValue !== void 0) {
+                            extractedValue.push(transformer(value))
+                        } else {
+                            objectAgr[key] = [transformer(value)]
+                        }
+                        return isLastElement(array, index) ? finalizeObject(objectAgr) as A : agr
+                    }
+                }
+            }
+            default:
+                // tslint:disable-next-line:max-line-length
+                throw new Error(`Reducer.groupBy function accepts as a paramter string or callback, instead got ${typeof getKey}`)
+        }
+    }
+
+    export function groupByObject<T, K extends keyof T>(key: K):
+        (
+            agr: Partial<Record<Extract<T[K], string>, T[]>>,
+            value: T,
+            index: number,
+            array: T[]
+        ) => Partial<Record<Extract<T[K], string>, T[]>>
+
+    export function groupByObject<T, K extends string>(getKey: Getter<T, K>):
+        (
+            agr: Partial<Record<K, T[]>>,
+            value: T,
+            index: number,
+            array: T[]
+        ) => Partial<Record<K, T[]>>
+
+    export function groupByObject<T, TR, K extends string>(
+        getKey: Getter<T, K>,
+        transformer: Getter<T, TR>
+    ): (
+        agr: Partial<Record<K, TR[]>>,
+        value: T,
+        index: number,
+        array: T[]
+    ) => Partial<Record<K, TR[]>>
+
+    export function groupByObject<T, TR, K extends keyof T>(key: K, transformer: Getter<T, TR>):
+        (
+            agr: Partial<Record<Extract<T[K], string>, TR[]>>,
+            value: T,
+            index: number,
+            array: T[]
+        ) => Partial<Record<Extract<T[K], string>, TR[]>>
+
+    export function groupByObject<T, TR>(
+        getKey: any,
+        transformer: Getter<T, TR> = x => x as any as TR
+    ) {
+        switch (typeof getKey) {
+            case 'string': {
+                const key = getKey
+                return function (
+                    agr: Partial<Record<string, TR[]>>,
+                    value: T,
+                    index: number,
+                    array: T[]
+                ) {
+                    const derivedKey = (value as any)[key]
+                    if (typeof derivedKey === 'string') {
+                        const derivedValue = agr[derivedKey]
+                        if (derivedValue !== void 0) {
+                            derivedValue.push(transformer(value))
+                        } else {
+                            agr[derivedKey] = [transformer(value)]
+                        }
+                        return isLastElement(array, index) ? finalizeObject(agr) : agr
+                    }
+                    // tslint:disable-next-line:max-line-length
+                    throw new Error('Value of "' + key + '" in groupBy ' + ' must be string, instead get: ' + typeof (value as any)[key])
+                }
+            }
+            case 'function': {
+                return function (
+                    agr: Partial<Record<string, TR[]>>,
+                    value: T,
+                    index: number,
+                    array: T[]
+                ) {
+                    const key = valid(getKey(value))
+                    const extractedValue = agr[key]
                     if (extractedValue !== void 0) {
                         extractedValue.push(transformer(value))
                     } else {
-                        agr.put(key, [transformer(value)])
+                        agr[key] = [transformer(value)]
                     }
-                    return isLastElement(array, index) ? finalizeMap(agr) : agr
+                    return isLastElement(array, index) ? finalizeObject(agr) : agr
                 }
             }
             default:
