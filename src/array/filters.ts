@@ -1,5 +1,5 @@
 import { Getter, Predicate } from '../types'
-import deepEqual from 'fast-deep-equal'
+import deepEqual from '../internal/deepEqual'
 /**
  * Functions to be used in {@link Array.prototype.filter} as a callback.
  * @see https://pavel-surinin.github.io/declarativejs/#/?id=filters

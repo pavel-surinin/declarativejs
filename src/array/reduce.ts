@@ -1,4 +1,4 @@
-import eq from 'fast-deep-equal'
+import deepEqual from '../internal/deepEqual'
 import { MethodMap } from '../map/MethodMap'
 import { StringMap, KeyGetter, Getter, Predicate, Tuple } from '../types'
 import { toObjectAndValue, toObjectValueObject } from '../internal/toObject'
@@ -307,7 +307,7 @@ export namespace Reducer {
          * Keys in objects may have duplicates, but values in these key must be equal
          */
         CHECKED: (aggregatorValue: any, currentValue: any) => aggregatorValue == null
-            || eq(aggregatorValue, currentValue)
+            || deepEqual(aggregatorValue, currentValue)
     }
 
     export type IsMergable<T = any> = (currentValue: T, aggregatorValue: T, key: string) => boolean

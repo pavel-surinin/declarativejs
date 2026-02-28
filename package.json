@@ -5,6 +5,7 @@
   "types": "index.d.ts",
   "author": "Pavel Surinin <pavel.surinin@gmail.com>",
   "license": "MIT",
+  "packageManager": "pnpm@10.15.0",
   "homepage": "https://pavel-surinin.github.io/declarativejs/",
   "repository": {
     "type": "git",
@@ -36,40 +37,39 @@
     "optimized",
     "flat"
   ],
-  "dependencies": {
-    "fast-deep-equal": "2.0.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "22.2.3",
     "coveralls": "3.0.5",
-    "docsify": "4.12.0",
-    "docsify-cli": "^4.4.3",
     "install": "0.12.2",
     "jest": "22.4.3",
     "ts-jest": "22.4.5",
     "tslint": "5.18.0",
     "typedoc": "0.22.10",
     "typedoc-plugin-markdown": "2.1.1",
-    "typescript": "3.7.2"
+    "typescript": "3.7.2",
+    "vitepress": "^1.6.4"
   },
   "scripts": {
     "compile": "tsc -d",
     "lint": "tslint -c tslint.json -p tsconfig.json -t stylish",
     "test": "jest -c jest.config.js",
-    "test:coverage": "npm test -- --coverage",
+    "test:coverage": "pnpm run test --coverage",
     "delete:target": "rm -rf target",
-    "docsify": "npx docsify -c .docs/ssr.config.js init ./docs",
-    "typedocs": "typedoc --out ./docs/typedoc src --theme minimal --name declarative-js --readme ./readme.md --exclude **/internal/**.ts --ignoreCompilerErrors --excludeNotExported --excludeExternals --excludePrivate",
-    "docs": "npm run docsify && npm run typedocs",
-    "docs:commit": "npm run docs && git add . && git commit -m \"Updated generated documentation\" && git push",
+    "typedocs": "node scripts/typedocs.js",
+    "docs": "pnpm run typedocs && pnpm run docs:build",
+    "docs:commit": "pnpm run docs && git add . && git commit -m \"Updated generated documentation\" && git push",
     "now": "cd docs && now -n declarativejs",
-    "docs:start": "docsify serve ./docs",
-    "build": "npm run delete:target && npm run lint && npm run compile && npm run test:coverage",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs && rm -rf docs/.vitepress/dist/typedoc && cp -R docs/typedoc docs/.vitepress/dist/typedoc",
+    "docs:preview": "vitepress preview docs",
+    "docs:start": "pnpm run docs:dev",
+    "build": "pnpm run delete:target && pnpm run lint && pnpm run compile && pnpm run test:coverage",
     "copy": "cp package.json target/out/package.json && cp LICENCE target/out/LICENCE && node scripts/readme",
-    "publish:prepatch": "npm run build && npm version prepatch && npm run copy && npm publish target/out",
-    "publish:patch": "npm run build && npm version patch && npm run copy && npm publish target/out",
-    "publish:minor": "npm run build && npm version minor && npm run copy && npm publish target/out",
-    "publish:major": "npm run build && npm version major && npm run copy && npm publish target/out",
+    "publish:prepatch": "pnpm run build && pnpm version prepatch && pnpm run copy && pnpm publish target/out",
+    "publish:patch": "pnpm run build && pnpm version patch && pnpm run copy && pnpm publish target/out",
+    "publish:minor": "pnpm run build && pnpm version minor && pnpm run copy && pnpm publish target/out",
+    "publish:major": "pnpm run build && pnpm version major && pnpm run copy && pnpm publish target/out",
     "coveralls": "cat target/coverage/lcov.info | coveralls"
   }
 }

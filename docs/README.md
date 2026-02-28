@@ -9,7 +9,7 @@ _declarative-js_ is modern JavaScript library, that helps to:
  - it is written in `typescript`. All functions provides great type inference
  - declarative code instead of imperative
  - reduces boilerplate code providing performant and tested solutions
- - comprehensive documentation [(link)](https://pavel-surinin.github.io/declarativejs/#/) 
+ - comprehensive documentation [(link)](https://pavel-surinin.github.io/declarativejs/) 
  - Target version of javascript is ES5
  - Internet Explorer 11 compatible 
 
@@ -22,13 +22,13 @@ _declarative-js_ is modern JavaScript library, that helps to:
 
 # Install
 ```
-npm i declarative-js --save
+pnpm add declarative-js
 ```
 
 # Array Functions
 
 ## Reducers
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_reduce_.reducer.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/Reducer.html)
 
 ### toObject
 
@@ -570,7 +570,7 @@ import ImmutableObject = Reducers.ImmutableObject
 
 
 ## Filters
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_filters_.tobe.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/toBe.html)
 
 ### toBe.present
 ```javascript
@@ -746,7 +746,7 @@ const result = array
 ```
 
 ## Mappers
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_mappers_.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/Mapper.html)
 ### toObjValues
 
 As javascript `Object` class has static method `keys`, there is similar method to get object values
@@ -759,7 +759,7 @@ import toObjValues = Reducers.toObjValues
 ``` 
 
 ## Sorters
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_array_sort_.sort.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/Sort.html)
 
 _performance benchmark_: [link](https://github.com/pavel-surinin/performance-bechmark/blob/master/output.md#sortascendingby)
 
@@ -859,7 +859,7 @@ const result =
 ```
 
 # Optional
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules/_optional_optional_.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/interfaces/OptionalInterface.html)
 
 Idea of this function is from [Java Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html)
 This function checks value to be non `null` or `undefined`. It has two branches of functions, `.map(x)` when value is present and second when value is absent `.or.x`
@@ -946,7 +946,7 @@ Method predicate `(value: T) => boolean`. If filters predicate returns `false`, 
 ```
 
 # MethodMap
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/interfaces/_map_methodmap_.methodmap.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/interfaces/MethodMap.html)
 
 Interface for DTO to that is used in [reducers](#reducers).
 Provided two implementations:
@@ -967,7 +967,7 @@ interface MethodMap<T> {
 ```
 
 # JMap
-API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/classes/_map_jmap_.jmap.html)
+API documentation [link](https://pavel-surinin.github.io/declarativejs/typedoc/modules.html#JMap)
 
 Map that has all required functions to comfortably work with it. Implements typescript `interface` [MethodMap](#methodmap) 
 ```javascript
